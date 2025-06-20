@@ -4,7 +4,7 @@ import ImageSlider from './ImageSlider';
 import BenefitsSection from './BenefitsSection';
 import RewardsSection from './RewardsSection';
 import Responsibilities from './Responsibilities';
-import ApplicationForm from './ApplicationForm';
+import AmbassadorForm from './AmbassadorForm';
 import AmbassadorHeader from './AmbassadorHeader';
 import AmbassadorTracker from './AmbassadorTracker';
 
@@ -51,9 +51,8 @@ const CampusAmbassador: React.FC = () => {
           </div>
         </div>
       </div>
-      
-      {/* Content Based on Tab */}
-      {currentTab === 'apply' ? <ApplicationForm /> : <AmbassadorTracker />}
+        {/* Content Based on Tab */}
+      {currentTab === 'apply' ? <AmbassadorForm /> : <AmbassadorTracker />}
     </div>
   );
 };
