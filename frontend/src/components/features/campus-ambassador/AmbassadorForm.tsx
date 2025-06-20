@@ -66,13 +66,11 @@ const AmbassadorForm: React.FC = () => {
     referralSource: "",
     additionalInfo: "",
   });
-
   const [message, setMessage] = useState<{
     type: "success" | "error";
     text: string;
   } | null>(null);
   
-  const [missingFields, setMissingFields] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (
@@ -96,49 +94,18 @@ const AmbassadorForm: React.FC = () => {
       }));
     }
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage(null);
     setIsSubmitting(true);
     
-    // Validate required fields
-    const requiredFields: (keyof CampusAmbassadorFormData)[] = [
-      'firstName', 'lastName', 'email', 'phone', 'university', 
-      'course', 'yearOfStudy', 'cgpa', 'linkedinUrl', 'skills',
-      'experience', 'motivation', 'whyInternexis', 'availabilityHours',
-      'startDate', 'referralSource'
-    ];
-    
-    const missing = requiredFields.filter(field => {
-      const value = formData[field];
-      const isEmpty = !value || (typeof value === 'string' && !value.trim()) || 
-                     (Array.isArray(value) && value.length === 0);
-      return isEmpty;
-    });
-    
-    setMissingFields(missing);
-    
-    if (missing.length > 0) {
-      setMessage({
-        type: "error",
-        text: `Please fill in all required fields: ${missing.join(', ')}`
-      });
-      setIsSubmitting(false);
-      
-      // Scroll to the form section
-      document.getElementById('ambassador-form')?.scrollIntoView({ behavior: 'smooth' });
-      return;
-    }
-    
     try {
       const result = await campusAmbassadorService.submitApplication(formData);
       
       if (result.success) {
-        setMissingFields([]);
         setMessage({
           type: "success",
-          text: `Application submitted successfully! Welcome to the Internexis Ambassador Program!`,
+          text: `Thank you for registering! Your application has been submitted successfully. Welcome to the Internexis Ambassador Program!`,
         });
 
         // Reset form on success
@@ -199,47 +166,65 @@ const AmbassadorForm: React.FC = () => {
         <div className="absolute bottom-20 right-20 w-28 h-28 bg-cyan-400/20 rounded-full blur-lg animate-float animation-delay-2000" />
       </div>
       
-      <div className="relative z-30 max-w-4xl mx-auto px-6">
-        {/* Header Section */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 mb-6 shadow-2xl animate-float">
-            <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="relative z-30 max-w-4xl mx-auto px-6">        {/* Header Section */}
+        <div className="text-center mb-16">
+          <div className="relative inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-r from-blue-500 via-purple-600 to-pink-500 mb-8 shadow-2xl animate-float">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-600 to-pink-500 rounded-full animate-pulse opacity-75"></div>
+            <svg className="relative w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
             </svg>
           </div>
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-4">
+          <h1 className="text-6xl font-extrabold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-6 leading-tight">
             Ambassador Application
           </h1>
-          <p className="text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
-            Join our exclusive Campus Ambassador Program and become the face of Internexis at your university
+          <p className="text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed font-light">
+            Join our exclusive Campus Ambassador Program and become the face of <span className="text-transparent bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text font-semibold">Internexis</span> at your university
           </p>
-        </div>
-
-        {/* Message Display */}
-        {message && (
-          <div className={`mb-8 p-6 rounded-xl shadow-lg ${
-            message.type === "success" 
-              ? "bg-green-500/20 border border-green-400/30 text-green-100" 
-              : "bg-red-500/20 border border-red-400/30 text-red-100"
-          }`}>
-            <div className="flex items-center">
-              {message.type === "success" ? (
-                <svg className="w-6 h-6 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              ) : (
-                <svg className="w-6 h-6 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              )}
-              <p className="font-medium">{message.text}</p>
+          <div className="mt-8 flex justify-center">
+            <div className="flex space-x-2">
+              <div className="w-3 h-3 bg-blue-400 rounded-full animate-bounce"></div>
+              <div className="w-3 h-3 bg-purple-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+              <div className="w-3 h-3 bg-pink-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
             </div>
           </div>
-        )}
-
-        {/* Form Card */}
-        <div className="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 overflow-hidden">
-          <form onSubmit={handleSubmit} className="p-8 md:p-12 space-y-8">
+        </div>        {/* Message Display */}
+        {message && (
+          <div className={`mb-10 p-8 rounded-2xl shadow-2xl border-2 transform transition-all duration-500 ${
+            message.type === "success" 
+              ? "bg-gradient-to-r from-green-500/20 to-emerald-500/20 border-green-400/50 text-green-100 scale-105" 
+              : "bg-gradient-to-r from-red-500/20 to-pink-500/20 border-red-400/50 text-red-100"
+          }`}>
+            <div className="flex items-center justify-center">
+              {message.type === "success" ? (
+                <div className="flex items-center">
+                  <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mr-4 animate-pulse">
+                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold mb-2">🎉 Congratulations!</h3>
+                    <p className="text-lg font-medium">{message.text}</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center">
+                  <svg className="w-8 h-8 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <p className="text-lg font-medium">{message.text}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}        {/* Form Card */}
+        <div className="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 overflow-hidden relative">
+          {/* Decorative elements */}
+          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
+          <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-xl"></div>
+          <div className="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-br from-pink-400/10 to-red-400/10 rounded-full blur-lg"></div>
+          
+          <form onSubmit={handleSubmit} className="relative p-8 md:p-12 space-y-10">
             {/* Personal Information Section */}
             <div>
               <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
@@ -249,59 +234,50 @@ const AmbassadorForm: React.FC = () => {
                 Personal Information
               </h3>
               
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="block text-white/90 font-medium">First Name *</label>
+              <div className="grid md:grid-cols-2 gap-6">                <div className="space-y-2">
+                  <label className="block text-white/90 font-medium">First Name</label>
                   <input
                     type="text"
                     name="firstName"
                     value={formData.firstName}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 rounded-xl bg-white/10 border backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                      missingFields.includes('firstName') ? 'border-red-400 focus:ring-red-400' : 'border-white/30'
-                    }`}
+                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/30 backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     placeholder="Enter your first name"
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <label className="block text-white/90 font-medium">Last Name *</label>
+                  <label className="block text-white/90 font-medium">Last Name</label>
                   <input
                     type="text"
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 rounded-xl bg-white/10 border backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                      missingFields.includes('lastName') ? 'border-red-400 focus:ring-red-400' : 'border-white/30'
-                    }`}
+                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/30 backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     placeholder="Enter your last name"
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <label className="block text-white/90 font-medium">Email Address *</label>
+                  <label className="block text-white/90 font-medium">Email Address</label>
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 rounded-xl bg-white/10 border backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                      missingFields.includes('email') ? 'border-red-400 focus:ring-red-400' : 'border-white/30'
-                    }`}
+                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/30 backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     placeholder="your.email@university.edu"
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <label className="block text-white/90 font-medium">Phone Number *</label>
+                  <label className="block text-white/90 font-medium">Phone Number</label>
                   <input
                     type="tel"
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 rounded-xl bg-white/10 border backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                      missingFields.includes('phone') ? 'border-red-400 focus:ring-red-400' : 'border-white/30'
-                    }`}
+                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/30 backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     placeholder="+1 (555) 123-4567"
                   />
                 </div>
@@ -316,45 +292,38 @@ const AmbassadorForm: React.FC = () => {
                 </div>
                 Academic Information
               </h3>
-              
-              <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2 md:col-span-2">
-                  <label className="block text-white/90 font-medium">University/College *</label>
+                  <label className="block text-white/90 font-medium">University/College</label>
                   <input
                     type="text"
                     name="university"
                     value={formData.university}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 rounded-xl bg-white/10 border backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                      missingFields.includes('university') ? 'border-red-400 focus:ring-red-400' : 'border-white/30'
-                    }`}
+                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/30 backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     placeholder="Enter your university or college name"
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <label className="block text-white/90 font-medium">Course/Major *</label>
+                  <label className="block text-white/90 font-medium">Course/Major</label>
                   <input
                     type="text"
                     name="course"
                     value={formData.course}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 rounded-xl bg-white/10 border backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                      missingFields.includes('course') ? 'border-red-400 focus:ring-red-400' : 'border-white/30'
-                    }`}
+                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/30 backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     placeholder="e.g., Computer Science, Business"
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <label className="block text-white/90 font-medium">Year of Study *</label>
+                  <label className="block text-white/90 font-medium">Year of Study</label>
                   <select
                     name="yearOfStudy"
                     value={formData.yearOfStudy}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 rounded-xl bg-white/10 border backdrop-blur-sm text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                      missingFields.includes('yearOfStudy') ? 'border-red-400 focus:ring-red-400' : 'border-white/30'
-                    }`}
+                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/30 backdrop-blur-sm text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                   >
                     <option value="" className="bg-gray-800">Select Year</option>
                     <option value="1st Year" className="bg-gray-800">1st Year</option>
@@ -367,30 +336,14 @@ const AmbassadorForm: React.FC = () => {
                 </div>
                 
                 <div className="space-y-2">
-                  <label className="block text-white/90 font-medium">CGPA/GPA *</label>
+                  <label className="block text-white/90 font-medium">CGPA/GPA</label>
                   <input
                     type="text"
                     name="cgpa"
                     value={formData.cgpa}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 rounded-xl bg-white/10 border backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                      missingFields.includes('cgpa') ? 'border-red-400 focus:ring-red-400' : 'border-white/30'
-                    }`}
+                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/30 backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     placeholder="e.g., 3.7/4.0 or 8.5/10.0"
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <label className="block text-white/90 font-medium">LinkedIn Profile *</label>
-                  <input
-                    type="url"
-                    name="linkedinUrl"
-                    value={formData.linkedinUrl}
-                    onChange={handleInputChange}
-                    className={`w-full px-4 py-3 rounded-xl bg-white/10 border backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                      missingFields.includes('linkedinUrl') ? 'border-red-400 focus:ring-red-400' : 'border-white/30'
-                    }`}
-                    placeholder="https://linkedin.com/in/yourprofile"
                   />
                 </div>
               </div>
@@ -404,47 +357,18 @@ const AmbassadorForm: React.FC = () => {
                 </div>
                 Skills & Experience
               </h3>
-              
-              <div className="space-y-6">
+                <div className="space-y-6">
                 <div className="space-y-2">
-                  <label className="block text-white/90 font-medium">Skills *</label>
+                  <label className="block text-white/90 font-medium">Skills</label>
                   <input
                     type="text"
                     name="skills"
                     value={Array.isArray(formData.skills) ? formData.skills.join(', ') : ''}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 rounded-xl bg-white/10 border backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                      missingFields.includes('skills') ? 'border-red-400 focus:ring-red-400' : 'border-white/30'
-                    }`}
+                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/30 backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     placeholder="e.g., Social Media Marketing, Event Management, Communication (comma-separated)"
                   />
                   <p className="text-white/60 text-sm">Separate skills with commas</p>
-                </div>
-                
-                <div className="space-y-2">
-                  <label className="block text-white/90 font-medium">Portfolio/Website URL</label>
-                  <input
-                    type="url"
-                    name="portfolioUrl"
-                    value={formData.portfolioUrl}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/30 backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    placeholder="https://yourportfolio.com (optional)"
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <label className="block text-white/90 font-medium">Relevant Experience *</label>
-                  <textarea
-                    name="experience"
-                    value={formData.experience}
-                    onChange={handleInputChange}
-                    rows={4}
-                    className={`w-full px-4 py-3 rounded-xl bg-white/10 border backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none ${
-                      missingFields.includes('experience') ? 'border-red-400 focus:ring-red-400' : 'border-white/30'
-                    }`}
-                    placeholder="Describe your relevant experience in leadership, marketing, events, or similar roles..."
-                  />
                 </div>
               </div>
             </div>
@@ -457,67 +381,17 @@ const AmbassadorForm: React.FC = () => {
                 </div>
                 Motivation & Commitment
               </h3>
-              
-              <div className="space-y-6">
+                <div className="space-y-6">
                 <div className="space-y-2">
-                  <label className="block text-white/90 font-medium">Why do you want to be a Campus Ambassador? *</label>
+                  <label className="block text-white/90 font-medium">Why do you want to be a Campus Ambassador?</label>
                   <textarea
                     name="motivation"
                     value={formData.motivation}
                     onChange={handleInputChange}
                     rows={4}
-                    className={`w-full px-4 py-3 rounded-xl bg-white/10 border backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none ${
-                      missingFields.includes('motivation') ? 'border-red-400 focus:ring-red-400' : 'border-white/30'
-                    }`}
+                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/30 backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
                     placeholder="Share your motivation and what drives you to represent Internexis..."
                   />
-                </div>
-                
-                <div className="space-y-2">
-                  <label className="block text-white/90 font-medium">Why Internexis? *</label>
-                  <textarea
-                    name="whyInternexis"
-                    value={formData.whyInternexis}
-                    onChange={handleInputChange}
-                    rows={4}
-                    className={`w-full px-4 py-3 rounded-xl bg-white/10 border backdrop-blur-sm text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none ${
-                      missingFields.includes('whyInternexis') ? 'border-red-400 focus:ring-red-400' : 'border-white/30'
-                    }`}
-                    placeholder="What attracts you to Internexis and our mission?"
-                  />
-                </div>
-                
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="block text-white/90 font-medium">Weekly Availability *</label>
-                    <select
-                      name="availabilityHours"
-                      value={formData.availabilityHours}
-                      onChange={handleInputChange}
-                      className={`w-full px-4 py-3 rounded-xl bg-white/10 border backdrop-blur-sm text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                        missingFields.includes('availabilityHours') ? 'border-red-400 focus:ring-red-400' : 'border-white/30'
-                      }`}
-                    >
-                      <option value="" className="bg-gray-800">Select Hours</option>
-                      <option value="5-10 hours" className="bg-gray-800">5-10 hours</option>
-                      <option value="10-15 hours" className="bg-gray-800">10-15 hours</option>
-                      <option value="15-20 hours" className="bg-gray-800">15-20 hours</option>
-                      <option value="20+ hours" className="bg-gray-800">20+ hours</option>
-                    </select>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <label className="block text-white/90 font-medium">Preferred Start Date *</label>
-                    <input
-                      type="date"
-                      name="startDate"
-                      value={formData.startDate}
-                      onChange={handleInputChange}
-                      className={`w-full px-4 py-3 rounded-xl bg-white/10 border backdrop-blur-sm text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                        missingFields.includes('startDate') ? 'border-red-400 focus:ring-red-400' : 'border-white/30'
-                      }`}
-                    />
-                  </div>
                 </div>
               </div>
             </div>
@@ -530,17 +404,14 @@ const AmbassadorForm: React.FC = () => {
                 </div>
                 Additional Information
               </h3>
-              
-              <div className="space-y-6">
+                <div className="space-y-6">
                 <div className="space-y-2">
-                  <label className="block text-white/90 font-medium">How did you hear about us? *</label>
+                  <label className="block text-white/90 font-medium">How did you hear about us?</label>
                   <select
                     name="referralSource"
                     value={formData.referralSource}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 rounded-xl bg-white/10 border backdrop-blur-sm text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                      missingFields.includes('referralSource') ? 'border-red-400 focus:ring-red-400' : 'border-white/30'
-                    }`}
+                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/30 backdrop-blur-sm text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                   >
                     <option value="" className="bg-gray-800">Select Source</option>
                     <option value="Social Media" className="bg-gray-800">Social Media</option>
@@ -564,35 +435,43 @@ const AmbassadorForm: React.FC = () => {
                   />
                 </div>
               </div>
-            </div>
-
-            {/* Submit Button */}
-            <div className="text-center pt-8">
+            </div>            {/* Submit Button */}
+            <div className="text-center pt-10">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`px-12 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold text-lg rounded-xl shadow-2xl transition-all duration-300 ${
+                className={`relative px-16 py-5 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-bold text-xl rounded-2xl shadow-2xl transition-all duration-500 overflow-hidden group ${
                   isSubmitting 
                     ? 'opacity-70 cursor-not-allowed' 
-                    : 'hover:from-blue-700 hover:to-purple-700 hover:shadow-3xl transform hover:scale-105'
+                    : 'hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 hover:shadow-3xl transform hover:scale-105 hover:-rotate-1'
                 }`}
               >
-                {isSubmitting ? (
-                  <>
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Submitting Application...
-                  </>
-                ) : (
-                  'Submit Application'
-                )}
+                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent transform -skew-x-12 group-hover:translate-x-full transition-transform duration-1000"></div>
+                <span className="relative">
+                  {isSubmitting ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-3 h-6 w-6 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Submitting Application...
+                    </>
+                  ) : (
+                    <>
+                      🚀 Submit Application
+                    </>
+                  )}
+                </span>
               </button>
               
-              <p className="mt-4 text-white/80 text-sm">
-                Your information is secure and will be processed within 24-48 hours
+              <p className="mt-6 text-white/80 text-base font-medium">
+                ✨ Your information is secure and will be processed within 24-48 hours
               </p>
+              <div className="mt-4 flex justify-center space-x-4 text-white/60 text-sm">
+                <span>🔒 Secure</span>
+                <span>⚡ Fast Processing</span>
+                <span>📱 Mobile Friendly</span>
+              </div>
             </div>
           </form>
         </div>

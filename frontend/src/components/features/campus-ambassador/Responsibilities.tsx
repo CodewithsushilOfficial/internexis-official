@@ -45,48 +45,12 @@ const Responsibilities: React.FC = () => {
         'Participate in ambassador meetings and training sessions'
       ],
       timeCommitment: '1-2 hours/week'
-    }
-  ];
-
-  const requirements = [
-    {
-      icon: '🎓',
-      title: 'Academic Standing',
-      description: 'Currently enrolled in 2nd year or above in any technical course'
-    },
-    {
-      icon: '💬',
-      title: 'Communication Skills',
-      description: 'Excellent verbal and written communication abilities'
-    },
-    {
-      icon: '🌐',
-      title: 'Social Media Presence',
-      description: 'Active on LinkedIn, Instagram, or other professional platforms'
-    },
-    {
-      icon: '⚡',
-      title: 'Leadership Experience',
-      description: 'Previous experience in clubs, societies, or leadership roles (preferred)'
-    },
-    {
-      icon: '⏰',
-      title: 'Time Commitment',
-      description: 'Ability to dedicate 5-10 hours per week for ambassador activities'
-    },
-    {
-      icon: '🤝',
-      title: 'Team Player',
-      description: 'Collaborative mindset and willingness to work with diverse teams'
-    }
-  ];
-
+    }  ];
   return (
-    <div className="py-20 bg-white">
+    <div className="py-12 bg-white">
       <div className="container mx-auto px-6">
         {/* Responsibilities Section */}
-        <div className="mb-20">
-          <div className="text-center mb-16">
+        <div className="mb-12">          <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Your 
               <span className="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent"> Responsibilities</span>
@@ -122,58 +86,7 @@ const Responsibilities: React.FC = () => {
                 </ul>
               </div>
             ))}
-          </div>
-        </div>
-
-        {/* Requirements Section */}
-        <div>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              What We're 
-              <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"> Looking For</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We seek passionate, motivated students who are ready to make a positive impact in their university community.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {requirements.map((requirement, index) => (
-              <div 
-                key={index}
-                className="group bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl border border-gray-100 hover:border-purple-200 transition-all duration-300"
-              >
-                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {requirement.icon}
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-purple-600 transition-colors">
-                  {requirement.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {requirement.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* CTA Section */}
-        <div className="text-center mt-16">
-          <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl p-8 text-white max-w-4xl mx-auto">
-            <h3 className="text-2xl md:text-3xl font-bold mb-4">
-              Think You're the Perfect Fit?
-            </h3>
-            <p className="text-lg mb-6 opacity-90">
-              Join our community of ambitious students who are shaping the future of tech education.
-            </p>
-            <button 
-              onClick={() => document.getElementById('application-form')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-8 py-4 bg-white text-purple-600 font-semibold rounded-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg"
-            >
-              Start Your Application
-            </button>
-          </div>
-        </div>
+          </div>        </div>
       </div>
     </div>
   );
