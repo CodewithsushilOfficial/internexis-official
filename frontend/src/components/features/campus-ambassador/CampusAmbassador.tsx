@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import HeroSection from './HeroSection';
 import ImageSlider from './ImageSlider';
-import BenefitsSection from './BenefitsSection';
-import RewardsSection from './RewardsSection';
+import BenefitsAndRewardsSection from './BenefitsAndRewardsSection';
 import Responsibilities from './Responsibilities';
 import AmbassadorForm from './AmbassadorForm';
 import AmbassadorHeader from './AmbassadorHeader';
@@ -11,13 +10,11 @@ import AmbassadorTracker from './AmbassadorTracker';
 const CampusAmbassador: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<'apply' | 'track'>('apply');
   
-  return (
-    <div className="min-h-screen">
+  return (    <div className="min-h-screen">
       <AmbassadorHeader />
       <HeroSection />
       <ImageSlider />
-      <BenefitsSection />
-      <RewardsSection />
+      <BenefitsAndRewardsSection />
       <Responsibilities />
       
       {/* Tab Navigation */}
