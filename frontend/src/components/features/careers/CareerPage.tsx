@@ -1,3 +1,18 @@
+/**
+ * CareerPage - Main careers page component
+ * 
+ * This page uses ONLY the unified CareerForm component.
+ * All legacy forms have been removed and consolidated into CareerForm.tsx
+ * 
+ * Forms removed:
+ * - CareerApplicationForm.tsx (deleted)
+ * - EmbeddedCareerApplicationForm.tsx (deleted)
+ * - ModernCareerApplicationForm.tsx (deleted) 
+ * - UnifiedCareerApplicationForm.tsx (deleted)
+ * 
+ * Current form: CareerForm.tsx (the only form used)
+ */
+
 import React, { useState } from "react";
 import { motion } from 'framer-motion';
 import { 
@@ -19,7 +34,7 @@ import {
   Crown,
   Diamond
 } from 'lucide-react';
-import EmbeddedCareerApplicationForm from './EmbeddedCareerApplicationForm';
+import CareerForm from './CareerForm';
 import './CareerPage.module.css';
 import './AnimatedEffects.module.css';
 
@@ -1107,7 +1122,7 @@ const CareerPage: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-indigo-100/30 rounded-3xl blur-xl transform -rotate-1"></div>              <div className="relative bg-white/90 backdrop-blur-md rounded-3xl p-10 shadow-[0_20px_50px_rgba(79,70,229,0.2)] border-2 border-white/70 hover:shadow-[0_25px_60px_rgba(79,70,229,0.3)] transition-all duration-500">
                 <div className="absolute -top-10 -right-8 w-32 h-32 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 rounded-full blur-xl"></div>
                 <div className="absolute -bottom-10 -left-8 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-full blur-xl"></div>
-                <EmbeddedCareerApplicationForm />
+                <CareerForm isEmbedded={true} />
               </div>
             </motion.div>
           </div>
