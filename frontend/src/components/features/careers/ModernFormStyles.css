@@ -1,0 +1,224 @@
+/* Form element styles */
+.focus-ring:focus-within {
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+}
+
+/* Button styles */
+.btn-primary {
+  background-color: #4f46e5;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #4338ca;
+  box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+}
+
+.btn-secondary {
+  background-color: #3b82f6;
+}
+
+.btn-secondary:hover {
+  background-color: #2563eb;
+  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+}
+
+/* Floating elements */
+@keyframes float {
+  0% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(-15px) translateX(5px);
+  }
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+}
+
+.floating-element {
+  animation: float 5s ease-in-out infinite;
+}
+
+.floating-element-1 {
+  animation-delay: 0s;
+}
+
+.floating-element-2 {
+  animation-delay: 1s;
+}
+
+.floating-element-3 {
+  animation-delay: 2s;
+}
+
+.floating-element-4 {
+  animation-delay: 3s;
+}
+
+/* Glowing effects */
+.glow-effect {
+  position: relative;
+}
+
+.glow-effect::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #ff0080, #ff8c00, #40e0d0, #7d26cd);
+  z-index: -1;
+  filter: blur(10px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: inherit;
+}
+
+.glow-effect:hover::before,
+.glow-effect:focus::before {
+  opacity: 0.6;
+}
+
+/* Input focus effects */
+.focus-ring {
+  transition: all 0.3s ease;
+}
+
+.focus-ring:focus-within {
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Gradient backgrounds */
+.bg-gradient-main {
+  background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+/* Fancy checkbox */
+.fancy-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d1d5db;
+  border-radius: 6px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.fancy-checkbox:checked {
+  border-color: #8b5cf6;
+  background-color: #8b5cf6;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M5 13l4 4L19 7' /%3E%3C/svg%3E");
+  background-size: 80%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Animated progress bar */
+@keyframes progress-pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+.progress-pulse {
+  animation: progress-pulse 2s ease-in-out infinite;
+}
+
+/* Sparkle effect */
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: white;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes sparkle {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity:, 0;
+  }
+}
+
+.sparkle-animation {
+  animation: sparkle 1s linear forwards;
+}
+
+/* Particles */
+.particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.particle-1 {
+  background: rgba(139, 92, 246, 0.3);
+  top: 10%;
+  left: 10%;
+  animation: float 6s ease-in-out infinite;
+}
+
+.particle-2 {
+  background: rgba(236, 72, 153, 0.3);
+  top: 20%;
+  right: 15%;
+  animation: float 8s ease-in-out infinite 1s;
+}
+
+.particle-3 {
+  background: rgba(59, 130, 246, 0.3);
+  bottom: 15%;
+  left: 20%;
+  animation: float 7s ease-in-out infinite 2s;
+}
+
+.particle-4 {
+  background: rgba(245, 158, 11, 0.3);
+  bottom: 25%;
+  right: 10%;
+  animation: float 5s ease-in-out infinite 1.5s;
+}
+
+/* Responsive form container */
+.form-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    padding: 1.5rem;
+  }
+}
