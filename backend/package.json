@@ -5,8 +5,8 @@
   "main": "server.js",  "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "build": "npm install && npm run build --prefix ../frontend",
-    "postinstall": "npm run build --prefix ../frontend"
+    "build": "echo 'Backend build complete'",
+    "postinstall": "echo 'Backend dependencies installed'"
   },
   "keywords": ["internexis", "backend", "express", "mongodb", "forms"],
   "author": "Internexis Team",

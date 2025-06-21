@@ -4,13 +4,12 @@ services:
     env: node
     region: oregon
     plan: free
-    buildCommand: npm install && npm run build --prefix ../frontend
-    startCommand: node server.js
+    buildCommand: npm run render:build
+    startCommand: npm run render:start
     envVars:
       - key: NODE_ENV
         value: production
-      - key: MONGODB_URI
-        value: mongodb+srv://internexis_user:internexis_user@cluster0.b9dwnfz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-      - key: MONGO_URI
-        value: mongodb+srv://internexis_user:internexis_user@cluster0.b9dwnfz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      - key: PORT
+        value: 10000
+      # Add MONGODB_URI and MONGO_URI manually in Render dashboard for security
     autoDeploy: true
