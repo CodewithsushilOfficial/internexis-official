@@ -277,14 +277,46 @@ export const campusAmbassadorService = {
 export const adminService = {
   async login(email: string, password: string) {
     try {
+      console.log('🔑 Admin Service: Attempting login with:', {
+        email,
+        passwordLength: password.length,
+        apiBaseUrl: API_BASE_URL
+      });
+      
       const response = await api.post('/api/admin/login', { email, password });
+      
+      console.log('✅ Admin Service: Login response received:', {
+        status: response.status,
+        success: response.data.success,
+        message: response.data.message
+      });
+      
       return response.data;
     } catch (error: unknown) {
-      console.error('Admin login error:', error);
-      const axiosError = error as AxiosError<{message?: string}>;
-      throw {
+      console.error('❌ Admin Service: Login error:', error);
+      
+      const axiosError = error as AxiosError<{message?: string; success?: boolean}>;
+      
+      // Log detailed error information
+      console.error('❌ Error details:', {
+        message: axiosError.message,
+        code: axiosError.code,
+        status: axiosError.response?.status,
+        statusText: axiosError.response?.statusText,
+        responseData: axiosError.response?.data
+      });
+      
+      // Return structured error response
+      if (axiosError.response?.data) {
+        return axiosError.response.data;
+      }
+      
+      // Return generic error for network issues
+      return {
         success: false,
-        message: axiosError.response?.data?.message || 'Login failed'
+        message: axiosError.code === 'ERR_NETWORK' 
+          ? 'Network error: Cannot connect to server. Please check if the backend is running.'
+          : axiosError.message || 'Login failed'
       };
     }
   },
