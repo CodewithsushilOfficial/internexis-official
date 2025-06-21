@@ -61,9 +61,17 @@ const SimpleAdminDashboard: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
+  // Get admin info from localStorage
+  const adminEmail = localStorage.getItem('adminEmail') || 'help.internexis@gmail.com';
+  const adminRole = localStorage.getItem('adminRole') || 'admin';
+
   const handleLogout = () => {
+    // Clear all admin authentication data
     localStorage.removeItem('adminLoggedIn');
     localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminId');
+    localStorage.removeItem('adminEmail');
+    localStorage.removeItem('adminRole');
     navigate('/admin-login');
   };
 
@@ -116,9 +124,14 @@ const SimpleAdminDashboard: React.FC = () => {
                 <ArrowLeft className="w-4 h-4" />
                 <span className="text-sm font-medium">Back to Website</span>
               </Link>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Admin Dashboard
-              </h1>
+              <div>
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  Admin Dashboard
+                </h1>
+                <p className="text-sm text-gray-600 mt-1">
+                  Welcome, {adminEmail} ({adminRole})
+                </p>
+              </div>
             </div>
             <div className="flex items-center space-x-4">
               <div className="relative">

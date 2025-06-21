@@ -3,9 +3,8 @@ import { motion } from 'framer-motion';
 import { Lock, User, Eye, EyeOff, LogIn, ArrowLeft } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 
-const SimpleAdminLogin: React.FC = () => {
-  const [credentials, setCredentials] = useState({
-    username: '',
+const SimpleAdminLogin: React.FC = () => {  const [credentials, setCredentials] = useState({
+    email: '',
     password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -22,28 +21,42 @@ const SimpleAdminLogin: React.FC = () => {
     }));
     setError(''); // Clear error when user types
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError('');    try {
-      // Simulate login process
-      await new Promise(resolve => setTimeout(resolve, 1000));
+    setError('');
+
+    try {
+      // Get API base URL
+      const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
       
-      // Use environment-based credentials for better security
-      const validUsername = import.meta.env.VITE_ADMIN_USERNAME || 'admin';
-      const validPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'admin123';
-      
-      if (credentials.username === validUsername && credentials.password === validPassword) {
+      const response = await fetch(`${API_BASE}/api/admin/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: credentials.email,
+          password: credentials.password
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
         // Successful login
         localStorage.setItem('adminLoggedIn', 'true');
-        localStorage.setItem('adminToken', 'admin-token-' + Date.now());
+        localStorage.setItem('adminToken', data.data.token);
+        localStorage.setItem('adminId', data.data.adminId);
+        localStorage.setItem('adminEmail', data.data.email);
+        localStorage.setItem('adminRole', data.data.role);
         navigate('/admin-dashboard');
       } else {
-        setError('Invalid credentials. Please contact administrator for access.');
+        setError(data.message || 'Login failed. Please check your credentials.');
       }
-    } catch {
-      setError('Login failed. Please try again.');
+    } catch (error) {
+      console.error('Login error:', error);
+      setError('Connection failed. Please check your internet connection and try again.');
     } finally {
       setIsLoading(false);
     }
@@ -85,22 +98,21 @@ const SimpleAdminLogin: React.FC = () => {
           </div>
 
           {/* Login Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Username Field */}
+          <form onSubmit={handleSubmit} className="space-y-6">            {/* Email Field */}
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
-                Username
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                Email
               </label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  value={credentials.username}
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={credentials.email}
                   onChange={handleInputChange}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="Enter username"
+                  placeholder="Enter email address"
                   required
                 />
               </div>

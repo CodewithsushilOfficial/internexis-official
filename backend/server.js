@@ -11,6 +11,7 @@ const app = express();
 const ambassadorRoute = require('./routes/ambassadorRoute');
 const careerRoute = require('./routes/careerRoute');
 const internshipRoute = require('./routes/internshipRoute');
+const adminRoute = require('./routes/adminRoute');
 
 // Middleware
 app.use(cors({
@@ -47,6 +48,7 @@ app.get('/health', (req, res) => {
 app.use('/api/ambassador', ambassadorRoute);
 app.use('/api/career', careerRoute);
 app.use('/api/internship', internshipRoute);
+app.use('/api/admin', adminRoute);
 
 // Root endpoint - API info
 app.get('/', (req, res) => {
@@ -56,11 +58,11 @@ app.get('/', (req, res) => {
     version: '2.0.0',
     frontend: process.env.NODE_ENV === 'production' 
       ? 'https://internexis-frontend.netlify.app'
-      : 'http://localhost:5173',
-    endpoints: {
+      : 'http://localhost:5173',    endpoints: {
       ambassador: '/api/ambassador',
       career: '/api/career',
       internship: '/api/internship',
+      admin: '/api/admin',
       health: '/health'
     },
     timestamp: new Date().toISOString()
