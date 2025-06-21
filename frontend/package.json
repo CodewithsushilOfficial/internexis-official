@@ -30,7 +30,7 @@
     "campus-ambassador",
     "career"
   ],
-  "author": "Internexis Technologies Pvt Ltd",
+  "author": "Internexis Technologies",
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0",

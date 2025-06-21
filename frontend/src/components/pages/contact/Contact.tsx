@@ -355,7 +355,7 @@ export const Contact: React.FC = () => {
                   <motion.a 
                     whileHover={{ y: -5, scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
-                    href="https://www.linkedin.com/company/internexis-technologies-pvt-ltd/" 
+                    href="https://www.linkedin.com/company/internexis-technologies/" 
                     className="text-white bg-white/10 dark:bg-white/5 p-3 rounded-lg hover:bg-white/20 dark:hover:bg-white/15 transition-all duration-300"
                     target="_blank"
                     rel="noopener noreferrer"

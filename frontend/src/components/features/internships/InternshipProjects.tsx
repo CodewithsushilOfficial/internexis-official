@@ -1246,7 +1246,7 @@ const InternshipProjects: React.FC = () => {
         <div className="mt-16 max-w-3xl mx-auto bg-white p-6 rounded-xl shadow-md">
           <h3 className="text-2xl font-bold mb-4 text-center text-gray-900">📜 Rules and Terms for Project Submission</h3>
           <div className="space-y-4">
-            <p className="text-gray-700">At Internexis Technologies Pvt. Ltd., we believe in providing our interns with real-time, hands-on project experience. To maintain quality and consistency, all interns should follow these guidelines during their internship:</p>
+            <p className="text-gray-700">At Internexis Technologies, we believe in providing our interns with real-time, hands-on project experience. To maintain quality and consistency, all interns should follow these guidelines during their internship:</p>
             
             <div className="pl-5">
               <h4 className="font-semibold text-gray-800 mb-2">✅ Internship Project Guidelines:</h4>
@@ -1277,7 +1277,7 @@ const InternshipProjects: React.FC = () => {
                   <div className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center mr-3">
                     <span className="text-blue-600 text-lg">🏅</span>
                   </div>
-                  <p className="text-gray-700"><span className="font-medium">Certificate Eligibility:</span> Interns who successfully complete all assigned projects and submit them as instructed will be eligible to receive an Internship Completion Certificate from Internexis Technologies Pvt. Ltd.</p>
+                  <p className="text-gray-700"><span className="font-medium">Certificate Eligibility:</span> Interns who successfully complete all assigned projects and submit them as instructed will be eligible to receive an Internship Completion Certificate from Internexis Technologies.</p>
                 </div>
                 
                 <div className="flex items-start">
