@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Lock, User, Eye, EyeOff, LogIn, ArrowLeft } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
+import { adminService } from '../../../lib/services';
 
 const SimpleAdminLogin: React.FC = () => {  const [credentials, setCredentials] = useState({
     email: '',
@@ -20,31 +21,24 @@ const SimpleAdminLogin: React.FC = () => {  const [credentials, setCredentials] 
       [name]: value
     }));
     setError(''); // Clear error when user types
-  };
-  const handleSubmit = async (e: React.FormEvent) => {
+  };  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
 
     try {
-      // Get API base URL
-      const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
-      
-      const response = await fetch(`${API_BASE}/api/admin/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: credentials.email,
-          password: credentials.password
-        })
+      console.log('Attempting admin login with:', { 
+        email: credentials.email,
+        passwordLength: credentials.password.length 
       });
-
-      const data = await response.json();
+      
+      const data = await adminService.login(credentials.email, credentials.password);
+      
+      console.log('Login response:', data);
 
       if (data.success) {
         // Successful login
+        console.log('Login successful, storing data and redirecting...');
         localStorage.setItem('adminLoggedIn', 'true');
         localStorage.setItem('adminToken', data.data.token);
         localStorage.setItem('adminId', data.data.adminId);
@@ -52,11 +46,19 @@ const SimpleAdminLogin: React.FC = () => {  const [credentials, setCredentials] 
         localStorage.setItem('adminRole', data.data.role);
         navigate('/admin-dashboard');
       } else {
+        console.error('Login failed:', data.message);
         setError(data.message || 'Login failed. Please check your credentials.');
-      }
-    } catch (error) {
+      }    } catch (error: unknown) {
       console.error('Login error:', error);
-      setError('Connection failed. Please check your internet connection and try again.');
+      
+      // Extract error message
+      let errorMessage = 'Connection failed. Please check your internet connection and try again.';
+      
+      if (error && typeof error === 'object' && 'message' in error) {
+        errorMessage = (error as { message: string }).message;
+      }
+      
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
