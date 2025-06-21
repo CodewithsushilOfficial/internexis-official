@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Navbar } from './components/layout/Navbar';
 import { Hero } from './components/pages/home/Hero';
 import { LiveChatButton } from './components/ui/live-chat-button';
@@ -31,14 +31,15 @@ import { UserPage } from './pages';
 import CampusAmbassadorApplication from './pages/CampusAmbassadorApplication';
 import CampusAmbassadorTestPage from './pages/CampusAmbassadorTestPage';
 
-function App() {
-  return (
-    <Router>
-      <div className="font-sans bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
-        <Navbar />
-        <LiveChatButton />
+// Component to conditionally render navbar based on route
+function AppLayout() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
 
-        <Routes>
+  return (
+    <div className="font-sans bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+      {!isAdminRoute && <Navbar />}
+      {!isAdminRoute && <LiveChatButton />}        <Routes>
           {/* Routes for the different pages */}
           <Route path="/terms" element={<TermsOfService />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
@@ -84,8 +85,15 @@ function App() {
           />
         </Routes>
 
-        <Footer />
+        {!isAdminRoute && <Footer />}
       </div>
+    );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppLayout />
     </Router>
   );
 }

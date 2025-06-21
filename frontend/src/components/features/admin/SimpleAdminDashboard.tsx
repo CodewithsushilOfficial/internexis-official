@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { 
   Users, 
   Briefcase, 
@@ -11,7 +12,8 @@ import {
   LogOut,
   Eye,
   Mail,
-  Calendar
+  Calendar,
+  ArrowLeft
 } from 'lucide-react';
 
 // Mock data for demonstration
@@ -94,14 +96,19 @@ const SimpleAdminDashboard: React.FC = () => {
       </div>
     </motion.div>
   );
-
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
+      {/* Admin Header */}
       <div className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
+          <div className="flex justify-between items-center h-16">            <div className="flex items-center space-x-6">
+              <Link 
+                to="/" 
+                className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span className="text-sm font-medium">Back to Website</span>
+              </Link>
               <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Admin Dashboard
               </h1>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Lock, User, Eye, EyeOff, LogIn } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Lock, User, Eye, EyeOff, LogIn, ArrowLeft } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
 
 const SimpleAdminLogin: React.FC = () => {
   const [credentials, setCredentials] = useState({
@@ -47,9 +47,17 @@ const SimpleAdminLogin: React.FC = () => {
       setIsLoading(false);
     }
   };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center p-4">
+      {/* Back to Website Link */}
+      <Link 
+        to="/" 
+        className="absolute top-6 left-6 flex items-center space-x-2 text-white/70 hover:text-white transition-colors"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        <span className="text-sm font-medium">Back to Website</span>
+      </Link>
+
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
