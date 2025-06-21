@@ -15,14 +15,21 @@ const api = axios.create({
   },
 });
 
-// Add request interceptor for debugging
+// Add request interceptor for debugging and authentication
 api.interceptors.request.use(
   (config) => {
+    // Add admin token to requests if available
+    const adminToken = localStorage.getItem('adminToken');
+    if (adminToken && (config.url?.includes('/admin/') || config.url?.includes('/api/admin/'))) {
+      config.headers.Authorization = `Bearer ${adminToken}`;
+    }
+    
     console.log('Making API request:', {
       url: config.url,
       method: config.method,
       baseURL: config.baseURL,
-      data: config.data
+      data: config.data,
+      hasAuthToken: !!config.headers.Authorization
     });
     return config;
   },
