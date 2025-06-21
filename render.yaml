@@ -1,24 +1,18 @@
 services:
   - type: web
-    name: internexis-official
+    name: internexis-backend
     env: node
     region: oregon
     plan: free
-    buildCommand: |
-      echo "Building frontend..."
-      cd frontend
-      npm cache clean --force
-      npm install
-      npm run build
-      echo "Frontend build complete, setting up backend..."
-      cd ../backend
-      npm install
-      echo "Build process complete!"
-    startCommand: cd backend && node server.js
+    rootDir: ./backend
+    buildCommand: npm install
+    startCommand: node server.js
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 10000
+      - key: CORS_ORIGIN
+        value: https://internexis-frontend.netlify.app,https://www.internexis-technologies.in
       # Add MONGODB_URI and MONGO_URI manually in Render dashboard for security
     autoDeploy: true

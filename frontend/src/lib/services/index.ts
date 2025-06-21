@@ -1,14 +1,15 @@
 import axios, { AxiosError } from 'axios';
 
 // API Configuration
-const API_BASE_URL = import.meta.env.PROD 
-  ? '' // Use relative URLs in production (same domain)
-  : 'http://localhost:5000'; // Use full URL in development
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 
+  (import.meta.env.PROD 
+    ? 'https://internexis-backend.onrender.com/api/v1' // Default production backend
+    : 'http://localhost:5000/api'); // Development backend
 
 // Create axios instance
 const api = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 10000,
+  timeout: 30000, // Increased timeout for render cold starts
   headers: {
     'Content-Type': 'application/json',
   },

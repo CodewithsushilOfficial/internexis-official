@@ -1,59 +1,94 @@
-# Render Deployment Guide
+# Separate Deployment Guide: Frontend (Netlify) + Backend (Render)
+
+## 🎯 Deployment Strategy
+- **Frontend**: React + Vite → Netlify
+- **Backend**: Node.js + Express → Render
+- **Database**: MongoDB Atlas (shared)
 
 ## Problem Fixed
-- ❌ **Error**: `sh: 1: vite: not found` during deployment
-- ✅ **Solution**: Proper monorepo structure with separate frontend and backend builds
+- ❌ **Error**: `sh: 1: vite: not found` during monorepo deployment
+- ✅ **Solution**: Separate deployments for better performance and easier management
 
 ## Changes Made
 
-### 1. Root Package.json Added
-- Added root-level `package.json` with build scripts for monorepo deployment
-- Separated frontend and backend build processes
+### 1. Frontend - Netlify Ready
+- Added `netlify.toml` configuration
+- Environment variables setup in `.env.production`
+- API base URL configured with `VITE_API_BASE_URL`
+- CORS configuration updated
 
-### 2. Backend Package.json Updated
-- Removed frontend build commands from backend scripts
-- Simplified backend-only build process
+### 2. Backend - Render Optimized
+- Updated `render.yaml` for backend-only deployment
+- Removed static file serving (no longer needed)
+- CORS configured for Netlify frontend URLs
+- Simplified to API-only service
 
-### 3. Render.yaml Configuration
-- Updated build command to use root-level scripts
-- Proper separation of frontend build and backend start
-- Removed database credentials from yaml file (for security)
+### 3. API Configuration
+- Frontend uses environment variables for API URL
+- Backend serves JSON API only
+- Proper CORS headers for cross-origin requests
 
 ## Deployment Steps
 
-### 1. Push to GitHub
-```bash
-git add .
-git commit -m "Fix: Render deployment configuration for monorepo"
-git push origin main
-```
+### 🚀 Frontend Deployment (Netlify)
 
-### 2. Render Dashboard Setup
-1. Go to Render Dashboard
-2. Select your service "internexis-official"
-3. Go to Environment variables
-4. Add these variables manually:
-   - `MONGODB_URI`: `mongodb+srv://internexis_user:internexis_user@cluster0.b9dwnfz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
-   - `MONGO_URI`: `mongodb+srv://internexis_user:internexis_user@cluster0.b9dwnfz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+1. **Connect to Netlify**:
+   - Go to [Netlify Dashboard](https://app.netlify.com)
+   - Click "Add new site" → "Import an existing project"
+   - Connect GitHub and select your repository
 
-### 3. Deploy
-- Render will automatically deploy with the new configuration
-- Build process will now work correctly
+2. **Build Settings**:
+   ```
+   Base directory: frontend
+   Build command: npm run build
+   Publish directory: frontend/dist
+   ```
 
-## Build Process Flow
-1. **Frontend Build**: 
-   - `cd frontend && npm install`
-   - `npm run build` (vite build with production mode)
-2. **Backend Setup**:
-   - `cd ../backend && npm install`
-3. **Start**: `cd backend && node server.js`
+3. **Environment Variables** (in Netlify Dashboard):
+   ```
+   VITE_API_BASE_URL=https://internexis-backend.onrender.com/api
+   VITE_NODE_ENV=production
+   ```
 
-## Recent Fix Applied
-- ❌ **New Error**: `sh: 1: vite: not found` 
-- ✅ **Solution**: 
-  - Changed `build:production` script from `NODE_ENV=production vite build` to `vite build --mode production`
-  - Updated render.yaml to use direct commands instead of npm scripts
-  - Simplified build process for better compatibility
+4. **Deploy**: Netlify will auto-deploy from GitHub
+
+### 🚀 Backend Deployment (Render)
+
+1. **Connect to Render**:
+   - Go to [Render Dashboard](https://dashboard.render.com)
+   - Click "New" → "Web Service"
+   - Connect GitHub repository
+
+2. **Service Settings**:
+   ```
+   Name: internexis-backend
+   Root Directory: backend
+   Build Command: npm install
+   Start Command: node server.js
+   ```
+
+3. **Environment Variables** (in Render Dashboard):
+   ```
+   NODE_ENV=production
+   PORT=10000
+   MONGODB_URI=mongodb+srv://internexis_user:internexis_user@cluster0.b9dwnfz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+   MONGO_URI=(same as above)
+   CORS_ORIGIN=https://your-netlify-app.netlify.app
+   ```
+
+4. **Deploy**: Render will auto-deploy from GitHub
+
+## URLs Structure
+- **Frontend**: `https://your-app.netlify.app`
+- **Backend**: `https://internexis-backend.onrender.com`
+- **API Endpoints**: `https://internexis-backend.onrender.com/api/`
+
+## Benefits of Separate Deployment
+✅ **Faster builds** - No monorepo complexity
+✅ **Better performance** - CDN for frontend, optimized backend
+✅ **Independent scaling** - Scale frontend and backend separately  
+✅ **Easier debugging** - Separate logs and monitoring
+✅ **Cost effective** - Netlify free tier + Render free tier
 
 ## Local Development
 ```bash

@@ -15,7 +15,12 @@ const internshipRoute = require('./routes/internshipRoute');
 // Middleware
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://internexis-official.onrender.com', 'https://internexis.com'] 
+    ? [
+        'https://internexis-frontend.netlify.app',
+        'https://www.internexis-technologies.in',
+        'https://internexis-technologies.netlify.app',
+        process.env.CORS_ORIGIN
+      ].filter(Boolean)
     : ['http://localhost:3000', 'http://localhost:5173'],
   credentials: true
 }));
@@ -43,28 +48,24 @@ app.use('/api/ambassador', ambassadorRoute);
 app.use('/api/career', careerRoute);
 app.use('/api/internship', internshipRoute);
 
-// Serve static files from the React app
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/dist')));
-  
-  // Catch all handler: send back React's index.html file for SPA routing
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+// Root endpoint - API info
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Internexis Backend API is running!',
+    version: '2.0.0',
+    frontend: process.env.NODE_ENV === 'production' 
+      ? 'https://internexis-frontend.netlify.app'
+      : 'http://localhost:5173',
+    endpoints: {
+      ambassador: '/api/ambassador',
+      career: '/api/career',
+      internship: '/api/internship',
+      health: '/health'
+    },
+    timestamp: new Date().toISOString()
   });
-}else {
-  app.get('/', (req, res) => {
-    res.json({
-      success: true,
-      message: 'Internexis Backend API is running in development mode!',
-      endpoints: {
-        ambassador: '/api/ambassador',
-        career: '/api/career',
-        internship: '/api/internship',
-        health: '/health'
-      }
-    });
-  });
-}
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
