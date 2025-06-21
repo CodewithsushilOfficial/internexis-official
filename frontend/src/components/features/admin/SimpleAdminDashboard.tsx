@@ -16,7 +16,8 @@ import {
   ArrowLeft,
   Loader2,
   ExternalLink,
-  RefreshCw
+  RefreshCw,
+  Trash2
 } from 'lucide-react';
 import { adminService, type DashboardApplication } from '../../../lib/services';
 
@@ -72,6 +73,7 @@ const SimpleAdminDashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [dataLoading, setDataLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState<string | null>(null);
   const navigate = useNavigate();
   // Get admin info from localStorage
   const adminEmail = localStorage.getItem('adminEmail') || 'help.internexis@gmail.com';
@@ -188,6 +190,64 @@ const SimpleAdminDashboard: React.FC = () => {
     } catch (err) {
       console.error('Failed to update status:', err);
       setError('Failed to update application status.');
+    }
+  };
+  const deleteApplication = async (id: string, applicantName: string) => {
+    // Show confirmation dialog
+    const isConfirmed = window.confirm(
+      `Are you sure you want to delete the application from ${applicantName}?\n\nThis action cannot be undone.`
+    );
+    
+    if (!isConfirmed) {
+      return;
+    }
+
+    try {
+      setDeleteLoading(id);
+      setError(null);
+
+      let type: 'ambassador' | 'career' | 'internship';
+      switch (activeTab) {
+        case 'campus-ambassadors':
+          type = 'ambassador';
+          break;
+        case 'careers':
+          type = 'career';
+          break;
+        case 'internships':
+          type = 'internship';
+          break;
+        default:
+          return;
+      }
+
+      console.log(`🗑️ Deleting ${type} application:`, { id, name: applicantName });
+      
+      const result = await adminService.deleteApplication(type, id);
+        if (result.success) {
+        // Show success message
+        console.log('✅ Application deleted successfully:', result.message);
+        console.log(`📋 Deleted application from ${applicantName}`);
+        
+        // Optional: You can create a toast notification here
+        // For now, we'll use console.log and clear any previous errors
+        setError(null);
+        
+        // Refresh the data after deletion
+        await Promise.all([
+          fetchApplicationData(),
+          fetchDashboardData()
+        ]);
+        
+        console.log('📊 Data refreshed after deletion');
+      } else {
+        setError(result.message || 'Failed to delete application');
+      }
+    } catch (err: unknown) {
+      console.error('❌ Failed to delete application:', err);
+      setError('Failed to delete application. Please try again.');
+    } finally {
+      setDeleteLoading(null);
     }
   };
 
@@ -663,7 +723,18 @@ const SimpleAdminDashboard: React.FC = () => {
                                 >
                                   <ExternalLink className="w-4 h-4" />
                                 </a>
-                              )}
+                              )}                              <button
+                                onClick={() => deleteApplication(applicationId!, application.name)}
+                                className="p-2 text-gray-400 hover:text-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                disabled={deleteLoading === applicationId}
+                                title={deleteLoading === applicationId ? 'Deleting...' : `Delete application from ${application.name}`}
+                              >
+                                {deleteLoading === applicationId ? (
+                                  <Loader2 className="w-4 h-4 animate-spin" />
+                                ) : (
+                                  <Trash2 className="w-4 h-4" />
+                                )}
+                              </button>
                             </div>
                           </td>
                         </tr>

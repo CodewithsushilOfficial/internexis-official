@@ -535,4 +535,94 @@ router.patch('/applications/:type/:id/status', async (req, res) => {
   }
 });
 
+// Delete application endpoint
+router.delete('/applications/:type/:id', async (req, res) => {
+  try {
+    const { type, id } = req.params;
+    
+    console.log(`🗑️ Delete request received for ${type} application:`, id);
+
+    // Validate MongoDB ObjectId format
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      console.log('❌ Invalid ObjectId format:', id);
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid application ID format'
+      });
+    }
+
+    let Model;
+    let modelName;
+    switch (type.toLowerCase()) {
+      case 'ambassador':
+      case 'campus-ambassador':
+        Model = Ambassador;
+        modelName = 'Campus Ambassador';
+        break;
+      case 'career':
+        Model = Career;
+        modelName = 'Career';
+        break;
+      case 'internship':
+        Model = Internship;
+        modelName = 'Internship';
+        break;
+      default:
+        console.log('❌ Invalid application type:', type);
+        return res.status(400).json({
+          success: false,
+          message: 'Invalid application type'
+        });
+    }
+
+    // First find the application to get details for logging
+    const application = await Model.findById(id);
+    
+    if (!application) {
+      console.log('❌ Application not found:', id);
+      return res.status(404).json({
+        success: false,
+        message: 'Application not found'
+      });
+    }
+
+    // Log the application details before deletion
+    console.log(`📋 Application found for deletion:`, {
+      id: application._id,
+      name: application.name,
+      email: application.email,
+      type: modelName,
+      submittedAt: application.submittedAt
+    });
+
+    // Delete the application
+    await Model.findByIdAndDelete(id);
+
+    console.log(`✅ ${modelName} application deleted successfully:`, {
+      id: application._id,
+      name: application.name,
+      email: application.email,
+      deletedAt: new Date().toISOString()
+    });
+
+    res.status(200).json({
+      success: true,
+      message: `${modelName} application deleted successfully`,
+      data: {
+        id: application._id,
+        name: application.name,
+        email: application.email,
+        type: modelName
+      }
+    });
+
+  } catch (error) {
+    console.error('❌ Delete application error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error'
+    });
+  }
+});
+
 module.exports = router;

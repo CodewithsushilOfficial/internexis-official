@@ -391,6 +391,26 @@ export const adminService = {
         message: axiosError.response?.data?.message || 'Failed to update application status'
       };
     }
+  },
+
+  async deleteApplication(type: 'ambassador' | 'career' | 'internship', id: string) {
+    try {
+      console.log(`🗑️ Admin Service: Deleting ${type} application with ID:`, id);
+      
+      const response = await api.delete(`/api/admin/applications/${type}/${id}`);
+      
+      console.log('✅ Admin Service: Application deleted successfully:', response.data);
+      return response.data;
+    } catch (error: unknown) {
+      console.error('❌ Admin Service: Delete application error:', error);
+      const axiosError = error as AxiosError<{message?: string}>;
+      
+      // Return structured error response
+      return {
+        success: false,
+        message: axiosError.response?.data?.message || 'Failed to delete application'
+      };
+    }
   }
 };
 
