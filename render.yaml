@@ -11,8 +11,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 10000
-      - key: CORS_ORIGIN
-        value: https://internexis-frontend.netlify.app,https://www.internexis-technologies.in
+        value: 10000      - key: CORS_ORIGIN
+        value: https://internexis-technologies.in,https://www.internexis-technologies.in
       # Add MONGODB_URI and MONGO_URI manually in Render dashboard for security
     autoDeploy: true

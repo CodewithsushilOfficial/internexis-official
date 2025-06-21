@@ -3,8 +3,8 @@ import axios, { AxiosError } from 'axios';
 // API Configuration
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 
   (import.meta.env.PROD 
-    ? 'https://internexis-backend.onrender.com/api/v1' // Default production backend
-    : 'http://localhost:5000/api'); // Development backend
+    ? 'https://internexis-official.onrender.com' // Correct production backend
+    : 'http://localhost:5000'); // Development backend
 
 // Create axios instance
 const api = axios.create({
@@ -38,6 +38,33 @@ export interface InternshipFormData {
   phone: string;
   domain: string;
   college: string;
+}
+
+// API Response types
+export interface ApiApplication {
+  _id: string;
+  name: string;
+  email: string;
+  submittedAt: string;
+  status?: string;
+  college?: string;
+  position?: string;
+  domain?: string;
+  phone?: string;
+  whyYouWantToJoin?: string;
+  resumeLink?: string;
+}
+
+export interface DashboardApplication {
+  id: string;
+  name: string;
+  email: string;
+  type: string;
+  status: string;
+  submittedAt: string;
+  college?: string;
+  position?: string;
+  domain?: string;
 }
 
 // Ambassador Service
@@ -144,6 +171,181 @@ export const campusAmbassadorService = {
     };
   }
 };
+
+// Admin Service
+export const adminService = {
+  async login(email: string, password: string) {
+    try {
+      const response = await api.post('/api/admin/login', { email, password });
+      return response.data;
+    } catch (error: unknown) {
+      console.error('Admin login error:', error);
+      const axiosError = error as AxiosError<{message?: string}>;
+      throw {
+        success: false,
+        message: axiosError.response?.data?.message || 'Login failed'
+      };
+    }
+  },
+
+  async getDashboardStats() {
+    try {
+      const [ambassadorRes, careerRes, internshipRes] = await Promise.all([
+        api.get('/api/ambassador'),
+        api.get('/api/career'),
+        api.get('/api/internship')
+      ]);
+
+      const ambassadorData = ambassadorRes.data.data || [];
+      const careerData = careerRes.data.data || [];
+      const internshipData = internshipRes.data.data || [];
+
+      // Calculate statistics
+      const currentMonth = new Date().getMonth();
+      const currentYear = new Date().getFullYear();
+
+      const thisMonthApplications = [
+        ...ambassadorData,
+        ...careerData,
+        ...internshipData
+      ].filter(app => {
+        const submittedDate = new Date(app.submittedAt);
+        return submittedDate.getMonth() === currentMonth && 
+               submittedDate.getFullYear() === currentYear;
+      }).length;
+
+      const pendingApplications = [
+        ...ambassadorData,
+        ...careerData,
+        ...internshipData
+      ].filter(app => app.status === 'pending').length;
+
+      return {
+        success: true,
+        data: {
+          totalApplications: ambassadorData.length + careerData.length + internshipData.length,
+          campusAmbassadors: ambassadorData.length,
+          careerApplications: careerData.length,
+          internshipApplications: internshipData.length,
+          pendingApplications,
+          thisMonthApplications
+        }
+      };
+    } catch (error: unknown) {
+      console.error('Dashboard stats error:', error);
+      const axiosError = error as AxiosError<{message?: string}>;
+      throw {
+        success: false,
+        message: axiosError.response?.data?.message || 'Failed to fetch dashboard data'
+      };
+    }
+  },
+
+  async getRecentApplications(limit: number = 10) {
+    try {
+      const [ambassadorRes, careerRes, internshipRes] = await Promise.all([
+        api.get('/api/ambassador'),
+        api.get('/api/career'),
+        api.get('/api/internship')
+      ]);
+
+      const ambassadorData = ambassadorRes.data.data || [];
+      const careerData = careerRes.data.data || [];
+      const internshipData = internshipRes.data.data || [];      // Transform and combine all applications
+      const allApplications: DashboardApplication[] = [
+        ...ambassadorData.map((app: ApiApplication) => ({
+          id: app._id,
+          name: app.name,
+          email: app.email,
+          type: 'Campus Ambassador',
+          status: app.status || 'pending',
+          submittedAt: app.submittedAt,
+          college: app.college
+        })),
+        ...careerData.map((app: ApiApplication) => ({
+          id: app._id,
+          name: app.name,
+          email: app.email,
+          type: 'Career Application',
+          status: app.status || 'pending',
+          submittedAt: app.submittedAt,
+          position: app.position
+        })),
+        ...internshipData.map((app: ApiApplication) => ({
+          id: app._id,
+          name: app.name,
+          email: app.email,
+          type: 'Internship',
+          status: app.status || 'pending',
+          submittedAt: app.submittedAt,
+          domain: app.domain,
+          college: app.college
+        }))
+      ];
+
+      // Sort by submission date (newest first) and limit
+      const recentApplications = allApplications
+        .sort((a, b) => new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime())
+        .slice(0, limit);
+
+      return {
+        success: true,
+        data: recentApplications
+      };
+    } catch (error: unknown) {
+      console.error('Recent applications error:', error);
+      const axiosError = error as AxiosError<{message?: string}>;
+      throw {
+        success: false,
+        message: axiosError.response?.data?.message || 'Failed to fetch recent applications'
+      };
+    }
+  },
+
+  async getApplicationsByType(type: 'ambassador' | 'career' | 'internship') {
+    try {
+      const response = await api.get(`/api/${type}`);
+      return response.data;
+    } catch (error: unknown) {
+      console.error(`${type} applications error:`, error);
+      const axiosError = error as AxiosError<{message?: string}>;
+      throw {
+        success: false,
+        message: axiosError.response?.data?.message || `Failed to fetch ${type} applications`
+      };
+    }
+  }
+};
+
+// Add request interceptor for better error handling
+api.interceptors.request.use(
+  (config) => {
+    console.log(`API Request: ${config.method?.toUpperCase()} ${config.url}`);
+    return config;
+  },
+  (error) => {
+    console.error('API Request Error:', error);
+    return Promise.reject(error);
+  }
+);
+
+// Add response interceptor for better error handling
+api.interceptors.response.use(
+  (response) => {
+    console.log(`API Response: ${response.status} ${response.config.url}`);
+    return response;
+  },
+  (error) => {
+    if (error.response) {
+      console.error(`API Error: ${error.response.status} ${error.response.config.url}`, error.response.data);
+    } else if (error.request) {
+      console.error('API Network Error:', error.message);
+    } else {
+      console.error('API Setup Error:', error.message);
+    }
+    return Promise.reject(error);
+  }
+);
 
 // Export default service for backward compatibility
 export default campusAmbassadorService;

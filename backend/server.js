@@ -17,8 +17,9 @@ const adminRoute = require('./routes/adminRoute');
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
     ? [
-        'https://internexis-frontend.netlify.app',
+        'https://internexis-technologies.in',
         'https://www.internexis-technologies.in',
+        'https://internexis-frontend.netlify.app',
         'https://internexis-technologies.netlify.app',
         process.env.CORS_ORIGIN
       ].filter(Boolean)
@@ -55,10 +56,9 @@ app.get('/', (req, res) => {
   res.json({
     success: true,
     message: 'Internexis Backend API is running!',
-    version: '2.0.0',
-    frontend: process.env.NODE_ENV === 'production' 
-      ? 'https://internexis-frontend.netlify.app'
-      : 'http://localhost:5173',    endpoints: {
+    version: '2.0.0',    frontend: process.env.NODE_ENV === 'production' 
+      ? 'https://internexis-technologies.in'
+      : 'http://localhost:5173',endpoints: {
       ambassador: '/api/ambassador',
       career: '/api/career',
       internship: '/api/internship',
