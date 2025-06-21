@@ -6,6 +6,12 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ||
     ? 'https://internexis-official.onrender.com' // Correct production backend
     : 'http://localhost:5000'); // Development backend
 
+console.log('🔗 API Configuration:', {
+  API_BASE_URL,
+  env: import.meta.env.MODE,
+  prod: import.meta.env.PROD
+});
+
 // Create axios instance
 const api = axios.create({
   baseURL: API_BASE_URL,

@@ -117,39 +117,49 @@ const InternshipApplication: React.FC = () => {
   const handleBack = () => {
     setCurrentStep((s) => s - 1);
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateStep()) return;
     
     setSubmitting(true);
     
-    // Log form data to console
-    console.log("=== Internship Application Submitted ===");
-    console.log("Personal Details:");
-    console.log(`- Full Name: ${formData.fullName}`);
-    console.log(`- Email: ${formData.email}`);
-    console.log(`- Mobile: ${formData.mobileNumber}`);
-    console.log("\nAcademic Details:");
-    console.log(`- College: ${formData.collegeName}`);
-    console.log(`- City: ${formData.collegeCity}`);
-    console.log(`- State: ${formData.state}`);
-    console.log(`- Course: ${formData.course}`);
-    console.log(`- Branch: ${formData.branch}`);
-    console.log(`- Year: ${formData.yearOfStudy}`);
-    console.log("\nProgram Details:");
-    console.log(`- Domain(s): ${formData.domain.join(", ")}`);
-    console.log(`- Duration: ${formData.internshipDuration}`);
-    console.log("\nPayment:");
-    console.log(`- UTR Number: ${formData.utrNumber}`);
-    console.log("=====================================");
-    
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      // Transform form data to match API requirements
+      const apiData = {
+        name: formData.fullName,
+        email: formData.email,
+        phone: formData.mobileNumber,
+        domain: formData.domain.join(", "), // Join multiple domains with comma
+        college: formData.collegeName
+      };
+
+      console.log('Submitting internship application:', apiData);
+      
+      // Use the internship service to submit
+      const { internshipService } = await import('../../../lib/services');
+      const result = await internshipService.submitApplication(apiData);
+      
+      if (result.success) {
+        console.log("✅ Internship Application Submitted Successfully!");
+        console.log("Application ID:", result.data?.id);
+        setSuccess(true);
+      } else {
+        console.error("❌ Submission failed:", result.message);
+        setErrors((prev) => ({
+          ...prev,
+          submit: result.message || 'Failed to submit application'
+        }));
+      }
+    } catch (error) {
+      console.error('❌ Submission error:', error);
+      setErrors((prev) => ({
+        ...prev,
+        submit: 'Failed to submit application. Please try again.'
+      }));    } finally {
       setSubmitting(false);
-      setSuccess(true);
-    }, 1500);
+    }
   };
+
   return (
     <div className="min-h-screen relative overflow-hidden">      {/* Enhanced Multi-layer Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-violet-50 via-blue-50 to-purple-100"></div>

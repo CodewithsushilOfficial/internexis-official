@@ -282,8 +282,7 @@ const CareerForm: React.FC<CareerFormProps> = ({
       referralSource: '',
       additionalInfo: ''
     });
-  };
-  const handleSubmit = async (e: React.FormEvent) => {
+  };  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Prevent double submission
@@ -292,19 +291,40 @@ const CareerForm: React.FC<CareerFormProps> = ({
     setIsSubmitting(true);
     setSubmitError(null);
 
-    try {      console.log('Career Form submitted:', formData);
-      setIsSubmitted(true);
+    try {
+      // Transform form data to match API requirements
+      const apiData = {
+        name: `${formData.firstName} ${formData.lastName}`.trim(),
+        email: formData.email,
+        phone: formData.phone,
+        position: formData.roleType || 'Other',
+        resumeLink: formData.resumeUrl || formData.portfolio || 'https://example.com/resume.pdf'
+      };
+
+      console.log('Submitting career application:', apiData);
       
-      if (!isEmbedded && onClose) {
-        // Close modal after 3 seconds only for modal mode
-        setTimeout(() => {
-          onClose();
-        }, 3000);
+      // Use the career service to submit
+      const { careerService } = await import('../../../lib/services');
+      const result = await careerService.submitApplication(apiData);
+      
+      if (result.success) {
+        console.log('✅ Career Application Submitted Successfully!');
+        console.log('Application ID:', result.data?.id);
+        setIsSubmitted(true);
+        
+        if (!isEmbedded && onClose) {
+          // Close modal after 3 seconds only for modal mode
+          setTimeout(() => {
+            onClose();
+          }, 3000);
+        }
+      } else {
+        console.error('❌ Submission failed:', result.message);
+        setSubmitError(result.message || 'Failed to submit application');
       }
-      // For embedded mode, keep the success state without auto-reset
     } catch (error) {
-      console.error('Submission error:', error);
-      setSubmitError('Network error. Please try again.');
+      console.error('❌ Submission error:', error);
+      setSubmitError('Failed to submit application. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
