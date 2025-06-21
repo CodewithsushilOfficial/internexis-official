@@ -3,10 +3,12 @@ import { motion } from 'framer-motion';
 import { Lock, User, Eye, EyeOff, LogIn, ArrowLeft } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { adminService } from '../../../lib/services';
+import { AxiosError } from 'axios';
 
-const SimpleAdminLogin: React.FC = () => {  const [credentials, setCredentials] = useState({
-    email: '',
-    password: ''
+const SimpleAdminLogin: React.FC = () => {
+  const [credentials, setCredentials] = useState({
+    email: 'help.internexis@gmail.com',
+    password: 'admin@internexis'
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,30 +34,43 @@ const SimpleAdminLogin: React.FC = () => {  const [credentials, setCredentials] 
         passwordLength: credentials.password.length 
       });
       
-      const data = await adminService.login(credentials.email, credentials.password);
+      const result = await adminService.login(credentials.email, credentials.password);
       
-      console.log('Login response:', data);
+      console.log('Login response:', result);
 
-      if (data.success) {
+      if (result.success) {
         // Successful login
         console.log('Login successful, storing data and redirecting...');
         localStorage.setItem('adminLoggedIn', 'true');
-        localStorage.setItem('adminToken', data.data.token);
-        localStorage.setItem('adminId', data.data.adminId);
-        localStorage.setItem('adminEmail', data.data.email);
-        localStorage.setItem('adminRole', data.data.role);
+        localStorage.setItem('adminToken', result.data.token);
+        localStorage.setItem('adminId', result.data.adminId);
+        localStorage.setItem('adminEmail', result.data.email);
+        localStorage.setItem('adminRole', result.data.role);
         navigate('/admin-dashboard');
       } else {
-        console.error('Login failed:', data.message);
-        setError(data.message || 'Login failed. Please check your credentials.');
-      }    } catch (error: unknown) {
+        console.error('Login failed:', result.message);
+        setError(result.message || 'Login failed. Please check your credentials.');
+      }
+    } catch (error: unknown) {
       console.error('Login error:', error);
       
       // Extract error message
-      let errorMessage = 'Connection failed. Please check your internet connection and try again.';
+      let errorMessage = 'Login failed. Please check your credentials.';
       
-      if (error && typeof error === 'object' && 'message' in error) {
-        errorMessage = (error as { message: string }).message;
+      if (error && typeof error === 'object') {
+        if ('message' in error) {
+          errorMessage = (error as { message: string }).message;        } else if ('response' in error) {
+          const axiosError = error as AxiosError<{ message?: string }>;
+          if (axiosError.response?.data?.message) {
+            errorMessage = axiosError.response.data.message;
+          } else if (axiosError.response?.status === 401) {
+            errorMessage = 'Invalid email or password. Please try again.';
+          } else if (axiosError.response && axiosError.response.status >= 500) {
+            errorMessage = 'Server error. Please try again later.';
+          } else if (axiosError.code === 'NETWORK_ERROR' || axiosError.code === 'ERR_NETWORK') {
+            errorMessage = 'Connection failed. Please check if the backend server is running.';
+          }
+        }
       }
       
       setError(errorMessage);

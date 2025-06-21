@@ -288,50 +288,10 @@ export const adminService = {
       };
     }
   },
-
   async getDashboardStats() {
     try {
-      const [ambassadorRes, careerRes, internshipRes] = await Promise.all([
-        api.get('/api/ambassador'),
-        api.get('/api/career'),
-        api.get('/api/internship')
-      ]);
-
-      const ambassadorData = ambassadorRes.data.data || [];
-      const careerData = careerRes.data.data || [];
-      const internshipData = internshipRes.data.data || [];
-
-      // Calculate statistics
-      const currentMonth = new Date().getMonth();
-      const currentYear = new Date().getFullYear();
-
-      const thisMonthApplications = [
-        ...ambassadorData,
-        ...careerData,
-        ...internshipData
-      ].filter(app => {
-        const submittedDate = new Date(app.submittedAt);
-        return submittedDate.getMonth() === currentMonth && 
-               submittedDate.getFullYear() === currentYear;
-      }).length;
-
-      const pendingApplications = [
-        ...ambassadorData,
-        ...careerData,
-        ...internshipData
-      ].filter(app => app.status === 'pending').length;
-
-      return {
-        success: true,
-        data: {
-          totalApplications: ambassadorData.length + careerData.length + internshipData.length,
-          campusAmbassadors: ambassadorData.length,
-          careerApplications: careerData.length,
-          internshipApplications: internshipData.length,
-          pendingApplications,
-          thisMonthApplications
-        }
-      };
+      const response = await api.get('/api/admin/dashboard/stats');
+      return response.data;
     } catch (error: unknown) {
       console.error('Dashboard stats error:', error);
       const axiosError = error as AxiosError<{message?: string}>;
@@ -341,58 +301,10 @@ export const adminService = {
       };
     }
   },
-
   async getRecentApplications(limit: number = 10) {
     try {
-      const [ambassadorRes, careerRes, internshipRes] = await Promise.all([
-        api.get('/api/ambassador'),
-        api.get('/api/career'),
-        api.get('/api/internship')
-      ]);
-
-      const ambassadorData = ambassadorRes.data.data || [];
-      const careerData = careerRes.data.data || [];
-      const internshipData = internshipRes.data.data || [];      // Transform and combine all applications
-      const allApplications: DashboardApplication[] = [
-        ...ambassadorData.map((app: ApiApplication) => ({
-          id: app._id,
-          name: app.name,
-          email: app.email,
-          type: 'Campus Ambassador',
-          status: app.status || 'pending',
-          submittedAt: app.submittedAt,
-          college: app.college
-        })),
-        ...careerData.map((app: ApiApplication) => ({
-          id: app._id,
-          name: app.name,
-          email: app.email,
-          type: 'Career Application',
-          status: app.status || 'pending',
-          submittedAt: app.submittedAt,
-          position: app.position
-        })),
-        ...internshipData.map((app: ApiApplication) => ({
-          id: app._id,
-          name: app.name,
-          email: app.email,
-          type: 'Internship',
-          status: app.status || 'pending',
-          submittedAt: app.submittedAt,
-          domain: app.domain,
-          college: app.college
-        }))
-      ];
-
-      // Sort by submission date (newest first) and limit
-      const recentApplications = allApplications
-        .sort((a, b) => new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime())
-        .slice(0, limit);
-
-      return {
-        success: true,
-        data: recentApplications
-      };
+      const response = await api.get(`/api/admin/dashboard/recent/${limit}`);
+      return response.data;
     } catch (error: unknown) {
       console.error('Recent applications error:', error);
       const axiosError = error as AxiosError<{message?: string}>;
@@ -402,10 +314,21 @@ export const adminService = {
       };
     }
   },
-
-  async getApplicationsByType(type: 'ambassador' | 'career' | 'internship') {
+  async getApplicationsByType(type: 'ambassador' | 'career' | 'internship', params?: {
+    page?: number;
+    limit?: number;
+    status?: string;
+    search?: string;
+  }) {
     try {
-      const response = await api.get(`/api/${type}`);
+      const queryParams = new URLSearchParams();
+      if (params?.page) queryParams.append('page', params.page.toString());
+      if (params?.limit) queryParams.append('limit', params.limit.toString());
+      if (params?.status) queryParams.append('status', params.status);
+      if (params?.search) queryParams.append('search', params.search);
+      
+      const url = `/api/admin/applications/${type}${queryParams.toString() ? '?' + queryParams.toString() : ''}`;
+      const response = await api.get(url);
       return response.data;
     } catch (error: unknown) {
       console.error(`${type} applications error:`, error);
@@ -413,6 +336,20 @@ export const adminService = {
       throw {
         success: false,
         message: axiosError.response?.data?.message || `Failed to fetch ${type} applications`
+      };
+    }
+  },
+
+  async updateApplicationStatus(type: 'ambassador' | 'career' | 'internship', id: string, status: string) {
+    try {
+      const response = await api.patch(`/api/admin/applications/${type}/${id}/status`, { status });
+      return response.data;
+    } catch (error: unknown) {
+      console.error('Update application status error:', error);
+      const axiosError = error as AxiosError<{message?: string}>;
+      throw {
+        success: false,
+        message: axiosError.response?.data?.message || 'Failed to update application status'
       };
     }
   }

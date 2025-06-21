@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { 
@@ -14,7 +14,9 @@ import {
   Mail,
   Calendar,
   ArrowLeft,
-  Loader2
+  Loader2,
+  ExternalLink,
+  RefreshCw
 } from 'lucide-react';
 import { adminService, type DashboardApplication } from '../../../lib/services';
 
@@ -28,9 +30,35 @@ interface DashboardStats {
   thisMonthApplications: number;
 }
 
+interface ApplicationData {
+  applications: Array<{
+    id?: string;
+    _id?: string;
+    name: string;
+    email: string;
+    phone?: string;
+    status: string;
+    submittedAt: string;
+    college?: string;
+    position?: string;
+    experience?: string;
+    domain?: string;
+    duration?: string;
+    resumeLink?: string;
+    whyYouWantToJoin?: string;
+  }>;
+  pagination?: {
+    currentPage: number;
+    totalPages: number;
+    totalItems: number;
+    itemsPerPage: number;
+  };
+}
+
 const SimpleAdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
   const [stats, setStats] = useState<DashboardStats>({
     totalApplications: 0,
     campusAmbassadors: 0,
@@ -40,18 +68,66 @@ const SimpleAdminDashboard: React.FC = () => {
     thisMonthApplications: 0
   });
   const [recentApplications, setRecentApplications] = useState<DashboardApplication[]>([]);
+  const [applicationData, setApplicationData] = useState<ApplicationData>({ applications: [] });
   const [loading, setLoading] = useState(true);
+  const [dataLoading, setDataLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-
   // Get admin info from localStorage
   const adminEmail = localStorage.getItem('adminEmail') || 'help.internexis@gmail.com';
   const adminRole = localStorage.getItem('adminRole') || 'admin';
+
+  const fetchApplicationData = useCallback(async () => {
+    try {
+      setDataLoading(true);
+      setError(null);
+
+      let type: 'ambassador' | 'career' | 'internship';
+      switch (activeTab) {
+        case 'campus-ambassadors':
+          type = 'ambassador';
+          break;
+        case 'careers':
+          type = 'career';
+          break;
+        case 'internships':
+          type = 'internship';
+          break;
+        default:
+          return;
+      }
+
+      const params = {
+        page: 1,
+        limit: 20,
+        ...(statusFilter && { status: statusFilter }),
+        ...(searchTerm && { search: searchTerm })
+      };
+
+      const result = await adminService.getApplicationsByType(type, params);
+      
+      if (result.success) {
+        setApplicationData(result.data);
+      }
+    } catch (err: unknown) {
+      console.error('Failed to fetch application data:', err);
+      setError('Failed to load application data.');
+    } finally {
+      setDataLoading(false);
+    }
+  }, [activeTab, searchTerm, statusFilter]);
 
   // Fetch dashboard data on component mount
   useEffect(() => {
     fetchDashboardData();
   }, []);
+
+  // Fetch application data when tab changes
+  useEffect(() => {
+    if (activeTab !== 'overview') {
+      fetchApplicationData();
+    }
+  }, [activeTab, searchTerm, statusFilter, fetchApplicationData]);
 
   const fetchDashboardData = async () => {
     try {
@@ -70,8 +146,7 @@ const SimpleAdminDashboard: React.FC = () => {
 
       if (recentResult.success) {
         setRecentApplications(recentResult.data);
-      }
-    } catch (err: unknown) {
+      }    } catch (err: unknown) {
       console.error('Failed to fetch dashboard data:', err);
       setError('Failed to load dashboard data. Please try refreshing the page.');
     } finally {
@@ -87,6 +162,33 @@ const SimpleAdminDashboard: React.FC = () => {
     localStorage.removeItem('adminEmail');
     localStorage.removeItem('adminRole');
     navigate('/admin-login');
+  };
+
+  const updateApplicationStatus = async (id: string, newStatus: string) => {
+    try {
+      let type: 'ambassador' | 'career' | 'internship';
+      switch (activeTab) {
+        case 'campus-ambassadors':
+          type = 'ambassador';
+          break;
+        case 'careers':
+          type = 'career';
+          break;
+        case 'internships':
+          type = 'internship';
+          break;
+        default:
+          return;
+      }
+
+      await adminService.updateApplicationStatus(type, id, newStatus);
+      // Refresh the data after update
+      fetchApplicationData();
+      fetchDashboardData(); // Update stats as well
+    } catch (err) {
+      console.error('Failed to update status:', err);
+      setError('Failed to update application status.');
+    }
   };
 
   const getStatusColor = (status: string) => {
@@ -346,42 +448,231 @@ const SimpleAdminDashboard: React.FC = () => {
           </div>
         )}        {/* Other Tabs */}
         {activeTab !== 'overview' && (
-          <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8">
-            <div className="text-center">
-              <div className="text-gray-400">
-                <Users className="w-16 h-16 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-600 mb-2">
-                  {activeTab === 'campus-ambassadors' && 'Campus Ambassador Applications'}
-                  {activeTab === 'careers' && 'Career Applications'}
-                  {activeTab === 'internships' && 'Internship Applications'}
-                </h3>
-                <p className="text-gray-500 mb-4">
-                  Loading {activeTab.replace('-', ' ')} data from the database...
-                </p>
-                <button
-                  onClick={() => {
-                    if (activeTab === 'campus-ambassadors') {
-                      adminService.getApplicationsByType('ambassador')
-                        .then(result => console.log('Ambassador data:', result))
-                        .catch(err => console.error('Error:', err));
-                    } else if (activeTab === 'careers') {
-                      adminService.getApplicationsByType('career')
-                        .then(result => console.log('Career data:', result))
-                        .catch(err => console.error('Error:', err));
-                    } else if (activeTab === 'internships') {
-                      adminService.getApplicationsByType('internship')
-                        .then(result => console.log('Internship data:', result))
-                        .catch(err => console.error('Error:', err));
-                    }
-                  }}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  Load {activeTab.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())} Data
-                </button>
-                <p className="text-sm text-gray-400 mt-4">
-                  ✅ Backend API connected • ✅ MongoDB Atlas connected • ✅ Real-time data available
-                </p>
+          <div className="space-y-6">
+            {/* Search and Filter Bar */}
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-4">
+              <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
+                <div className="flex-1 max-w-md">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <input
+                      type="text"
+                      placeholder="Search by name or email..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <select
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                    className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="reviewed">Reviewed</option>
+                    <option value="accepted">Accepted</option>
+                    <option value="rejected">Rejected</option>
+                    {activeTab === 'careers' && (
+                      <>
+                        <option value="shortlisted">Shortlisted</option>
+                        <option value="interviewed">Interviewed</option>
+                        <option value="hired">Hired</option>
+                      </>
+                    )}
+                    {activeTab === 'internships' && (
+                      <option value="completed">Completed</option>
+                    )}
+                  </select>
+                  <button
+                    onClick={fetchApplicationData}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                  >
+                    <RefreshCw className="w-4 h-4" />
+                    <span>Refresh</span>
+                  </button>
+                </div>
               </div>
+            </div>
+
+            {/* Applications Table */}
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100">
+              <div className="px-6 py-4 border-b border-gray-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      {activeTab === 'campus-ambassadors' && 'Campus Ambassador Applications'}
+                      {activeTab === 'careers' && 'Career Applications'}
+                      {activeTab === 'internships' && 'Internship Applications'}
+                    </h3>
+                    <p className="text-gray-600 text-sm">
+                      {applicationData.pagination?.totalItems || 0} total applications
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {dataLoading ? (
+                <div className="p-8 text-center">
+                  <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-600" />
+                  <p className="text-gray-600">Loading applications...</p>
+                </div>
+              ) : applicationData.applications.length === 0 ? (
+                <div className="p-8 text-center text-gray-500">
+                  <Users className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+                  <p>No applications found</p>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Applicant
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Contact
+                        </th>
+                        {activeTab === 'campus-ambassadors' && (
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            College
+                          </th>
+                        )}
+                        {activeTab === 'careers' && (
+                          <>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Position
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Experience
+                            </th>
+                          </>
+                        )}
+                        {activeTab === 'internships' && (
+                          <>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Domain
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              College
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Duration
+                            </th>
+                          </>
+                        )}
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Status
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Submitted
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">                      {applicationData.applications.map((application) => {
+                        const applicationId = application.id || application._id;
+                        return (
+                        <tr key={applicationId} className="hover:bg-gray-50">
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center">
+                              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                <span className="text-white font-semibold text-sm">
+                                  {application.name?.charAt(0).toUpperCase()}
+                                </span>
+                              </div>
+                              <div className="ml-4">
+                                <div className="text-sm font-medium text-gray-900">
+                                  {application.name}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">{application.email}</div>
+                            <div className="text-sm text-gray-500">{application.phone}</div>
+                          </td>
+                          {activeTab === 'campus-ambassadors' && (
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                              {application.college}
+                            </td>
+                          )}
+                          {activeTab === 'careers' && (
+                            <>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                {application.position}
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                {application.experience}
+                              </td>
+                            </>
+                          )}
+                          {activeTab === 'internships' && (
+                            <>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                {application.domain}
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                {application.college}
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                {application.duration}
+                              </td>
+                            </>
+                          )}
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <select
+                              value={application.status}
+                              onChange={(e) => applicationId && updateApplicationStatus(applicationId, e.target.value)}
+                              className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(application.status)}`}
+                            >
+                              <option value="pending">Pending</option>
+                              <option value="reviewed">Reviewed</option>
+                              <option value="accepted">Accepted</option>
+                              <option value="rejected">Rejected</option>
+                              {activeTab === 'careers' && (
+                                <>
+                                  <option value="shortlisted">Shortlisted</option>
+                                  <option value="interviewed">Interviewed</option>
+                                  <option value="hired">Hired</option>
+                                </>
+                              )}
+                              {activeTab === 'internships' && (
+                                <option value="completed">Completed</option>
+                              )}
+                            </select>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {new Date(application.submittedAt).toLocaleDateString()}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center space-x-2">
+                              <button className="p-2 text-gray-400 hover:text-blue-600 transition-colors">
+                                <Eye className="w-4 h-4" />
+                              </button>
+                              {activeTab === 'careers' && application.resumeLink && (
+                                <a
+                                  href={application.resumeLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-2 text-gray-400 hover:text-green-600 transition-colors"
+                                >
+                                  <ExternalLink className="w-4 h-4" />
+                                </a>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
           </div>
         )}
