@@ -4,8 +4,17 @@ services:
     env: node
     region: oregon
     plan: free
-    buildCommand: npm run render:build
-    startCommand: npm run render:start
+    buildCommand: |
+      echo "Building frontend..."
+      cd frontend
+      npm cache clean --force
+      npm install
+      npm run build
+      echo "Frontend build complete, setting up backend..."
+      cd ../backend
+      npm install
+      echo "Build process complete!"
+    startCommand: cd backend && node server.js
     envVars:
       - key: NODE_ENV
         value: production

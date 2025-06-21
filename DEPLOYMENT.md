@@ -41,13 +41,19 @@ git push origin main
 - Build process will now work correctly
 
 ## Build Process Flow
-1. **Root Install**: Installs root dependencies
-2. **Frontend Build**: 
+1. **Frontend Build**: 
    - `cd frontend && npm install`
-   - `npm run build:production`
-3. **Backend Setup**:
-   - `cd backend && npm install`
-4. **Start**: `cd backend && node server.js`
+   - `npm run build` (vite build with production mode)
+2. **Backend Setup**:
+   - `cd ../backend && npm install`
+3. **Start**: `cd backend && node server.js`
+
+## Recent Fix Applied
+- ❌ **New Error**: `sh: 1: vite: not found` 
+- ✅ **Solution**: 
+  - Changed `build:production` script from `NODE_ENV=production vite build` to `vite build --mode production`
+  - Updated render.yaml to use direct commands instead of npm scripts
+  - Simplified build process for better compatibility
 
 ## Local Development
 ```bash

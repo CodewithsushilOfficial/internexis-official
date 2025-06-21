@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "Internexis Frontend Application - React + TypeScript + Vite + Tailwind CSS",
   "private": true,
-  "type": "module",
-  "scripts": {
+  "type": "module",  "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "build:production": "NODE_ENV=production vite build",
-    "build:check": "tsc --noEmit && vite build",
+    "build": "npx vite build",
+    "build:production": "npx vite build --mode production",
+    "build:debug": "echo 'Node version:' && node --version && echo 'NPM version:' && npm --version && echo 'Checking vite:' && npx vite --version && echo 'Building:' && npx vite build",
+    "build:check": "tsc --noEmit && npx vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext ts,tsx --fix",
     "preview": "vite preview",
