@@ -93,11 +93,39 @@ const AmbassadorForm: React.FC = () => {
         [name]: value,
       }));
     }
-  };
-  const handleSubmit = async (e: React.FormEvent) => {
+  };  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage(null);
     setIsSubmitting(true);
+      // Basic form validation
+    const requiredFields = {
+      firstName: 'First name',
+      lastName: 'Last name', 
+      email: 'Email',
+      phone: 'Phone number',
+      university: 'University',
+      motivation: 'Why you want to be a Campus Ambassador'
+    };
+    
+    const missingFields: string[] = [];
+    
+    Object.entries(requiredFields).forEach(([field, label]) => {
+      const value = formData[field as keyof typeof formData];
+      if (!value || (typeof value === 'string' && !value.trim())) {
+        missingFields.push(label);
+      }
+    });
+    
+    if (missingFields.length > 0) {
+      setMessage({
+        type: "error",
+        text: `Please fill in the following required fields: ${missingFields.join(', ')}`
+      });
+      setIsSubmitting(false);
+      return;
+    }
+    
+    console.log('Form data being submitted:', formData);
     
     try {
       const result = await campusAmbassadorService.submitApplication(formData);
@@ -134,12 +162,26 @@ const AmbassadorForm: React.FC = () => {
           type: "error",
           text: "Failed to submit application. Please try again."
         });
-      }
-    } catch (error) {
+      }    } catch (error) {
       console.error("Error submitting application:", error);
+      
+      // Extract detailed error information
+      let errorMessage = "Failed to submit application. Please try again.";
+      
+      if (error && typeof error === 'object' && 'message' in error) {
+        errorMessage = error.message as string;
+      }
+      
+      if (error && typeof error === 'object' && 'errors' in error && Array.isArray(error.errors)) {
+        const errors = error.errors as string[];
+        if (errors.length > 0) {
+          errorMessage = errors.join(', ');
+        }
+      }
+      
       setMessage({
         type: "error",
-        text: "Failed to submit application. Please try again.",
+        text: errorMessage,
       });
     } finally {
       setIsSubmitting(false);

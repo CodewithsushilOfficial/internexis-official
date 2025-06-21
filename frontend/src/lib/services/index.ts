@@ -15,6 +15,43 @@ const api = axios.create({
   },
 });
 
+// Add request interceptor for debugging
+api.interceptors.request.use(
+  (config) => {
+    console.log('Making API request:', {
+      url: config.url,
+      method: config.method,
+      baseURL: config.baseURL,
+      data: config.data
+    });
+    return config;
+  },
+  (error) => {
+    console.error('Request interceptor error:', error);
+    return Promise.reject(error);
+  }
+);
+
+// Add response interceptor for debugging
+api.interceptors.response.use(
+  (response) => {
+    console.log('API response received:', {
+      status: response.status,
+      data: response.data
+    });
+    return response;
+  },
+  (error) => {
+    console.error('Response interceptor error:', {
+      message: error.message,
+      code: error.code,
+      status: error.response?.status,
+      data: error.response?.data
+    });
+    return Promise.reject(error);
+  }
+);
+
 // Type definitions for form data
 export interface AmbassadorFormData {
   name: string;
@@ -71,15 +108,47 @@ export interface DashboardApplication {
 export const ambassadorService = {
   async submitApplication(data: AmbassadorFormData) {
     try {
+      console.log('Sending ambassador application data:', data);
+      console.log('API Base URL:', API_BASE_URL);
+      
       const response = await api.post('/api/ambassador', data);
-      return response.data;    } catch (error: unknown) {
-      console.error('Ambassador application error:', error);
-      const axiosError = error as AxiosError<{message?: string; errors?: string[]}>;
-      throw {
-        success: false,
-        message: axiosError.response?.data?.message || 'Failed to submit application',
-        errors: axiosError.response?.data?.errors || []
-      };
+      console.log('Ambassador application response:', response.data);
+      return response.data;
+    } catch (error: unknown) {
+      console.error('Axios ambassador application error:', error);
+      
+      // Try with fetch as fallback if axios fails
+      try {
+        console.log('Trying with fetch as fallback...');
+        const fetchResponse = await fetch(`${API_BASE_URL}/api/ambassador`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+        
+        const fetchData = await fetchResponse.json();
+        
+        if (fetchResponse.ok) {
+          console.log('Fetch successful:', fetchData);
+          return fetchData;
+        } else {
+          console.error('Fetch error response:', fetchData);
+          throw {
+            success: false,
+            message: fetchData.message || 'Failed to submit application',
+            errors: fetchData.errors || []
+          };
+        }
+      } catch (fetchError) {
+        console.error('Both axios and fetch failed:', fetchError);
+        throw {
+          success: false,
+          message: 'Network error: Could not connect to server. Please check if the backend is running.',
+          errors: []
+        };
+      }
     }
   }
 };
@@ -144,14 +213,46 @@ export interface CampusAmbassadorFormData {
 // Legacy Campus Ambassador Service (keeping for backward compatibility)
 export const campusAmbassadorService = {
   async submitApplication(data: CampusAmbassadorFormData) {
+    // First test connection
+    console.log('Testing connection before submission...');
+    const connectionTest = await testConnection();
+    
+    if (!connectionTest.success) {
+      throw {
+        success: false,
+        message: `Cannot connect to server: ${connectionTest.error}. Please ensure the backend server is running on http://localhost:5000`,
+        errors: []
+      };
+    }
+    
+    // Validate required fields before transformation
+    const errors: string[] = [];
+    
+    if (!data.firstName?.trim()) errors.push('First name is required');
+    if (!data.lastName?.trim()) errors.push('Last name is required');
+    if (!data.email?.trim()) errors.push('Email is required');
+    if (!data.phone?.trim()) errors.push('Phone number is required');
+    if (!data.university?.trim()) errors.push('University is required');
+    if (!data.motivation?.trim()) errors.push('Why you want to be a Campus Ambassador is required');
+    
+    if (errors.length > 0) {
+      throw {
+        success: false,
+        message: 'Please fill in all required fields',
+        errors
+      };
+    }
+    
     // Transform legacy data to new format
     const transformedData: AmbassadorFormData = {
-      name: `${data.firstName} ${data.lastName}`,
-      email: data.email,
-      phone: data.phone,
-      college: data.university,
-      whyYouWantToJoin: data.whyInternexis
+      name: `${data.firstName.trim()} ${data.lastName.trim()}`,
+      email: data.email.trim(),
+      phone: data.phone.trim(),
+      college: data.university.trim(),
+      whyYouWantToJoin: data.motivation.trim()
     };
+    
+    console.log('Transformed data being sent:', transformedData);
     
     return ambassadorService.submitApplication(transformedData);
   },
@@ -346,6 +447,31 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+// Connection test function
+export const testConnection = async () => {
+  try {
+    console.log('Testing connection to:', API_BASE_URL);
+    const response = await fetch(`${API_BASE_URL}/health`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      console.log('✅ Connection test successful:', data);
+      return { success: true, data };
+    } else {
+      console.error('❌ Connection test failed:', response.status, response.statusText);
+      return { success: false, error: `HTTP ${response.status}: ${response.statusText}` };
+    }
+  } catch (error) {
+    console.error('❌ Connection test error:', error);
+    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+  }
+};
 
 // Export default service for backward compatibility
 export default campusAmbassadorService;
