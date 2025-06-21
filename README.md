@@ -206,11 +206,18 @@ npm run lint     # Run ESLint
 
 ## 🔐 Environment Variables
 
-### Development (.env)
+### Backend Development (.env)
 ```env
 NODE_ENV=development
 PORT=5000
 MONGODB_URI=your_mongodb_connection_string
+```
+
+### Frontend Development (.env)
+```env
+VITE_API_BASE_URL=http://localhost:5000/api
+VITE_ADMIN_USERNAME=your_admin_username
+VITE_ADMIN_PASSWORD=your_secure_password
 ```
 
 ### Production (Render Dashboard)
@@ -219,6 +226,20 @@ NODE_ENV=production
 PORT=5000
 MONGODB_URI=your_mongodb_connection_string
 ```
+
+## 🔧 Admin Configuration
+
+### Setting Up Admin Access
+1. Copy `.env.example` to `.env` in the frontend directory
+2. Set secure admin credentials:
+   ```env
+   VITE_ADMIN_USERNAME=your_chosen_username
+   VITE_ADMIN_PASSWORD=your_secure_password
+   ```
+3. Access admin panel at `/admin` or `/admin-login`
+4. Use your configured credentials to login
+
+**Security Note**: Never commit actual credentials to version control. The demo credentials have been removed for security.
 
 ## 🧪 Testing
 

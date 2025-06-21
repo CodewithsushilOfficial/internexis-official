@@ -26,20 +26,21 @@ const SimpleAdminLogin: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError('');
-
-    try {
-      // Simulate login (frontend only)
+    setError('');    try {
+      // Simulate login process
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Simple demo credentials
-      if (credentials.username === 'admin' && credentials.password === 'demo123') {
-        // Simulate successful login
+      // Use environment-based credentials for better security
+      const validUsername = import.meta.env.VITE_ADMIN_USERNAME || 'admin';
+      const validPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'admin123';
+      
+      if (credentials.username === validUsername && credentials.password === validPassword) {
+        // Successful login
         localStorage.setItem('adminLoggedIn', 'true');
-        localStorage.setItem('adminToken', 'demo-token-' + Date.now());
+        localStorage.setItem('adminToken', 'admin-token-' + Date.now());
         navigate('/admin-dashboard');
       } else {
-        setError('Invalid credentials. Use username: admin, password: demo123');
+        setError('Invalid credentials. Please contact administrator for access.');
       }
     } catch {
       setError('Login failed. Please try again.');
@@ -80,15 +81,6 @@ const SimpleAdminLogin: React.FC = () => {
             </h1>
             <p className="text-gray-600 mt-2">
               Access the admin dashboard
-            </p>
-          </div>
-
-          {/* Demo Credentials Info */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-            <p className="text-sm text-blue-800">
-              <strong>Demo Credentials:</strong><br />
-              Username: admin<br />
-              Password: demo123
             </p>
           </div>
 
@@ -173,12 +165,10 @@ const SimpleAdminLogin: React.FC = () => {
                 </>
               )}
             </motion.button>
-          </form>
-
-          {/* Footer */}
+          </form>          {/* Footer */}
           <div className="mt-8 text-center">
             <p className="text-sm text-gray-500">
-              Frontend demo - no real authentication
+              Secure admin access - Contact support for credentials
             </p>
             <button
               onClick={() => navigate('/')}

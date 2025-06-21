@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   Users, 
   Briefcase, 
@@ -59,6 +59,13 @@ const mockRecentApplications = [
 const SimpleAdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('adminLoggedIn');
+    localStorage.removeItem('adminToken');
+    navigate('/admin-login');
+  };
 
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
@@ -129,11 +136,14 @@ const SimpleAdminDashboard: React.FC = () => {
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                   3
                 </span>
-              </button>
-              <button className="p-2 text-gray-400 hover:text-gray-600">
+              </button>              <button className="p-2 text-gray-400 hover:text-gray-600">
                 <Settings className="w-6 h-6" />
               </button>
-              <button className="p-2 text-gray-400 hover:text-gray-600">
+              <button 
+                onClick={handleLogout}
+                className="p-2 text-gray-400 hover:text-red-600 transition-colors"
+                title="Logout"
+              >
                 <LogOut className="w-6 h-6" />
               </button>
             </div>
@@ -268,9 +278,11 @@ const SimpleAdminDashboard: React.FC = () => {
                 {activeTab === 'campus-ambassadors' && 'Campus Ambassador Applications'}
                 {activeTab === 'careers' && 'Career Applications'}
                 {activeTab === 'internships' && 'Internship Applications'}
-              </h3>
-              <p className="text-gray-500">
-                This is a frontend demo. In a full implementation, this would show detailed application data.
+              </h3>              <p className="text-gray-500">
+                This is a frontend demo. Connect to a backend API to show real application data.<br />
+                <span className="text-sm mt-2 block">
+                  💡 Admin credentials can be configured in the frontend .env file (VITE_ADMIN_USERNAME & VITE_ADMIN_PASSWORD)
+                </span>
               </p>
             </div>
           </div>
