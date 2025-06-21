@@ -1,6 +1,96 @@
-// Frontend-only services (no backend integration)
+import axios, { AxiosError } from 'axios';
 
-// Type definitions for Campus Ambassador form data
+// API Configuration
+const API_BASE_URL = import.meta.env.PROD 
+  ? '' // Use relative URLs in production (same domain)
+  : 'http://localhost:5000'; // Use full URL in development
+
+// Create axios instance
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Type definitions for form data
+export interface AmbassadorFormData {
+  name: string;
+  email: string;
+  phone: string;
+  college: string;
+  whyYouWantToJoin: string;
+}
+
+export interface CareerFormData {
+  name: string;
+  email: string;
+  phone: string;
+  position: string;
+  resumeLink: string;
+}
+
+export interface InternshipFormData {
+  name: string;
+  email: string;
+  phone: string;
+  domain: string;
+  college: string;
+}
+
+// Ambassador Service
+export const ambassadorService = {
+  async submitApplication(data: AmbassadorFormData) {
+    try {
+      const response = await api.post('/api/ambassador', data);
+      return response.data;    } catch (error: unknown) {
+      console.error('Ambassador application error:', error);
+      const axiosError = error as AxiosError<{message?: string; errors?: string[]}>;
+      throw {
+        success: false,
+        message: axiosError.response?.data?.message || 'Failed to submit application',
+        errors: axiosError.response?.data?.errors || []
+      };
+    }
+  }
+};
+
+// Career Service
+export const careerService = {
+  async submitApplication(data: CareerFormData) {
+    try {
+      const response = await api.post('/api/career', data);
+      return response.data;    } catch (error: unknown) {
+      console.error('Career application error:', error);
+      const axiosError = error as AxiosError<{message?: string; errors?: string[]}>;
+      throw {
+        success: false,
+        message: axiosError.response?.data?.message || 'Failed to submit application',
+        errors: axiosError.response?.data?.errors || []
+      };
+    }
+  }
+};
+
+// Internship Service
+export const internshipService = {
+  async submitApplication(data: InternshipFormData) {
+    try {
+      const response = await api.post('/api/internship', data);
+      return response.data;    } catch (error: unknown) {
+      console.error('Internship application error:', error);
+      const axiosError = error as AxiosError<{message?: string; errors?: string[]}>;
+      throw {
+        success: false,
+        message: axiosError.response?.data?.message || 'Failed to submit application',
+        errors: axiosError.response?.data?.errors || []
+      };
+    }
+  }
+};
+
+// Legacy Campus Ambassador types and service for backward compatibility
 export interface CampusAmbassadorFormData {
   firstName: string;
   lastName: string;
@@ -23,21 +113,19 @@ export interface CampusAmbassadorFormData {
   submittedAt?: string;
 }
 
-// Frontend-only Campus Ambassador Service
+// Legacy Campus Ambassador Service (keeping for backward compatibility)
 export const campusAmbassadorService = {
   async submitApplication(data: CampusAmbassadorFormData) {
-    // Simulate form submission (frontend only)
-    console.log('Campus Ambassador Application submitted (frontend only):', data);
-    
-    // Simulate processing time
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Return success response
-    return {
-      success: true,
-      message: 'Application submitted successfully! (Frontend demo - no backend integration)',
-      data: { submittedAt: new Date().toISOString() }
+    // Transform legacy data to new format
+    const transformedData: AmbassadorFormData = {
+      name: `${data.firstName} ${data.lastName}`,
+      email: data.email,
+      phone: data.phone,
+      college: data.university,
+      whyYouWantToJoin: data.whyInternexis
     };
+    
+    return ambassadorService.submitApplication(transformedData);
   },
 
   async validateForm(data: Partial<CampusAmbassadorFormData>) {
@@ -48,17 +136,6 @@ export const campusAmbassadorService = {
     if (!data.email?.trim()) errors.push('Email is required');
     if (!data.phone?.trim()) errors.push('Phone is required');
     if (!data.university?.trim()) errors.push('University is required');
-    if (!data.course?.trim()) errors.push('Course is required');
-    if (!data.yearOfStudy?.trim()) errors.push('Year of study is required');
-    if (!data.cgpa?.trim()) errors.push('CGPA is required');
-    if (!data.linkedinUrl?.trim()) errors.push('LinkedIn URL is required');
-    if (!data.skills || data.skills.length === 0) errors.push('At least one skill is required');
-    if (!data.experience?.trim()) errors.push('Experience is required');
-    if (!data.motivation?.trim()) errors.push('Motivation is required');
-    if (!data.whyInternexis?.trim()) errors.push('Why Internexis is required');
-    if (!data.availabilityHours?.trim()) errors.push('Availability hours is required');
-    if (!data.startDate?.trim()) errors.push('Start date is required');
-    if (!data.referralSource?.trim()) errors.push('Referral source is required');
     
     return {
       isValid: errors.length === 0,

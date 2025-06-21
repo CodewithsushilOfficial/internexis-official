@@ -34,7 +34,8 @@
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=8.0.0"
-  },  "dependencies": {
+  },
+  "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@heroicons/react": "^2.2.0",
     "@radix-ui/react-tabs": "^1.1.9",
@@ -42,6 +43,7 @@
     "@react-three/fiber": "^8.15.16",
     "@react-three/postprocessing": "^2.7.0",
     "aos": "^2.3.4",
+    "axios": "^1.10.0",
     "framer-motion": "^11.0.5",
     "lottie-react": "^2.4.1",
     "lucide-react": "^0.344.0",
@@ -53,9 +55,11 @@
     "recharts": "^2.15.3",
     "swiper": "^11.0.6",
     "three": "^0.161.0"
-  },  "devDependencies": {
+  },
+  "devDependencies": {
     "@eslint/js": "^9.9.1",
     "@types/aos": "^3.0.7",
+    "@types/node": "^24.0.3",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@types/three": "^0.161.2",

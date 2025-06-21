@@ -32,16 +32,16 @@ export default defineConfig({
       transformMixedEsModules: true,
     },
   },  server: {
-    port: 3000,
+    port: 5173,
     open: true,
     proxy: {
-      '/api': {        target: 'https://internexis-official.onrender.com',
+      '/api': {
+        target: 'http://localhost:5000',
         changeOrigin: true,
-        secure: true,
+        secure: false,
       }
     },
-  },
-  preview: {
-    port: 3000,
+  },  preview: {
+    port: 5173,
   },
 });
