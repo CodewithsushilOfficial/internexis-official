@@ -24,7 +24,7 @@ import { AllPrograms } from './components/pages/programs/AllPrograms';
 import InternshipProjects from './components/features/internships/InternshipProjects';
 import CampusAmbassador from './components/features/campus-ambassador/CampusAmbassador';
 import InternshipApplication from './components/features/internships/InternshipApplication';
-import SimpleAdminDashboard from './components/features/admin/SimpleAdminDashboard';
+import AdminDashboard from './components/features/admin/AdminDashboard';
 import SimpleAdminLogin from './components/features/admin/SimpleAdminLogin';
 import CareerPage from './components/features/careers/CareerPage';
 import { UserPage } from './pages';
@@ -60,7 +60,7 @@ function AppLayout() {
           <Route path="/users" element={<UserPage />} />          {/* Admin Routes */}
           <Route path="/admin" element={<SimpleAdminLogin />} />
           <Route path="/admin-login" element={<SimpleAdminLogin />} />
-          <Route path="/admin-dashboard" element={<SimpleAdminDashboard />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/user-page" element={<UserPage />} />
 
           {/* Home route with multiple sections */}
