@@ -38,6 +38,8 @@ import {
   Pie
 } from 'recharts';
 import { adminService, type DashboardApplication } from '../../../lib/services';
+import ExportMenu from './ExportMenu';
+import type { ApplicationCollection, ApplicationData as ExportApplicationData } from '../../../lib/utils/exportUtils';
 
 // Enhanced Dashboard Interfaces
 interface DashboardStats {
@@ -120,8 +122,15 @@ const AdminDashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [dataLoading, setDataLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [deleteLoading, setDeleteLoading] = useState<string | null>(null);
-  const [bulkActionLoading, setBulkActionLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState<string | null>(null);  const [bulkActionLoading, setBulkActionLoading] = useState(false);
+  
+  // Export State
+  const [showExportMenu, setShowExportMenu] = useState(false);
+  const [allApplicationsData, setAllApplicationsData] = useState<ApplicationCollection>({
+    ambassadors: [],
+    careers: [],
+    internships: []
+  });
   
   // Navigation
   const navigate = useNavigate();
@@ -359,34 +368,56 @@ const AdminDashboard: React.FC = () => {
       setError('Failed to perform bulk action.');
     } finally {
       setBulkActionLoading(false);
+    }  };  // Helper function to convert applications to ApplicationData format
+  const convertToApplicationData = (apps: unknown[]): ExportApplicationData[] => {
+    return apps.map((app) => {
+      const appData = app as Record<string, unknown>;
+      return {
+        id: (appData.id || appData._id) as string,
+        name: appData.name as string,
+        email: appData.email as string,
+        phone: appData.phone as string,
+        status: appData.status as string,
+        submittedAt: appData.submittedAt as string,
+        college: appData.college as string,
+        position: appData.position as string,
+        experience: appData.experience as string,
+        domain: appData.domain as string,
+        duration: appData.duration as string,
+        resumeLink: appData.resumeLink as string,
+        whyYouWantToJoin: appData.whyYouWantToJoin as string,
+        year: appData.year as string,
+        skills: appData.skills as string[],
+        location: appData.location as string,
+        graduation: appData.graduation as string
+      };
+    });
+  };
+
+  // Fetch all applications for export
+  const fetchAllApplicationsData = useCallback(async () => {
+    try {
+      const [ambassadorResult, careerResult, internshipResult] = await Promise.all([
+        adminService.getApplicationsByType('ambassador', { page: 1, limit: 1000 }),
+        adminService.getApplicationsByType('career', { page: 1, limit: 1000 }),
+        adminService.getApplicationsByType('internship', { page: 1, limit: 1000 })
+      ]);      const allData: ApplicationCollection = {
+        ambassadors: ambassadorResult.success ? convertToApplicationData(ambassadorResult.data.applications) : [],
+        careers: careerResult.success ? convertToApplicationData(careerResult.data.applications) : [],
+        internships: internshipResult.success ? convertToApplicationData(internshipResult.data.applications) : []
+      };
+
+      setAllApplicationsData(allData);
+    } catch (error) {
+      console.error('Failed to fetch all applications data:', error);
     }
-  };
+  }, []);
 
-  const exportData = () => {
-    const csvContent = applicationData.applications.map(app => ({
-      Name: app.name,
-      Email: app.email,
-      Phone: app.phone || '',
-      Status: app.status,
-      'Submitted At': new Date(app.submittedAt).toLocaleDateString(),
-      College: app.college || '',
-      Position: app.position || '',
-      Domain: app.domain || ''
-    }));
-
-    const csv = [
-      Object.keys(csvContent[0]).join(','),
-      ...csvContent.map(row => Object.values(row).join(','))
-    ].join('\n');
-
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${activeTab}-applications-${new Date().toISOString().split('T')[0]}.csv`;
-    a.click();
-    window.URL.revokeObjectURL(url);
-  };
+  // Enhanced export data function
+  const handleExportClick = async () => {
+    // Fetch all data first
+    await fetchAllApplicationsData();
+    setShowExportMenu(true);  };
 
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
@@ -847,10 +878,9 @@ const AdminDashboard: React.FC = () => {
                     onChange={(e) => setDateFilter(e.target.value)}
                     className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
-                  
-                  <button
-                    onClick={exportData}
-                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center space-x-2"
+                    <button
+                    onClick={handleExportClick}
+                    className="px-4 py-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-xl"
                   >
                     <Download className="w-4 h-4" />
                     <span>Export</span>
@@ -1141,10 +1171,25 @@ const AdminDashboard: React.FC = () => {
                   </table>
                 </div>
               )}
-            </div>
-          </div>
+            </div>          </div>
         )}
       </div>
+
+      {/* Export Menu */}
+      <ExportMenu        applications={convertToApplicationData(applicationData.applications as unknown[])}
+        currentTab={activeTab}
+        stats={{
+          totalApplications: stats.totalApplications,
+          campusAmbassadors: stats.campusAmbassadors,
+          careerApplications: stats.careerApplications,
+          internshipApplications: stats.internshipApplications,
+          pendingApplications: stats.pendingApplications,
+          thisMonthApplications: stats.thisMonthApplications
+        }}
+        allApplications={allApplicationsData}
+        isVisible={showExportMenu}
+        onClose={() => setShowExportMenu(false)}
+      />
     </div>
   );
 };

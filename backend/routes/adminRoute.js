@@ -625,4 +625,339 @@ router.delete('/applications/:type/:id', async (req, res) => {
   }
 });
 
+// Export endpoints
+router.get('/export/:type', async (req, res) => {
+  try {
+    const { type } = req.params;
+    const { format = 'xlsx' } = req.query;
+
+    let Model, typeName;
+    switch (type) {
+      case 'ambassador':
+        Model = Ambassador;
+        typeName = 'Campus Ambassador';
+        break;
+      case 'career':
+        Model = Career;
+        typeName = 'Career';
+        break;
+      case 'internship':
+        Model = Internship;
+        typeName = 'Internship';
+        break;
+      default:
+        return res.status(400).json({
+          success: false,
+          message: 'Invalid export type'
+        });
+    }
+
+    // Fetch all data
+    const applications = await Model.find().sort({ submittedAt: -1 }).lean();
+
+    if (format === 'xlsx') {
+      const ExcelJS = require('exceljs');
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet(`${typeName} Applications`);
+
+      // Define columns based on type
+      let columns = [
+        { header: 'Name', key: 'name', width: 20 },
+        { header: 'Email', key: 'email', width: 25 },
+        { header: 'Phone', key: 'phone', width: 15 },
+        { header: 'Status', key: 'status', width: 12 },
+        { header: 'Submitted At', key: 'submittedAt', width: 15 }
+      ];
+
+      // Add type-specific columns
+      if (type === 'ambassador') {
+        columns.push(
+          { header: 'College', key: 'college', width: 30 },
+          { header: 'Why Join', key: 'whyYouWantToJoin', width: 50 }
+        );
+      } else if (type === 'career') {
+        columns.push(
+          { header: 'Position', key: 'position', width: 20 },
+          { header: 'Experience', key: 'experience', width: 15 },
+          { header: 'Resume Link', key: 'resumeLink', width: 40 }
+        );
+      } else if (type === 'internship') {
+        columns.push(
+          { header: 'Domain', key: 'domain', width: 20 },
+          { header: 'College', key: 'college', width: 30 },
+          { header: 'Year', key: 'year', width: 12 },
+          { header: 'Duration', key: 'duration', width: 12 }
+        );
+      }
+
+      worksheet.columns = columns;
+
+      // Style the header row
+      worksheet.getRow(1).font = { bold: true };
+      worksheet.getRow(1).fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'FF4472C4' }
+      };
+      worksheet.getRow(1).font = { color: { argb: 'FFFFFFFF' }, bold: true };
+
+      // Add data rows
+      applications.forEach(app => {
+        const row = {
+          name: app.name,
+          email: app.email,
+          phone: app.phone || '',
+          status: app.status,
+          submittedAt: new Date(app.submittedAt).toLocaleDateString('en-US')
+        };
+
+        if (type === 'ambassador') {
+          row.college = app.college || '';
+          row.whyYouWantToJoin = app.whyYouWantToJoin || '';
+        } else if (type === 'career') {
+          row.position = app.position || '';
+          row.experience = app.experience || '';
+          row.resumeLink = app.resumeLink || '';
+        } else if (type === 'internship') {
+          row.domain = app.domain || '';
+          row.college = app.college || '';
+          row.year = app.year || '';
+          row.duration = app.duration || '';
+        }
+
+        worksheet.addRow(row);
+      });
+
+      // Auto-fit columns
+      worksheet.columns.forEach(column => {
+        if (column.eachCell) {
+          let maxLength = 0;
+          column.eachCell({ includeEmpty: true }, function (cell) {
+            const columnLength = cell.value ? cell.value.toString().length : 10;
+            if (columnLength > maxLength) {
+              maxLength = columnLength;
+            }
+          });
+          column.width = maxLength < 10 ? 10 : maxLength + 2;
+        }
+      });
+
+      // Add borders to all cells
+      worksheet.eachRow((row, rowNumber) => {
+        row.eachCell((cell, colNumber) => {
+          cell.border = {
+            top: { style: 'thin' },
+            left: { style: 'thin' },
+            bottom: { style: 'thin' },
+            right: { style: 'thin' }
+          };
+        });
+      });
+
+      // Set response headers
+      const fileName = `${type}-applications-${new Date().toISOString().split('T')[0]}.xlsx`;
+      res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+
+      // Write to response
+      await workbook.xlsx.write(res);
+      res.end();
+
+    } else if (format === 'csv') {
+      // CSV format
+      let headers = ['Name', 'Email', 'Phone', 'Status', 'Submitted At'];
+      
+      if (type === 'ambassador') {
+        headers.push('College', 'Why Join');
+      } else if (type === 'career') {
+        headers.push('Position', 'Experience', 'Resume Link');
+      } else if (type === 'internship') {
+        headers.push('Domain', 'College', 'Year', 'Duration');
+      }
+
+      const csvRows = [headers.join(',')];
+
+      applications.forEach(app => {
+        const row = [
+          `"${app.name || ''}"`,
+          `"${app.email || ''}"`,
+          `"${app.phone || ''}"`,
+          `"${app.status || ''}"`,
+          `"${new Date(app.submittedAt).toLocaleDateString('en-US')}"`
+        ];
+
+        if (type === 'ambassador') {
+          row.push(`"${app.college || ''}"`);
+          row.push(`"${(app.whyYouWantToJoin || '').replace(/"/g, '""')}"`);
+        } else if (type === 'career') {
+          row.push(`"${app.position || ''}"`);
+          row.push(`"${app.experience || ''}"`);
+          row.push(`"${app.resumeLink || ''}"`);
+        } else if (type === 'internship') {
+          row.push(`"${app.domain || ''}"`);
+          row.push(`"${app.college || ''}"`);
+          row.push(`"${app.year || ''}"`);
+          row.push(`"${app.duration || ''}"`);
+        }
+
+        csvRows.push(row.join(','));
+      });
+
+      const fileName = `${type}-applications-${new Date().toISOString().split('T')[0]}.csv`;
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+      res.send(csvRows.join('\n'));
+
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: 'Unsupported format. Use xlsx or csv.'
+      });
+    }
+
+  } catch (error) {
+    console.error('Export error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to export data'
+    });
+  }
+});
+
+// Export all data in a single Excel file with multiple sheets
+router.get('/export-all', async (req, res) => {
+  try {
+    const ExcelJS = require('exceljs');
+    const workbook = new ExcelJS.Workbook();
+
+    // Fetch all data
+    const [ambassadors, careers, internships] = await Promise.all([
+      Ambassador.find().sort({ submittedAt: -1 }).lean(),
+      Career.find().sort({ submittedAt: -1 }).lean(),
+      Internship.find().sort({ submittedAt: -1 }).lean()
+    ]);
+
+    // Create Campus Ambassador sheet
+    const ambassadorSheet = workbook.addWorksheet('Campus Ambassadors');
+    ambassadorSheet.columns = [
+      { header: 'Name', key: 'name', width: 20 },
+      { header: 'Email', key: 'email', width: 25 },
+      { header: 'Phone', key: 'phone', width: 15 },
+      { header: 'College', key: 'college', width: 30 },
+      { header: 'Why Join', key: 'whyYouWantToJoin', width: 50 },
+      { header: 'Status', key: 'status', width: 12 },
+      { header: 'Submitted At', key: 'submittedAt', width: 15 }
+    ];
+
+    // Style header and add data
+    ambassadorSheet.getRow(1).font = { bold: true };
+    ambassadorSheet.getRow(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF4472C4' } };
+    ambassadorSheet.getRow(1).font = { color: { argb: 'FFFFFFFF' }, bold: true };
+
+    ambassadors.forEach(app => {
+      ambassadorSheet.addRow({
+        name: app.name,
+        email: app.email,
+        phone: app.phone || '',
+        college: app.college || '',
+        whyYouWantToJoin: app.whyYouWantToJoin || '',
+        status: app.status,
+        submittedAt: new Date(app.submittedAt).toLocaleDateString('en-US')
+      });
+    });
+
+    // Create Career sheet
+    const careerSheet = workbook.addWorksheet('Career Applications');
+    careerSheet.columns = [
+      { header: 'Name', key: 'name', width: 20 },
+      { header: 'Email', key: 'email', width: 25 },
+      { header: 'Phone', key: 'phone', width: 15 },
+      { header: 'Position', key: 'position', width: 20 },
+      { header: 'Experience', key: 'experience', width: 15 },
+      { header: 'Resume Link', key: 'resumeLink', width: 40 },
+      { header: 'Status', key: 'status', width: 12 },
+      { header: 'Submitted At', key: 'submittedAt', width: 15 }
+    ];
+
+    careerSheet.getRow(1).font = { bold: true };
+    careerSheet.getRow(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF10B981' } };
+    careerSheet.getRow(1).font = { color: { argb: 'FFFFFFFF' }, bold: true };
+
+    careers.forEach(app => {
+      careerSheet.addRow({
+        name: app.name,
+        email: app.email,
+        phone: app.phone || '',
+        position: app.position || '',
+        experience: app.experience || '',
+        resumeLink: app.resumeLink || '',
+        status: app.status,
+        submittedAt: new Date(app.submittedAt).toLocaleDateString('en-US')
+      });
+    });
+
+    // Create Internship sheet
+    const internshipSheet = workbook.addWorksheet('Internship Applications');
+    internshipSheet.columns = [
+      { header: 'Name', key: 'name', width: 20 },
+      { header: 'Email', key: 'email', width: 25 },
+      { header: 'Phone', key: 'phone', width: 15 },
+      { header: 'Domain', key: 'domain', width: 20 },
+      { header: 'College', key: 'college', width: 30 },
+      { header: 'Year', key: 'year', width: 12 },
+      { header: 'Duration', key: 'duration', width: 12 },
+      { header: 'Status', key: 'status', width: 12 },
+      { header: 'Submitted At', key: 'submittedAt', width: 15 }
+    ];
+
+    internshipSheet.getRow(1).font = { bold: true };
+    internshipSheet.getRow(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF8B5CF6' } };
+    internshipSheet.getRow(1).font = { color: { argb: 'FFFFFFFF' }, bold: true };
+
+    internships.forEach(app => {
+      internshipSheet.addRow({
+        name: app.name,
+        email: app.email,
+        phone: app.phone || '',
+        domain: app.domain || '',
+        college: app.college || '',
+        year: app.year || '',
+        duration: app.duration || '',
+        status: app.status,
+        submittedAt: new Date(app.submittedAt).toLocaleDateString('en-US')
+      });
+    });
+
+    // Add borders to all sheets
+    [ambassadorSheet, careerSheet, internshipSheet].forEach(sheet => {
+      sheet.eachRow((row, rowNumber) => {
+        row.eachCell((cell, colNumber) => {
+          cell.border = {
+            top: { style: 'thin' },
+            left: { style: 'thin' },
+            bottom: { style: 'thin' },
+            right: { style: 'thin' }
+          };
+        });
+      });
+    });
+
+    // Set response headers
+    const fileName = `internexis-all-applications-${new Date().toISOString().split('T')[0]}.xlsx`;
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+
+    // Write to response
+    await workbook.xlsx.write(res);
+    res.end();
+
+  } catch (error) {
+    console.error('Export all error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to export data'
+    });
+  }
+});
+
 module.exports = router;

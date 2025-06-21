@@ -407,14 +407,86 @@ export const adminService = {
       
       console.log('✅ Admin Service: Application deleted successfully:', response.data);
       return response.data;
-    } catch (error: unknown) {
-      console.error('❌ Admin Service: Delete application error:', error);
+    } catch (error: unknown) {      console.error('❌ Admin Service: Delete application error:', error);
       const axiosError = error as AxiosError<{message?: string}>;
       
       // Return structured error response
       return {
         success: false,
         message: axiosError.response?.data?.message || 'Failed to delete application'
+      };
+    }
+  },
+
+  // Export methods
+  async exportApplications(type: 'ambassador' | 'career' | 'internship', format: 'xlsx' | 'csv' = 'xlsx') {
+    try {
+      console.log(`📤 Admin Service: Exporting ${type} applications in ${format} format`);
+      
+      const response = await api.get(`/api/admin/export/${type}?format=${format}`, {
+        responseType: 'blob',
+      });
+      
+      // Create blob and download
+      const blob = new Blob([response.data], {
+        type: format === 'xlsx' 
+          ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+          : 'text/csv'
+      });
+      
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${type}-applications-${new Date().toISOString().split('T')[0]}.${format}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      
+      console.log('✅ Admin Service: Export completed successfully');
+      return { success: true, message: `${type} applications exported successfully` };
+    } catch (error: unknown) {
+      console.error('❌ Admin Service: Export error:', error);
+      const axiosError = error as AxiosError<{message?: string}>;
+      
+      return {
+        success: false,
+        message: axiosError.response?.data?.message || `Failed to export ${type} applications`
+      };
+    }
+  },
+
+  async exportAllApplications() {
+    try {
+      console.log('📤 Admin Service: Exporting all applications');
+      
+      const response = await api.get('/api/admin/export-all', {
+        responseType: 'blob',
+      });
+      
+      // Create blob and download
+      const blob = new Blob([response.data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      });
+      
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `internexis-all-applications-${new Date().toISOString().split('T')[0]}.xlsx`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      
+      console.log('✅ Admin Service: All applications exported successfully');
+      return { success: true, message: 'All applications exported successfully' };
+    } catch (error: unknown) {
+      console.error('❌ Admin Service: Export all error:', error);
+      const axiosError = error as AxiosError<{message?: string}>;
+      
+      return {
+        success: false,
+        message: axiosError.response?.data?.message || 'Failed to export all applications'
       };
     }
   }

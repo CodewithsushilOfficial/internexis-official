@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export Feature Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+        .result {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+        .error {
+            border-color: #ef4444;
+            background: #fef2f2;
+            color: #dc2626;
+        }
+        .success {
+            border-color: #10b981;
+            background: #f0fdf4;
+            color: #059669;
+        }
+    </style>
+</head>
+<body>
+    <h1>Export Feature Test</h1>
+    <p>This page tests the export functionality from the admin dashboard.</p>
+    
+    <div>
+        <button onclick="testExportEndpoint('ambassador', 'xlsx')">Export Ambassadors (XLSX)</button>
+        <button onclick="testExportEndpoint('career', 'csv')">Export Careers (CSV)</button>
+        <button onclick="testExportEndpoint('internship', 'xlsx')">Export Internships (XLSX)</button>
+        <button onclick="testExportAll()">Export All Data</button>
+    </div>
+
+    <div id="results"></div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:5000/api';
+        
+        function addResult(message, isError = false) {
+            const resultsDiv = document.getElementById('results');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `result ${isError ? 'error' : 'success'}`;
+            resultDiv.innerHTML = `<strong>${new Date().toLocaleTimeString()}</strong>: ${message}`;
+            resultsDiv.appendChild(resultDiv);
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+        }
+
+        async function testExportEndpoint(type, format) {
+            try {
+                addResult(`Testing export for ${type} in ${format} format...`);
+                
+                const response = await fetch(`${API_BASE_URL}/admin/export/${type}?format=${format}`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': format === 'xlsx' ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' : 'text/csv'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const blob = await response.blob();
+                const filename = `${type}-export.${format}`;
+                
+                // Create download link
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+
+                addResult(`✅ Successfully exported ${type} data as ${format} (${blob.size} bytes)`);
+            } catch (error) {
+                addResult(`❌ Export failed for ${type}: ${error.message}`, true);
+            }
+        }
+
+        async function testExportAll() {
+            try {
+                addResult('Testing export all data...');
+                
+                const response = await fetch(`${API_BASE_URL}/admin/export-all`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const blob = await response.blob();
+                const filename = 'all-applications-export.xlsx';
+                
+                // Create download link
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+
+                addResult(`✅ Successfully exported all data (${blob.size} bytes)`);
+            } catch (error) {
+                addResult(`❌ Export all failed: ${error.message}`, true);
+            }
+        }
+
+        // Test basic API connectivity on load
+        window.addEventListener('load', async () => {
+            try {
+                const response = await fetch(`${API_BASE_URL.replace('/api', '')}/health`);
+                const data = await response.json();
+                addResult(`✅ API Connection successful: ${data.message || 'Backend is running'}`);
+            } catch (error) {
+                addResult(`❌ API Connection failed: ${error.message}`, true);
+            }
+        });
+    </script>
+</body>
+</html>

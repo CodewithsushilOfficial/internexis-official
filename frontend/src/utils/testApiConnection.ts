@@ -1,4 +1,4 @@
-import { adminService, ambassadorService, careerService, internshipService } from '../lib/services';
+import { adminService } from '../lib/services';
 
 // Test API connections
 export const testAPIConnections = async () => {
@@ -35,7 +35,7 @@ export const testAPIConnections = async () => {
       
       const recentApps = await adminService.getRecentApplications(3);
       console.log('✅ Recent Applications:', recentApps);
-    } catch (adminError) {
+    } catch {
       console.log('ℹ️ Admin Dashboard: Needs authentication (expected)');
     }
 
