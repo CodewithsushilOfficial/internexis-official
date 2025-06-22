@@ -142,13 +142,10 @@ export const Footer: React.FC = () => {
             <h3 className="text-xl font-bold mb-8 relative">
               Quick Links
               <span className="absolute -bottom-3 left-0 w-16 h-1.5 bg-gradient-to-r from-primary-500 to-primary-300 rounded-full"></span>
-            </h3>
-            <ul className="space-y-4">
-              {[
+            </h3>            <ul className="space-y-4">              {[
                 { name: "About Us", path: "/#about" },
                 { name: "Internship Programs", path: "/#programs" },
                 { name: "Career Page", path: "/careers" },
-                { name: "Admin Login", path: "/admin" },
                 { name: "Pricing", path: "/#pricing" },
                 { name: "Testimonials", path: "/#testimonials" },
                 { name: "FAQ", path: "/#faq" },
@@ -199,11 +196,39 @@ export const Footer: React.FC = () => {
                   </Link>
                 </motion.li>
               ))}
+            </ul>          </div>
+
+          {/* Services */}
+          <div className="lg:col-span-2" data-aos="fade-up" data-aos-delay="250">
+            <h3 className="text-xl font-bold mb-8 relative">
+              Services
+              <span className="absolute -bottom-3 left-0 w-16 h-1.5 bg-gradient-to-r from-primary-500 to-primary-300 rounded-full"></span>
+            </h3>            <ul className="space-y-4">
+              {[
+                { name: "Virtual Internships", path: "/#programs" },
+                { name: "Career Guidance", path: "/careers" },
+                { name: "Campus Ambassador", path: "/#ambassador" },
+                { name: "Mentorship Program", path: "/#mentorship" },
+                { name: "Project Consultation", path: "/#contact" },
+              ].map((item, index) => (
+                <motion.li 
+                  key={index}
+                  whileHover={{ x: 5 }}
+                  transition={{ type: "spring", stiffness: 400 }}
+                >
+                  <Link 
+                    to={item.path} 
+                    className="text-gray-300 hover:text-primary-400 transition-colors flex items-center group"
+                  >
+                    <span className="inline-block w-0 group-hover:w-4 overflow-hidden transition-all duration-300 ease-out opacity-0 group-hover:opacity-100">&raquo;</span>
+                    <span className="group-hover:translate-x-1 transition-transform duration-300">{item.name}</span>
+                  </Link>                </motion.li>
+              ))}
             </ul>
           </div>
 
           {/* Newsletter - improved */}
-          <div className="lg:col-span-4" data-aos="fade-up" data-aos-delay="300">
+          <div className="lg:col-span-2" data-aos="fade-up" data-aos-delay="300">
             <h3 className="text-xl font-bold mb-8 relative">
               Stay Updated
               <span className="absolute -bottom-3 left-0 w-16 h-1.5 bg-gradient-to-r from-primary-500 to-primary-300 rounded-full"></span>
@@ -331,9 +356,7 @@ export const Footer: React.FC = () => {
               © {new Date().getFullYear()} Internexis Technologies. All rights reserved. Made with{" "}
               <Heart className="inline-block h-4 w-4 text-accent-500 hover:text-red-500 transition-colors" fill="#ff6b6b" /> in India
             </motion.p>
-          </div>
-          
-          <div className="flex flex-wrap gap-4 text-gray-500">
+          </div>            <div className="flex flex-wrap gap-4 text-gray-500">
             {["Accessibility", "Careers", "Sitemap"].map((item, index) => (
               <motion.a
                 key={index}

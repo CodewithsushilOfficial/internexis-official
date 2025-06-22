@@ -5,10 +5,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import { adminService } from '../../../lib/services';
 import { AxiosError } from 'axios';
 
-const SimpleAdminLogin: React.FC = () => {
-  const [credentials, setCredentials] = useState({
-    email: 'help.internexis@gmail.com',
-    password: 'admin@internexis'
+const SimpleAdminLogin: React.FC = () => {  const [credentials, setCredentials] = useState({
+    email: '',
+    password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -36,9 +35,7 @@ const SimpleAdminLogin: React.FC = () => {
       
       const result = await adminService.login(credentials.email, credentials.password);
       
-      console.log('Login response:', result);
-
-      if (result.success) {
+      console.log('Login response:', result);      if (result.success) {
         // Successful login
         console.log('Login successful, storing data and redirecting...');
         localStorage.setItem('adminLoggedIn', 'true');
@@ -46,6 +43,8 @@ const SimpleAdminLogin: React.FC = () => {
         localStorage.setItem('adminId', result.data.adminId);
         localStorage.setItem('adminEmail', result.data.email);
         localStorage.setItem('adminRole', result.data.role);
+        // Dispatch custom event to update footer
+        window.dispatchEvent(new Event('adminAuthChanged'));
         navigate('/admin-dashboard');
       } else {
         console.error('Login failed:', result.message);

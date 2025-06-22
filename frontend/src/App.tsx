@@ -26,6 +26,7 @@ import CampusAmbassador from './components/features/campus-ambassador/CampusAmba
 import InternshipApplication from './components/features/internships/InternshipApplication';
 import AdminDashboard from './components/features/admin/AdminDashboard';
 import SimpleAdminLogin from './components/features/admin/SimpleAdminLogin';
+import AdminApp from './components/admin/AdminApp';
 import CareerPage from './components/features/careers/CareerPage';
 import { UserPage } from './pages';
 import CampusAmbassadorApplication from './pages/CampusAmbassadorApplication';
@@ -84,10 +85,12 @@ function AppLayout() {
           
           {/* User Management Route */}
           <Route path="/users" element={<UserPage />} />
-          
-          {/* Admin Routes */}
-          <Route path="/admin" element={<SimpleAdminLogin />} />
-          <Route path="/admin-login" element={<SimpleAdminLogin />} />          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+            {/* Admin Routes */}
+          <Route path="/admin" element={<AdminApp />} />
+          <Route path="/admin/dashboard" element={<AdminApp />} />
+          <Route path="/admin/*" element={<AdminApp />} />
+          <Route path="/admin-login" element={<SimpleAdminLogin />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/user-page" element={<UserPage />} />
           
           {/* Home route with multiple sections */}

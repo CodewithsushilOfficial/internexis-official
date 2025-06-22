@@ -134,9 +134,8 @@ const AdminDashboard: React.FC = () => {
   
   // Navigation
   const navigate = useNavigate();
-  
-  // Admin info from localStorage
-  const adminEmail = localStorage.getItem('adminEmail') || 'help.internexis@gmail.com';
+    // Admin info from localStorage
+  const adminEmail = localStorage.getItem('adminEmail') || 'admin@internexis.com';
   const adminRole = localStorage.getItem('adminRole') || 'admin';
 
   // Fetch application data
@@ -259,13 +258,14 @@ const AdminDashboard: React.FC = () => {
       applicationTrends: trendsData
     });
   };
-
   const handleLogout = () => {
     localStorage.removeItem('adminLoggedIn');
     localStorage.removeItem('adminToken');
     localStorage.removeItem('adminId');
     localStorage.removeItem('adminEmail');
     localStorage.removeItem('adminRole');
+    // Dispatch custom event to update footer
+    window.dispatchEvent(new Event('adminAuthChanged'));
     navigate('/admin-login');
   };
 

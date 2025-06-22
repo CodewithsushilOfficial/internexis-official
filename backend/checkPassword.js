@@ -11,7 +11,9 @@ async function checkPassword() {
         console.log('✅ Connected to production MongoDB');
 
         // Find admin user
-        const admin = await Admin.findOne({ email: 'help.internexis@gmail.com' });
+        // Use environment variable or default for checking
+        const adminEmail = process.env.ADMIN_EMAIL || 'admin@internexis.com';
+        const admin = await Admin.findOne({ email: adminEmail });
         
         if (!admin) {
             console.log('❌ No admin user found');
@@ -21,17 +23,12 @@ async function checkPassword() {
         console.log('👤 Admin user found:');
         console.log(`   Email: ${admin.email}`);
         console.log(`   Stored Password: "${admin.password}"`);
-        console.log(`   IsActive: ${admin.isActive}`);
-        console.log(`   LoginAttempts: ${admin.loginAttempts}`);
+        console.log(`   IsActive: ${admin.isActive}`);        console.log(`   LoginAttempts: ${admin.loginAttempts}`);
         console.log(`   IsLocked: ${admin.isLocked}`);
         console.log(`   LockUntil: ${admin.lockUntil}`);
 
-        // Test the validation function
-        const testPasswords = ['admin@internexis', 'admin123', 'internexis123'];
-        for (const pwd of testPasswords) {
-            const matches = pwd === admin.password;
-            console.log(`🔐 "${pwd}" matches stored password: ${matches ? '✅ YES' : '❌ NO'}`);
-        }
+        // Note: For security reasons, password testing is disabled in this script
+        console.log('🔐 Password verification available through proper login endpoints only');
 
     } catch (error) {
         console.error('❌ Error:', error.message);

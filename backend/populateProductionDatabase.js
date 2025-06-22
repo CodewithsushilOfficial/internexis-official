@@ -310,24 +310,33 @@ const internshipData = [
 // Function to initialize admin
 const initializeAdmin = async () => {
   try {
+    // Get admin credentials from environment variables
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@internexis.com';
+    const adminPassword = process.env.ADMIN_PASSWORD || 'changeThisPassword!';
+    
     // Check if admin already exists
-    const existingAdmin = await Admin.findOne({ email: 'help.internexis@gmail.com' });
+    const existingAdmin = await Admin.findOne({ email: adminEmail });
     
     if (existingAdmin) {
-      console.log('✅ Admin already exists');
+      console.log(`✅ Admin already exists with email: ${adminEmail}`);
       return existingAdmin;
+    }
+
+    // Warn if using default credentials
+    if (!process.env.ADMIN_EMAIL || !process.env.ADMIN_PASSWORD) {
+      console.log('⚠️  WARNING: Using default admin credentials. Set ADMIN_EMAIL and ADMIN_PASSWORD environment variables for production.');
     }
 
     // Create admin
     const admin = new Admin({
-      email: 'help.internexis@gmail.com',
-      password: 'admin@internexis',
+      email: adminEmail,
+      password: adminPassword,
       role: 'super_admin',
       isActive: true
     });
 
     await admin.save();
-    console.log('✅ Admin created successfully');
+    console.log(`✅ Admin created successfully with email: ${adminEmail}`);
     return admin;
   } catch (error) {
     console.error('❌ Error creating admin:', error);
@@ -401,12 +410,13 @@ const populateProductionDatabase = async () => {
 
 // Main function
 const main = async () => {
-  try {
-    await connectDB();
-    await populateProductionDatabase();
-    console.log('\n✨ Production database is ready!');
-    console.log('🔗 You can now login at: https://internexis-technologies.in/admin-login');
-    console.log('🔐 Credentials: help.internexis@gmail.com / admin@internexis');
+  try {    await connectDB();
+    await populateProductionDatabase();    console.log('\n✨ Production database is ready!');
+    console.log('🔗 Admin login available at the configured admin URL');
+    console.log('🔐 Use the configured admin credentials to access the dashboard');
+    if (!process.env.ADMIN_EMAIL || !process.env.ADMIN_PASSWORD) {
+      console.log('⚠️  Remember to set ADMIN_EMAIL and ADMIN_PASSWORD environment variables for production!');
+    }
   } catch (error) {
     console.error('❌ Script failed:', error);
   } finally {
