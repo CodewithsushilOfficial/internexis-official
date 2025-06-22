@@ -1,6 +1,87 @@
+/* AOS Animation Library */
+@import 'aos/dist/aos.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom CSS for modern Our Services section */
+@layer utilities {
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+  
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  
+  .blur-glass {
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.125);
+  }
+  
+  .dark .blur-glass {
+    background-color: rgba(17, 24, 39, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.125);
+  }
+}
+
+/* Custom animations for services section */
+@keyframes float-up-down {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-float {
+  animation: float-up-down 3s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
 
 /* Adding gradient animation for certificate component */
 @keyframes gradient-x {

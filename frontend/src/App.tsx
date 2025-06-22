@@ -4,6 +4,7 @@ import { Hero } from './components/pages/home/Hero';
 import { LiveChatButton } from './components/ui/live-chat-button';
 import { About } from './components/pages/about/About';
 import { Programs } from './components/pages/programs/Programs';
+import { OurServices } from './components/pages/home/OurServicesNew';
 import { Pricing } from './components/features/internships/Pricing';
 import { ApplicationTracker } from './components/features/internships/ApplicationTracker';
 import { Certificates } from './components/features/internships/Certificates';
@@ -29,6 +30,17 @@ import { UserPage } from './pages';
 import CampusAmbassadorApplication from './pages/CampusAmbassadorApplication';
 import CampusAmbassadorTestPage from './pages/CampusAmbassadorTestPage';
 
+// Service pages
+import DigitalSolutionsPage from './components/features/services/DigitalSolutionsPage';
+import HackathonsPage from './components/features/services/HackathonsPage';
+import WorkWithUsPage from './components/features/services/WorkWithUsPage';
+import { 
+  MentorshipPage, 
+  CareerGuidancePage, 
+  FreelanceProjectsPage, 
+  CareerJobsPage 
+} from './components/features/services/ServicePages';
+
 // Component to conditionally render navbar based on route
 function AppLayout() {
   const location = useLocation();
@@ -41,31 +53,47 @@ function AppLayout() {
           {/* Routes for the different pages */}
           <Route path="/terms" element={<TermsOfService />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/refund-policy" element={<RefundPolicy />} />          <Route path="/cookie-policy" element={<CookiePolicy />} />
+          <Route path="/refund-policy" element={<RefundPolicy />} />
+          <Route path="/cookie-policy" element={<CookiePolicy />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
           <Route path="/meet-internexis" element={<MeetInternexis />} />
           
-          {/* Routes for program pages */}          <Route path="/all-programs" element={<AllPrograms />} />
+          {/* Routes for program pages */}
+          <Route path="/all-programs" element={<AllPrograms />} />
           <Route path="/internship-projects" element={<InternshipProjects />} />
-          <Route path="/internship-projects/:domainSlug" element={<InternshipProjects />} />            {/* Campus Ambassador Program Routes */}
+          <Route path="/internship-projects/:domainSlug" element={<InternshipProjects />} />
+            {/* Service Routes */}
+          <Route path="/digital-solutions" element={<DigitalSolutionsPage />} />
+          <Route path="/hackathons" element={<HackathonsPage />} />
+          <Route path="/work-with-us" element={<WorkWithUsPage />} />
+          <Route path="/mentorship" element={<MentorshipPage />} />
+          <Route path="/career-guidance" element={<CareerGuidancePage />} />
+          <Route path="/freelance-projects" element={<FreelanceProjectsPage />} />
+          <Route path="/career-jobs" element={<CareerJobsPage />} />
+          
+          {/* Campus Ambassador Program Routes */}
           <Route path="/campus-ambassador" element={<CampusAmbassador />} />
           <Route path="/campus-ambassador-application" element={<CampusAmbassadorApplication />} />
           <Route path="/campus-ambassador-test" element={<CampusAmbassadorTestPage />} />
           <Route path="/apply-internship" element={<InternshipApplication />} />
-            {/* Career Page Route */}
+          
+          {/* Career Page Route */}
           <Route path="/careers" element={<CareerPage />} />
-            {/* User Management Route */}
-          <Route path="/users" element={<UserPage />} />          {/* Admin Routes */}
+          
+          {/* User Management Route */}
+          <Route path="/users" element={<UserPage />} />
+          
+          {/* Admin Routes */}
           <Route path="/admin" element={<SimpleAdminLogin />} />
           <Route path="/admin-login" element={<SimpleAdminLogin />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
-          <Route path="/user-page" element={<UserPage />} />
-
-          {/* Home route with multiple sections */}
+          <Route path="/user-page" element={<UserPage />} />          {/* Home route with multiple sections */}
           <Route
             path="/"
-            element={              <main>
+            element={
+              <main>
                 <Hero />
+                <OurServices />
                 <About />
                 <Programs />
                 <Pricing />
