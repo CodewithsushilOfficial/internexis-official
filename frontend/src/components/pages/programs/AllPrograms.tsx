@@ -28,6 +28,24 @@ export const AllPrograms: React.FC = () => {
     });
   }, []);
 
+  // Function to get domain slug for "Know More" link
+  const getDomainSlug = (programTitle: string): string => {    const titleToSlugMap: Record<string, string> = {
+      "Web Development": "web",
+      "Android App Development": "android", 
+      "AI & Machine Learning": "ai",
+      "Programming Languages": "python", // Default to python for programming languages
+      "Data Science & Analytics": "datascience",
+      "Cybersecurity": "cybersecurity",
+      "Cloud Computing & DevOps": "cloud",
+      "Blockchain Development": "blockchain",
+      "UI/UX Design": "uiux",
+      "Digital Marketing": "digital-marketing",
+      "Internet of Things (IoT)": "iot",
+      "Game Development": "game-dev"
+    };
+    return titleToSlugMap[programTitle] || "web";
+  };
+
   const programs: Program[] = [
     {
       id: 1,
@@ -181,29 +199,28 @@ export const AllPrograms: React.FC = () => {
         program.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
         program.skills.some(skill => skill.toLowerCase().includes(searchQuery.toLowerCase()))
       );
-
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-gray-100" id="all-programs">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+    <section className="py-8 sm:py-12 md:py-16 lg:py-24 bg-gradient-to-b from-gray-50 to-gray-100" id="all-programs">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb navigation */}
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-8"
+          className="mb-6 sm:mb-8"
         >
           <nav className="flex" aria-label="Breadcrumb">
             <ol className="inline-flex items-center space-x-1 md:space-x-2">
               <li className="inline-flex items-center">
-                <Link to="/" className="text-gray-500 hover:text-blue-600 inline-flex items-center text-sm font-medium transition-colors duration-300">
-                  <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                <Link to="/" className="text-gray-500 hover:text-blue-600 inline-flex items-center text-xs sm:text-sm font-medium transition-colors duration-300">
+                  <svg className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
                   Home
                 </Link>
               </li>
               <li>
                 <div className="flex items-center">
-                  <svg className="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path></svg>
-                  <span className="text-gray-800 ml-1 md:ml-2 text-sm font-medium">All Programs</span>
+                  <svg className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path></svg>
+                  <span className="text-gray-800 ml-1 md:ml-2 text-xs sm:text-sm font-medium">All Programs</span>
                 </div>
               </li>
             </ol>
@@ -214,22 +231,22 @@ export const AllPrograms: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="max-w-3xl mx-auto text-center mb-12 md:mb-16"
+          className="max-w-4xl mx-auto text-center mb-8 sm:mb-12 md:mb-16"
           data-aos="fade-up"
         >
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-gray-900 relative inline-block">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 text-gray-900 relative inline-block">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
               🎓 Our Internship Programs
             </span>
             <motion.div 
-              className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500"
+              className="absolute -bottom-1 sm:-bottom-2 left-0 w-full h-0.5 sm:h-1 bg-gradient-to-r from-blue-500 to-purple-500"
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
               transition={{ delay: 0.8, duration: 0.8 }}
             ></motion.div>
           </h2>
           <motion.p 
-            className="text-xl text-gray-700 mb-4 mt-8"
+            className="text-base sm:text-lg md:text-xl text-gray-700 mb-3 sm:mb-4 mt-4 sm:mt-6 md:mt-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.9, duration: 0.5 }}
@@ -237,7 +254,7 @@ export const AllPrograms: React.FC = () => {
             Learn. Build. <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 font-bold">Excel.</span>
           </motion.p>
           <motion.p 
-            className="text-lg text-gray-600"
+            className="text-sm sm:text-base md:text-lg text-gray-600 px-4 sm:px-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.0, duration: 0.5 }}
@@ -247,32 +264,32 @@ export const AllPrograms: React.FC = () => {
           </motion.p>
         </motion.div>
 
-        {/* Search Bar */}
-        <div className="max-w-md mx-auto mb-12" data-aos="fade-up" data-aos-delay="200">
+        {/* Enhanced Search Bar */}
+        <div className="max-w-lg mx-auto mb-8 sm:mb-12" data-aos="fade-up" data-aos-delay="200">
           <div className="relative flex items-center">
-            <Search className="w-5 h-5 absolute left-3 text-gray-400" />
+            <Search className="w-4 h-4 sm:w-5 sm:h-5 absolute left-3 sm:left-3 text-gray-400" />
             <input
               type="text"
               placeholder="Search programs or skills..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 shadow-sm"
+              className="w-full pl-9 sm:pl-10 pr-4 py-2.5 sm:py-3 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 shadow-sm text-sm sm:text-base"
             />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 perspective-1000">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 perspective-1000">
           {filteredPrograms.length === 0 ? (
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }} 
-              className="col-span-full text-center py-10"
+              className="col-span-full text-center py-8 sm:py-10"
               data-aos="fade-up"
             >
-              <div className="text-gray-600 text-xl mb-4">No programs match your search</div>
+              <div className="text-gray-600 text-lg sm:text-xl mb-4">No programs match your search</div>
               <button 
                 onClick={() => setSearchQuery('')}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm sm:text-base"
               >
                 Clear Search
               </button>
@@ -286,7 +303,7 @@ export const AllPrograms: React.FC = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 data-aos="flip-up"
                 data-aos-delay={index * 100}
-                className="relative p-6 rounded-xl shadow-lg bg-white cursor-pointer transition-all duration-300 hover:shadow-2xl z-10 group transform hover:-translate-y-2 hover:scale-[1.03] overflow-hidden"
+                className="relative p-4 sm:p-6 rounded-xl shadow-lg bg-white cursor-pointer transition-all duration-300 hover:shadow-2xl z-10 group transform hover:-translate-y-2 hover:scale-[1.03] overflow-hidden"
                 onMouseEnter={() => setHoveredCard(program.id)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
@@ -315,15 +332,17 @@ export const AllPrograms: React.FC = () => {
                   <motion.div 
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     className={`${hoveredCard === program.id && program.gradient 
-                      ? 'bg-gradient-to-r ' + program.gradient + ' p-3 rounded-full inline-block shadow-lg' 
+                      ? 'bg-gradient-to-r ' + program.gradient + ' p-2 sm:p-3 rounded-full inline-block shadow-lg' 
                       : getIconColor(program.color, program.gradient, hoveredCard === program.id) + ' transform transition-all duration-500'} 
-                      mb-4`}
+                      mb-3 sm:mb-4`}
                   >
-                    {program.icon}
+                    {React.cloneElement(program.icon as React.ReactElement, {
+                      size: window.innerWidth < 640 ? 24 : window.innerWidth < 1024 ? 32 : 40
+                    })}
                   </motion.div>
                   
                   <motion.h3 
-                    className="text-xl font-bold mb-3 text-gray-900"
+                    className="text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-3 text-gray-900 leading-tight"
                     animate={hoveredCard === program.id ? {
                       color: ['#1F2937', program.color === 'blue' ? '#3B82F6' : 
                              program.color === 'green' ? '#10B981' : 
@@ -335,19 +354,19 @@ export const AllPrograms: React.FC = () => {
                     {program.title}
                   </motion.h3>
                   
-                  <p className="text-gray-700 mb-4">{program.description}</p>
+                  <p className="text-gray-700 mb-3 sm:mb-4 text-xs sm:text-sm md:text-base leading-relaxed">{program.description}</p>
                   
-                  <div className="mt-4">
-                    <p className="font-medium text-gray-800 mb-2">Key Skills:</p>
-                    <div className="flex flex-wrap gap-2">
-                      {program.skills.map((skill, idx) => (
+                  <div className="mt-3 sm:mt-4">
+                    <p className="font-medium text-gray-800 mb-2 text-xs sm:text-sm">Key Skills:</p>
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                      {program.skills.slice(0, 6).map((skill, idx) => (
                         <motion.span 
                           key={idx}
                           initial={{ opacity: 0, scale: 0.8 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: idx * 0.05 + 0.2 }}
                           whileHover={{ scale: 1.1, y: -2 }}
-                          className={`inline-block px-2 py-1 rounded-md text-xs font-medium ${
+                          className={`inline-block px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md text-xs font-medium ${
                             hoveredCard === program.id 
                               ? 'bg-gradient-to-r ' + program.gradient + ' text-white shadow-sm' 
                               : 'bg-white text-gray-700 border border-gray-200'
@@ -356,26 +375,62 @@ export const AllPrograms: React.FC = () => {
                           {skill}
                         </motion.span>
                       ))}
+                      {program.skills.length > 6 && (
+                        <span className="inline-block px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-500">
+                          +{program.skills.length - 6}
+                        </span>
+                      )}
                     </div>
                   </div>
                   
-                  <div className="mt-6">
+                  <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row gap-2 sm:gap-3">
+                    {/* Apply Now Button */}
                     <motion.div
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      className="flex-1"
                     >
                       <Link 
-                        to="/internship-projects"
-                        className={`inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium text-white ${
+                        to="/apply-internship"
+                        className={`inline-flex items-center justify-center w-full px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg font-medium text-white text-xs sm:text-sm ${
                           hoveredCard === program.id && program.gradient 
                             ? 'bg-gradient-to-r ' + program.gradient + ' shadow-md' 
                             : `bg-${program.color}-500 hover:bg-${program.color}-600`
                         } transition-all duration-300`}
                       >
-                        View Projects
+                        Apply Now
                         <motion.svg 
                           xmlns="http://www.w3.org/2000/svg" 
-                          className="h-4 w-4 ml-2" 
+                          className="h-3 w-3 sm:h-4 sm:w-4 ml-1 sm:ml-2" 
+                          fill="none" 
+                          viewBox="0 0 24 24" 
+                          stroke="currentColor"
+                          animate={{ x: [0, 4, 0] }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        </motion.svg>
+                      </Link>
+                    </motion.div>
+
+                    {/* Know More Button */}
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="flex-1"
+                    >
+                      <Link 
+                        to={`/domain-details/${getDomainSlug(program.title)}`}
+                        className={`inline-flex items-center justify-center w-full px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg font-medium text-xs sm:text-sm ${
+                          hoveredCard === program.id && program.gradient 
+                            ? 'bg-white text-gray-700 border border-gray-300 shadow-md' 
+                            : `border border-${program.color}-500 text-${program.color}-500 hover:bg-${program.color}-50`
+                        } transition-all duration-300`}
+                      >
+                        Know More
+                        <motion.svg 
+                          xmlns="http://www.w3.org/2000/svg" 
+                          className="h-3 w-3 sm:h-4 sm:w-4 ml-1 sm:ml-2" 
                           fill="none" 
                           viewBox="0 0 24 24" 
                           stroke="currentColor"
@@ -391,13 +446,11 @@ export const AllPrograms: React.FC = () => {
               </motion.div>
             ))
           )}
-        </div>
-
-        <motion.div 
+        </div>        <motion.div 
           initial={{ opacity: 0, y: 50 }} 
           animate={{ opacity: 1, y: 0 }} 
           transition={{ duration: 0.6, delay: 0.5 }} 
-          className="mt-24 max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-xl relative overflow-hidden"
+          className="mt-12 sm:mt-16 md:mt-24 max-w-4xl mx-auto bg-white p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl shadow-xl relative overflow-hidden"
           data-aos="fade-up"
           data-aos-delay="300"
         >
@@ -406,19 +459,19 @@ export const AllPrograms: React.FC = () => {
           
           {/* Animated corner accents */}
           <motion.div 
-            className="absolute top-0 left-0 w-16 h-16" 
+            className="absolute top-0 left-0 w-12 h-12 sm:w-16 sm:h-16" 
             animate={{ rotate: 360 }} 
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           >
-            <div className="w-32 h-32 rounded-full bg-gradient-to-r from-blue-300 to-cyan-200 opacity-20 -translate-x-16 -translate-y-16"></div>
+            <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-r from-blue-300 to-cyan-200 opacity-20 -translate-x-12 sm:-translate-x-16 -translate-y-12 sm:-translate-y-16"></div>
           </motion.div>
           
           <motion.div 
-            className="absolute bottom-0 right-0 w-16 h-16" 
+            className="absolute bottom-0 right-0 w-12 h-12 sm:w-16 sm:h-16" 
             animate={{ rotate: -360 }} 
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           >
-            <div className="w-32 h-32 rounded-full bg-gradient-to-r from-purple-300 to-pink-200 opacity-20 translate-x-16 translate-y-16"></div>
+            <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-r from-purple-300 to-pink-200 opacity-20 translate-x-12 sm:translate-x-16 translate-y-12 sm:translate-y-16"></div>
           </motion.div>
           
           <div className="relative z-10">
@@ -426,12 +479,12 @@ export const AllPrograms: React.FC = () => {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.5 }}
-              className="text-2xl md:text-3xl font-bold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600"
+              className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600"
             >
               ✨ All Internships Include:
             </motion.h3>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-5">
               {[
                 "Real-World Projects",
                 "Resume-Boosting Certifications",
@@ -446,18 +499,18 @@ export const AllPrograms: React.FC = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.7 + (index * 0.1), duration: 0.5 }}
                   whileHover={{ scale: 1.03 }}
-                  className="flex items-start bg-gradient-to-r from-white to-gray-50 p-3 rounded-lg shadow-sm border border-gray-100"
+                  className="flex items-start bg-gradient-to-r from-white to-gray-50 p-2.5 sm:p-3 rounded-lg shadow-sm border border-gray-100"
                 >
-                  <div className="flex-shrink-0 h-7 w-7 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center mr-3 shadow-sm">
+                  <div className="flex-shrink-0 h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center mr-2 sm:mr-3 shadow-sm">
                     <motion.span 
                       animate={{ scale: [1, 1.2, 1] }}
                       transition={{ duration: 2, repeat: Infinity }}
-                      className="text-white text-lg font-bold"
+                      className="text-white text-sm sm:text-base md:text-lg font-bold"
                     >
                       ✓
                     </motion.span>
                   </div>
-                  <p className="text-gray-700 font-medium py-1">{item}</p>
+                  <p className="text-gray-700 font-medium py-0.5 sm:py-1 text-xs sm:text-sm md:text-base">{item}</p>
                 </motion.div>
               ))}
             </div>
@@ -468,13 +521,13 @@ export const AllPrograms: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 1 }}
-          className="mt-16 text-center"
+          className="mt-12 sm:mt-16 text-center"
           data-aos="zoom-in"
           data-aos-delay="400"
         >
           <Link 
-            to="/#contact" 
-            className="relative inline-flex group items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-4 px-10 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl overflow-hidden"
+            to="/apply-internship" 
+            className="relative inline-flex group items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 md:px-10 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl overflow-hidden text-sm sm:text-base md:text-lg"
           >
             {/* Animation effect */}
             <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity"></span>
@@ -487,7 +540,7 @@ export const AllPrograms: React.FC = () => {
               Apply Now 
               <motion.svg 
                 xmlns="http://www.w3.org/2000/svg" 
-                className="h-5 w-5 ml-2" 
+                className="h-4 w-4 sm:h-5 sm:w-5 ml-2" 
                 fill="none" 
                 viewBox="0 0 24 24" 
                 stroke="currentColor"

@@ -21,6 +21,7 @@ import { TermsAndConditions } from './components/features/legal/TermsAndConditio
 import { MeetInternexis } from './components/pages/about/MeetInternexis';
 import { AllPrograms } from './components/pages/programs/AllPrograms';
 import InternshipProjects from './components/features/internships/InternshipProjects';
+import DomainDetails from './components/features/internships/DomainDetails';
 import CampusAmbassador from './components/features/campus-ambassador/CampusAmbassador';
 import InternshipApplication from './components/features/internships/InternshipApplication';
 import AdminDashboard from './components/features/admin/AdminDashboard';
@@ -45,24 +46,25 @@ import {
 function AppLayout() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
-
   return (
     <div className="font-sans bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
       {!isAdminRoute && <Navbar />}
-      {!isAdminRoute && <LiveChatButton />}        <Routes>
+      {!isAdminRoute && <LiveChatButton />}
+      
+      <Routes>
           {/* Routes for the different pages */}
           <Route path="/terms" element={<TermsOfService />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/cookie-policy" element={<CookiePolicy />} />
-          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-          <Route path="/meet-internexis" element={<MeetInternexis />} />
+          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />          <Route path="/meet-internexis" element={<MeetInternexis />} />
           
           {/* Routes for program pages */}
           <Route path="/all-programs" element={<AllPrograms />} />
           <Route path="/internship-projects" element={<InternshipProjects />} />
-          <Route path="/internship-projects/:domainSlug" element={<InternshipProjects />} />
-            {/* Service Routes */}
+          <Route path="/internship-projects/:domainSlug" element={<InternshipProjects />} />          <Route path="/domain-details/:domainSlug" element={<DomainDetails />} />
+          
+          {/* Service Routes */}
           <Route path="/digital-solutions" element={<DigitalSolutionsPage />} />
           <Route path="/hackathons" element={<HackathonsPage />} />
           <Route path="/work-with-us" element={<WorkWithUsPage />} />
@@ -85,9 +87,10 @@ function AppLayout() {
           
           {/* Admin Routes */}
           <Route path="/admin" element={<SimpleAdminLogin />} />
-          <Route path="/admin-login" element={<SimpleAdminLogin />} />
-          <Route path="/admin-dashboard" element={<AdminDashboard />} />
-          <Route path="/user-page" element={<UserPage />} />          {/* Home route with multiple sections */}
+          <Route path="/admin-login" element={<SimpleAdminLogin />} />          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/user-page" element={<UserPage />} />
+          
+          {/* Home route with multiple sections */}
           <Route
             path="/"
             element={
