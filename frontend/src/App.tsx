@@ -4,7 +4,6 @@ import { Hero } from './components/pages/home/Hero';
 import { LiveChatButton } from './components/ui/live-chat-button';
 import { About } from './components/pages/about/About';
 import { Programs } from './components/pages/programs/Programs';
-import { Stats } from './components/pages/home/Stats';
 import { Pricing } from './components/features/internships/Pricing';
 import { ApplicationTracker } from './components/features/internships/ApplicationTracker';
 import { Certificates } from './components/features/internships/Certificates';
@@ -69,7 +68,6 @@ function AppLayout() {
                 <Hero />
                 <About />
                 <Programs />
-                <Stats />
                 <Pricing />
                 <ApplicationTracker />
                 <Certificates />
