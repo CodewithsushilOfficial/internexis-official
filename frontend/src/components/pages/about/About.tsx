@@ -1,129 +1,527 @@
 import React from 'react';
-import { Award, Globe, BookOpen, Lightbulb, Clock, GraduationCap, TrendingUp } from 'lucide-react';
-import { useTheme } from '../../../lib/hooks/use-theme';
+import { 
+  Globe, 
+  Code, 
+  Bot, 
+  Repeat, 
+  Users, 
+  Lightbulb, 
+  BookOpen, 
+  Wrench, 
+  BarChart3,
+  ArrowRight,
+  Check,
+  Sparkles,
+  Target,
+  Award,
+  Zap,
+  Shield,
+  Rocket,
+  Brain,
+  Star,
+  TrendingUp
+} from 'lucide-react';
 
 export const About: React.FC = () => {
-  // We're using the theme through Tailwind's dark mode classes
-  useTheme();
-  
   return (
-    <section className="py-16 md:py-24 relative overflow-hidden transition-colors duration-300 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-950" id="about">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -left-32 -top-32 w-64 h-64 bg-blue-400/10 dark:bg-blue-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute right-0 top-1/3 w-72 h-72 bg-purple-400/10 dark:bg-purple-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute left-1/4 bottom-0 w-96 h-96 bg-teal-400/10 dark:bg-teal-500/10 rounded-full blur-3xl"></div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-blue-950 overflow-hidden">
+      {/* Animated Background Pattern */}
+      <div className="absolute inset-0 bg-grid-slate-200 dark:bg-grid-slate-700/25 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" />
+      
+      {/* Floating Particles */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-20 left-10 w-4 h-4 bg-blue-400/20 rounded-full animate-bounce [animation-delay:0s]" />
+        <div className="absolute top-40 right-20 w-3 h-3 bg-purple-400/20 rounded-full animate-bounce [animation-delay:0.5s]" />
+        <div className="absolute bottom-40 left-20 w-5 h-5 bg-teal-400/20 rounded-full animate-bounce [animation-delay:1s]" />
+        <div className="absolute bottom-20 right-10 w-4 h-4 bg-orange-400/20 rounded-full animate-bounce [animation-delay:1.5s]" />
       </div>
-
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
-        <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16" data-aos="fade-up">
-          <span className="px-3 py-1 text-xs font-medium text-blue-600 dark:text-blue-400 rounded-full bg-blue-100 dark:bg-blue-900/30 mb-4 inline-block">ABOUT US</span>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-400 dark:to-violet-400">
-            Internexis – Where Internships Meet Innovation
-          </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-400 dark:to-violet-400 mx-auto mb-6"></div>
-        </div>
-
-        <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
-          <div className="md:w-1/2 relative" data-aos="fade-right">
-            <div className="absolute -z-10 w-72 h-72 bg-gradient-to-br from-blue-200 to-blue-100 dark:from-blue-800/30 dark:to-blue-900/30 rounded-full blur-3xl opacity-70 top-1/2 -translate-x-1/2 -translate-y-1/2"></div>
-            <div className="relative rounded-2xl overflow-hidden shadow-xl transform transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl border border-gray-200/50 dark:border-gray-700/50">
-              <img 
-                src="https://images.pexels.com/photos/3184393/pexels-photo-3184393.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
-                alt="Students working on computers" 
-                className="w-full h-auto object-cover"
-              />
-              {/* Color overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60 dark:opacity-70"></div>
+        {/* Who We Are Section with Hero Image */}
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-full mb-6">
+              <Star className="w-5 h-5 text-yellow-500 mr-2" />
+              <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">WHO WE ARE</span>
             </div>
-            <div className="grid grid-cols-3 gap-4 mt-4 transform translate-y-[-20px]" data-aos="fade-up" data-aos-delay="200">
-              <div className="bg-white dark:bg-gray-800 shadow-lg border border-gray-100 dark:border-gray-700 rounded-xl p-4 flex flex-col items-center transform transition-transform hover:-translate-y-1 hover:shadow-xl">
-                <div className="rounded-full bg-blue-100 dark:bg-blue-900/30 p-3 mb-3">
-                  <Award className="text-blue-600 dark:text-blue-400" size={20} />
-                </div>
-                <p className="text-center text-sm font-medium text-gray-900 dark:text-gray-100">Certified</p>
-              </div>
-              <div className="bg-white dark:bg-gray-800 shadow-lg border border-gray-100 dark:border-gray-700 rounded-xl p-4 flex flex-col items-center transform transition-transform hover:-translate-y-1 hover:shadow-xl">
-                <div className="rounded-full bg-purple-100 dark:bg-purple-900/30 p-3 mb-3">
-                  <Globe className="text-purple-600 dark:text-purple-400" size={20} />
-                </div>
-                <p className="text-center text-sm font-medium text-gray-900 dark:text-gray-100">Virtual</p>
-              </div>
-              <div className="bg-white dark:bg-gray-800 shadow-lg border border-gray-100 dark:border-gray-700 rounded-xl p-4 flex flex-col items-center transform transition-transform hover:-translate-y-1 hover:shadow-xl">
-                <div className="rounded-full bg-teal-100 dark:bg-teal-900/30 p-3 mb-3">
-                  <BookOpen className="text-teal-600 dark:text-teal-400" size={20} />
-                </div>
-                <p className="text-center text-sm font-medium text-gray-900 dark:text-gray-100">Practical</p>
-              </div>
-            </div>
+            <h2 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-teal-600 bg-clip-text text-transparent">
+                Internexis Technologies
+              </span>
+            </h2>
+            <div className="w-32 h-1.5 bg-gradient-to-r from-blue-500 via-purple-500 to-teal-500 mx-auto mb-8 rounded-full" />
           </div>
+          
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="space-y-8">
+              <div className="relative">
+                <div className="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-blue-500 to-purple-500 rounded-full" />
+                <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed pl-8">
+                  Internexis Technologies is pioneering the future of professional development by creating 
+                  seamless connections between academic excellence and industry innovation. We specialize 
+                  in transforming theoretical knowledge into practical expertise through hands-on experience.
+                </p>
+              </div>
+              
+              <div className="relative">
+                <div className="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-purple-500 to-teal-500 rounded-full" />
+                <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed pl-8">
+                  Our comprehensive platform spans multiple cutting-edge domains including 
+                  <span className="font-bold text-blue-600 dark:text-blue-400"> Web Development</span>, 
+                  <span className="font-bold text-purple-600 dark:text-purple-400"> Agentic AI</span>, 
+                  <span className="font-bold text-teal-600 dark:text-teal-400"> Automation</span>, and 
+                  <span className="font-bold text-orange-600 dark:text-orange-400"> Freelance Projects</span>.
+                </p>
+              </div>
 
-          <div className="md:w-1/2" data-aos="fade-left">
-            <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-              At Internexis, we're redefining internships for the modern student. As an AICTE-authorized, ISO-certified, and Govt. of Technical Education-supported platform, we offer virtual, project-based internships at a fraction of traditional costs — starting at just ₹99.
-            </p>
-            <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
-              We help you go beyond certificates by providing real-world experience, project mentorship, and career-ready skills.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div 
-                className="bg-white dark:bg-gray-800/50 p-5 rounded-xl border border-gray-100 dark:border-gray-700/50 shadow-md hover:shadow-xl group transition-all duration-300 hover:border-blue-500 dark:hover:border-blue-400"
-                data-aos="zoom-in"
-                data-aos-delay="100"
-              >
-                <div className="bg-gradient-to-br from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500 rounded-lg h-10 w-10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
-                  <Lightbulb className="text-white" size={20} />
+              {/* Stats Cards */}
+              <div className="grid grid-cols-2 gap-4 mt-8">
+                <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 transform hover:scale-105 transition-all duration-300">
+                  <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">50+</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">Projects Completed</div>
                 </div>
-                <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Real Projects</h3>
-                <p className="text-gray-700 dark:text-gray-300">Work on actual projects that build your portfolio and experience.</p>
-              </div>
-              
-              <div 
-                className="bg-white dark:bg-gray-800/50 p-5 rounded-xl border border-gray-100 dark:border-gray-700/50 shadow-md hover:shadow-xl group transition-all duration-300 hover:border-purple-500 dark:hover:border-purple-400"
-                data-aos="zoom-in"
-                data-aos-delay="200"
-              >
-                <div className="bg-gradient-to-br from-purple-500 to-purple-600 dark:from-purple-400 dark:to-purple-500 rounded-lg h-10 w-10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
-                  <Clock className="text-white" size={20} />
+                <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 transform hover:scale-105 transition-all duration-300">
+                  <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">500+</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">Students Trained</div>
                 </div>
-                <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">Flexible Learning</h3>
-                <p className="text-gray-700 dark:text-gray-300">Complete internships at your own pace, from anywhere.</p>
-              </div>
-              
-              <div 
-                className="bg-white dark:bg-gray-800/50 p-5 rounded-xl border border-gray-100 dark:border-gray-700/50 shadow-md hover:shadow-xl group transition-all duration-300 hover:border-teal-500 dark:hover:border-teal-400"
-                data-aos="zoom-in"
-                data-aos-delay="300"
-              >
-                <div className="bg-gradient-to-br from-teal-500 to-teal-600 dark:from-teal-400 dark:to-teal-500 rounded-lg h-10 w-10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
-                  <GraduationCap className="text-white" size={20} />
-                </div>
-                <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">Expert Mentorship</h3>
-                <p className="text-gray-700 dark:text-gray-300">Get guidance from industry professionals throughout your journey.</p>
-              </div>
-              
-              <div 
-                className="bg-white dark:bg-gray-800/50 p-5 rounded-xl border border-gray-100 dark:border-gray-700/50 shadow-md hover:shadow-xl group transition-all duration-300 hover:border-amber-500 dark:hover:border-amber-400"
-                data-aos="zoom-in"
-                data-aos-delay="400"
-              >
-                <div className="bg-gradient-to-br from-amber-500 to-amber-600 dark:from-amber-400 dark:to-amber-500 rounded-lg h-10 w-10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
-                  <TrendingUp className="text-white" size={20} />
-                </div>
-                <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">Career Growth</h3>
-                <p className="text-gray-700 dark:text-gray-300">Top performers receive job referrals and career opportunities.</p>
               </div>
             </div>
             
-            <div className="mt-8 text-center md:text-left" data-aos="fade-up">
-              <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-full shadow-lg hover:shadow-xl transform transition-all duration-300 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-opacity-50">
-                Join Internexis Today
-              </button>
+            <div className="relative">
+              {/* 3D Card Effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-3xl transform rotate-3 scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-teal-500/10 rounded-3xl transform -rotate-2 scale-102" />
+              
+              <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-700 backdrop-blur-sm transform hover:scale-105 transition-all duration-500">
+                <div className="flex items-center mb-6">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center mr-4">
+                    <Globe className="w-8 h-8 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                      Global Impact
+                    </h3>
+                    <div className="flex items-center mt-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-6">
+                  Connecting learners worldwide with industry opportunities and real-world projects 
+                  that make a difference in the global technology landscape.
+                </p>
+                
+                {/* Progress Bars */}
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between text-sm mb-2">
+                      <span className="text-gray-600 dark:text-gray-400">Innovation</span>
+                      <span className="text-blue-600 dark:text-blue-400">95%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full w-[95%]"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex justify-between text-sm mb-2">
+                      <span className="text-gray-600 dark:text-gray-400">Quality</span>
+                      <span className="text-purple-600 dark:text-purple-400">98%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="bg-gradient-to-r from-purple-500 to-teal-500 h-2 rounded-full w-[98%]"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Our Digital Solutions with Enhanced Design */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-gray-50 to-blue-50 dark:from-gray-800/50 dark:to-blue-900/20">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-full mb-6">
+              <Rocket className="w-5 h-5 text-blue-500 mr-2" />
+              <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">OUR SOLUTIONS</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+              Digital Solutions That 
+              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Transform</span>
+            </h2>
+            <div className="w-32 h-1.5 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-8 rounded-full" />
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Solution 1 */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110" />
+              <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-2">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-bl-3xl" />
+                
+                <div className="relative">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <Code className="w-8 h-8 text-white" />
+                  </div>
+                  
+                  <div className="flex items-center mb-4">
+                    <Check className="w-6 h-6 text-green-500 mr-3" />
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                      Custom Web & App Development
+                    </h3>
+                  </div>
+                  
+                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                    Build scalable, modern applications tailored to your specific business needs with cutting-edge technologies.
+                  </p>
+                  
+                  <div className="flex items-center text-blue-600 dark:text-blue-400 font-semibold group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300">
+                    <span className="mr-2">Learn More</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Solution 2 */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110" />
+              <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-2">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-bl-3xl" />
+                
+                <div className="relative">
+                  <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <Bot className="w-8 h-8 text-white" />
+                  </div>
+                  
+                  <div className="flex items-center mb-4">
+                    <span className="text-3xl mr-3">🤖</span>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                      AI Solutions & Workflow Automation
+                    </h3>
+                  </div>
+                  
+                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                    Intelligent automation solutions that streamline processes and boost productivity with AI-powered workflows.
+                  </p>
+                  
+                  <div className="flex items-center text-purple-600 dark:text-purple-400 font-semibold group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors duration-300">
+                    <span className="mr-2">Learn More</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Solution 3 */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-teal-500/20 to-green-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110" />
+              <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-2">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-teal-500/10 to-green-500/10 rounded-bl-3xl" />
+                
+                <div className="relative">
+                  <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-teal-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <Repeat className="w-8 h-8 text-white" />
+                  </div>
+                  
+                  <div className="flex items-center mb-4">
+                    <span className="text-3xl mr-3">🔁</span>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                      Process Optimization
+                    </h3>
+                  </div>
+                  
+                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                    Enhance efficiency through strategic process analysis and optimization methodologies.
+                  </p>
+                  
+                  <div className="flex items-center text-teal-600 dark:text-teal-400 font-semibold group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300">
+                    <span className="mr-2">Learn More</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Solution 4 */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110" />
+              <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-2">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-bl-3xl" />
+                
+                <div className="relative">
+                  <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <Users className="w-8 h-8 text-white" />
+                  </div>
+                  
+                  <div className="flex items-center mb-4">
+                    <span className="text-3xl mr-3">🧑‍💻</span>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                      Freelance Tech Project Execution
+                    </h3>
+                  </div>
+                  
+                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                    Expert project delivery with flexible engagement models for all your technology needs.
+                  </p>
+                  
+                  <div className="flex items-center text-orange-600 dark:text-orange-400 font-semibold group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300">
+                    <span className="mr-2">Learn More</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>      {/* Our Commitment with 3D Effects */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0">
+          <img 
+            src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=1200&q=80" 
+            alt="Technology Background" 
+            className="w-full h-full object-cover opacity-5 dark:opacity-10"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-white/95 to-blue-50/95 dark:from-gray-900/95 dark:to-blue-950/95" />
+        </div>
+        
+        <div className="max-w-7xl mx-auto relative">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-full mb-6">
+              <Shield className="w-5 h-5 text-blue-500 mr-2" />
+              <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">OUR COMMITMENT</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+              What Drives Us 
+              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Forward</span>
+            </h2>
+            <div className="w-32 h-1.5 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-8 rounded-full" />
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-12">
+            {/* Commitment 1 */}
+            <div className="group text-center relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-3xl transform rotate-1 group-hover:rotate-2 transition-transform duration-500" />
+              
+              <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-4 transition-all duration-500">
+                <div className="relative inline-block mb-8">
+                  <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500 animate-pulse" />
+                  <div className="relative w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-2xl">
+                    <Sparkles className="w-12 h-12 text-white" />
+                  </div>
+                  {/* Floating Elements */}
+                  <div className="absolute -top-2 -right-2 w-4 h-4 bg-yellow-400 rounded-full animate-bounce [animation-delay:0s]" />
+                  <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-blue-400 rounded-full animate-bounce [animation-delay:0.5s]" />
+                </div>
+                
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                  Nurturing Talent
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-6">
+                  We believe in cultivating potential and transforming it into exceptional performance 
+                  through personalized guidance and mentorship programs.
+                </p>
+                
+                {/* Achievement Badge */}
+                <div className="inline-flex items-center px-4 py-2 bg-blue-100 dark:bg-blue-900/30 rounded-full">
+                  <TrendingUp className="w-4 h-4 text-blue-600 dark:text-blue-400 mr-2" />
+                  <span className="text-sm font-semibold text-blue-600 dark:text-blue-400">500+ Students Mentored</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Commitment 2 */}
+            <div className="group text-center relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-pink-500/5 rounded-3xl transform -rotate-1 group-hover:-rotate-2 transition-transform duration-500" />
+              
+              <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-4 transition-all duration-500">
+                <div className="relative inline-block mb-8">
+                  <div className="absolute inset-0 bg-purple-500/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500 animate-pulse [animation-delay:0.5s]" />
+                  <div className="relative w-24 h-24 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-2xl">
+                    <Brain className="w-12 h-12 text-white" />
+                  </div>
+                  {/* Floating Elements */}
+                  <div className="absolute -top-2 -right-2 w-4 h-4 bg-purple-400 rounded-full animate-bounce [animation-delay:0.2s]" />
+                  <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-pink-400 rounded-full animate-bounce [animation-delay:0.7s]" />
+                </div>
+                
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                  Driving Innovation
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-6">
+                  We push boundaries and embrace cutting-edge technologies to create solutions 
+                  that shape the future of digital transformation.
+                </p>
+                
+                {/* Achievement Badge */}
+                <div className="inline-flex items-center px-4 py-2 bg-purple-100 dark:bg-purple-900/30 rounded-full">
+                  <Lightbulb className="w-4 h-4 text-purple-600 dark:text-purple-400 mr-2" />
+                  <span className="text-sm font-semibold text-purple-600 dark:text-purple-400">50+ Innovations Delivered</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Commitment 3 */}
+            <div className="group text-center relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-teal-500/5 to-green-500/5 rounded-3xl transform rotate-1 group-hover:rotate-2 transition-transform duration-500" />
+              
+              <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-4 transition-all duration-500">
+                <div className="relative inline-block mb-8">
+                  <div className="absolute inset-0 bg-teal-500/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500 animate-pulse [animation-delay:1s]" />
+                  <div className="relative w-24 h-24 bg-gradient-to-br from-teal-500 to-teal-600 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-2xl">
+                    <Target className="w-12 h-12 text-white" />
+                  </div>
+                  {/* Floating Elements */}
+                  <div className="absolute -top-2 -right-2 w-4 h-4 bg-teal-400 rounded-full animate-bounce [animation-delay:0.3s]" />
+                  <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-green-400 rounded-full animate-bounce [animation-delay:0.8s]" />
+                </div>
+                
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                  Delivering Results
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-6">
+                  Our commitment to excellence ensures measurable outcomes that exceed expectations 
+                  and drive sustainable growth for our partners.
+                </p>
+                
+                {/* Achievement Badge */}
+                <div className="inline-flex items-center px-4 py-2 bg-teal-100 dark:bg-teal-900/30 rounded-full">
+                  <Award className="w-4 h-4 text-teal-600 dark:text-teal-400 mr-2" />
+                  <span className="text-sm font-semibold text-teal-600 dark:text-teal-400">98% Success Rate</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Your Journey Starts Here with Timeline Design */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800/50 dark:to-blue-900/20">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-full mb-6">
+              <Rocket className="w-5 h-5 text-blue-500 mr-2" />
+              <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">YOUR JOURNEY</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+              Your Success Journey 
+              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Starts Here</span>
+            </h2>
+            <div className="w-32 h-1.5 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-8 rounded-full" />
+          </div>
+          
+          <div className="relative">
+            {/* Timeline Line */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-500 via-purple-500 to-teal-500 rounded-full hidden md:block" />
+            
+            <div className="space-y-16">
+              {/* Journey Step 1 */}
+              <div className="relative flex flex-col md:flex-row items-center gap-12">
+                <div className="md:w-1/2 md:pr-12 text-center md:text-right">
+                  <div className="relative inline-block mb-6">
+                    <img 
+                      src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=500&q=80" 
+                      alt="Learning Environment" 
+                      className="w-80 h-48 object-cover rounded-2xl shadow-xl border-4 border-white dark:border-gray-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-blue-500/20 to-transparent rounded-2xl" />
+                  </div>
+                </div>
+                  {/* Timeline Node */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full items-center justify-center shadow-2xl border-4 border-white dark:border-gray-800 z-10 hidden md:flex">
+                  <BookOpen className="w-10 h-10 text-white" />
+                </div>
+                
+                <div className="md:w-1/2 md:pl-12 text-center md:text-left">
+                  <div className="flex items-center justify-center md:justify-start mb-4">
+                    <span className="text-4xl mr-4">📘</span>
+                    <h3 className="text-3xl font-bold text-gray-900 dark:text-white">Learn</h3>
+                  </div>
+                  <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                    Comprehensive internships combined with expert mentorship to build foundational 
+                    knowledge and industry-relevant skills through structured learning paths.
+                  </p>
+                  <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+                    <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-sm font-medium">Mentorship</span>
+                    <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-sm font-medium">Internships</span>
+                    <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-sm font-medium">Skills</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Journey Step 2 */}
+              <div className="relative flex flex-col md:flex-row-reverse items-center gap-12">
+                <div className="md:w-1/2 md:pl-12 text-center md:text-left">
+                  <div className="relative inline-block mb-6">
+                    <img 
+                      src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=500&q=80" 
+                      alt="Building Projects" 
+                      className="w-80 h-48 object-cover rounded-2xl shadow-xl border-4 border-white dark:border-gray-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-purple-500/20 to-transparent rounded-2xl" />
+                  </div>
+                </div>
+                  {/* Timeline Node */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full items-center justify-center shadow-2xl border-4 border-white dark:border-gray-800 z-10 hidden md:flex">
+                  <Wrench className="w-10 h-10 text-white" />
+                </div>
+                
+                <div className="md:w-1/2 md:pr-12 text-center md:text-right">
+                  <div className="flex items-center justify-center md:justify-end mb-4">
+                    <h3 className="text-3xl font-bold text-gray-900 dark:text-white mr-4">Build</h3>
+                    <span className="text-4xl">🛠️</span>
+                  </div>
+                  <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                    Work on real projects that matter, creating a compelling portfolio while gaining 
+                    hands-on experience with cutting-edge technologies and industry best practices.
+                  </p>
+                  <div className="flex flex-wrap gap-2 justify-center md:justify-end">
+                    <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full text-sm font-medium">Real Projects</span>
+                    <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full text-sm font-medium">Portfolio</span>
+                    <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full text-sm font-medium">Experience</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Journey Step 3 */}
+              <div className="relative flex flex-col md:flex-row items-center gap-12">
+                <div className="md:w-1/2 md:pr-12 text-center md:text-right">
+                  <div className="relative inline-block mb-6">
+                    <img 
+                      src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=500&q=80" 
+                      alt="Business Growth" 
+                      className="w-80 h-48 object-cover rounded-2xl shadow-xl border-4 border-white dark:border-gray-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-teal-500/20 to-transparent rounded-2xl" />
+                  </div>
+                </div>
+                  {/* Timeline Node */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-20 h-20 bg-gradient-to-br from-teal-500 to-teal-600 rounded-full items-center justify-center shadow-2xl border-4 border-white dark:border-gray-800 z-10 hidden md:flex">
+                  <BarChart3 className="w-10 h-10 text-white" />
+                </div>
+                
+                <div className="md:w-1/2 md:pl-12 text-center md:text-left">
+                  <div className="flex items-center justify-center md:justify-start mb-4">
+                    <span className="text-4xl mr-4">📈</span>
+                    <h3 className="text-3xl font-bold text-gray-900 dark:text-white">Scale</h3>
+                  </div>
+                  <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                    Accelerate business growth through our comprehensive digital solutions and 
+                    strategic technology implementations that drive measurable results.
+                  </p>
+                  <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+                    <span className="px-3 py-1 bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 rounded-full text-sm font-medium">Growth</span>
+                    <span className="px-3 py-1 bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 rounded-full text-sm font-medium">Digital Solutions</span>
+                    <span className="px-3 py-1 bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 rounded-full text-sm font-medium">Results</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>        </div>
+      </section>
+    </div>
   );
 };

@@ -4,7 +4,6 @@ import { Hero } from './components/pages/home/Hero';
 import { LiveChatButton } from './components/ui/live-chat-button';
 import { About } from './components/pages/about/About';
 import { Programs } from './components/pages/programs/Programs';
-import { WhyChoose } from './components/pages/home/WhyChoose';
 import { Stats } from './components/pages/home/Stats';
 import { Pricing } from './components/features/internships/Pricing';
 import { ApplicationTracker } from './components/features/internships/ApplicationTracker';
@@ -66,12 +65,10 @@ function AppLayout() {
           {/* Home route with multiple sections */}
           <Route
             path="/"
-            element={
-              <main>
+            element={              <main>
                 <Hero />
                 <About />
                 <Programs />
-                <WhyChoose />
                 <Stats />
                 <Pricing />
                 <ApplicationTracker />
