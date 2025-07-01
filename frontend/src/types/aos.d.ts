@@ -1,4 +1,4 @@
-declare module 'aos' {
+declare module "aos" {
   interface AosOptions {
     offset?: number;
     delay?: number;

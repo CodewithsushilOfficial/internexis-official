@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { X } from 'lucide-react';
+import React, { useState } from "react";
+import { X } from "lucide-react";
 
 interface AccessCodeModalProps {
   isOpen: boolean;
@@ -14,21 +14,21 @@ const AccessCodeModal: React.FC<AccessCodeModalProps> = ({
   onClose,
   onSubmit,
   domain,
-  domainTitle
+  domainTitle,
 }) => {
-  const [accessCode, setAccessCode] = useState('');
-  const [error, setError] = useState('');
+  const [accessCode, setAccessCode] = useState("");
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-    
+    setError("");
+
     if (!accessCode.trim()) {
-      setError('Please enter an access code');
+      setError("Please enter an access code");
       return;
     }
-    
+
     setIsLoading(true);
     // Simulate loading
     setTimeout(() => {
@@ -50,7 +50,7 @@ const AccessCodeModal: React.FC<AccessCodeModalProps> = ({
           >
             <X size={20} />
           </button>
-          
+
           <div className="p-6">
             <div className="text-center mb-6">
               <h3 className="text-xl font-bold text-gray-900 mb-2">
@@ -60,10 +60,13 @@ const AccessCodeModal: React.FC<AccessCodeModalProps> = ({
                 Please enter the access code to view {domain} projects
               </p>
             </div>
-            
+
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
-                <label htmlFor="accessCode" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="accessCode"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Access Code
                 </label>
                 <input
@@ -71,22 +74,22 @@ const AccessCodeModal: React.FC<AccessCodeModalProps> = ({
                   id="accessCode"
                   value={accessCode}
                   onChange={(e) => setAccessCode(e.target.value)}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors ${error ? 'border-red-500' : 'border-gray-300'}`}
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors ${error ? "border-red-500" : "border-gray-300"}`}
                   placeholder="Enter access code"
                   autoComplete="off"
                 />
                 {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
               </div>
-              
+
               <button
                 type="submit"
                 disabled={isLoading}
-                className={`w-full py-2 px-4 rounded-lg font-medium text-white transition-colors ${isLoading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}`}
+                className={`w-full py-2 px-4 rounded-lg font-medium text-white transition-colors ${isLoading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}
               >
-                {isLoading ? 'Processing...' : 'Submit'}
+                {isLoading ? "Processing..." : "Submit"}
               </button>
             </form>
-            
+
             <div className="mt-4 text-center text-sm text-gray-500">
               <p>Contact your internship mentor to get the access code</p>
             </div>

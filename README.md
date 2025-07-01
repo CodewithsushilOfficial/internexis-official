@@ -1,6 +1,6 @@
-# Internexis Official - MERN Stack Application
+# Internexis Technologies Official - MERN Stack Application
 
-A full-stack MERN (MongoDB, Express, React, Node.js) application for Internexis with three different form submission types: Campus Ambassador, Career Applications, and Internship Applications.
+A full-stack MERN (MongoDB, Express, React, Node.js) application for Internexis Technologies - a self-independent EduTech and digital services platform providing internships, training courses, hackathons, career guidance, freelance projects, and digital solutions for students, professionals, and businesses.
 
 ## 🏗️ Project Structure
 

@@ -1,5 +1,5 @@
-import React from 'react';
-import AmbassadorForm from '../components/features/campus-ambassador/AmbassadorForm';
+import React from "react";
+import AmbassadorForm from "../components/features/campus-ambassador/AmbassadorForm";
 
 const CampusAmbassadorTestPage: React.FC = () => {
   return (
@@ -13,7 +13,8 @@ const CampusAmbassadorTestPage: React.FC = () => {
             </h1>
           </div>
         </div>
-      </div>      {/* Content */}
+      </div>{" "}
+      {/* Content */}
       <div className="py-8">
         <AmbassadorForm />
       </div>

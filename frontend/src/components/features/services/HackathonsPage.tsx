@@ -1,29 +1,41 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Zap, Calendar, Trophy, Users, Bell, Code2, Rocket } from 'lucide-react';
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  Zap,
+  Calendar,
+  Trophy,
+  Users,
+  Bell,
+  Code2,
+  Rocket,
+} from "lucide-react";
 
 export const HackathonsPage: React.FC = () => {
   const features = [
     {
       icon: <Bell className="w-6 h-6" />,
       title: "Daily Event Alerts",
-      description: "Get notified about hackathons, coding competitions, and tech events happening worldwide"
+      description:
+        "Get notified about hackathons, coding competitions, and tech events happening worldwide",
     },
     {
       icon: <Users className="w-6 h-6" />,
       title: "Registration Support",
-      description: "We help you register for events and provide guidance on requirements"
+      description:
+        "We help you register for events and provide guidance on requirements",
     },
     {
       icon: <Code2 className="w-6 h-6" />,
       title: "Project Mentoring",
-      description: "Expert mentors to guide your project development and strategy"
+      description:
+        "Expert mentors to guide your project development and strategy",
     },
     {
       icon: <Trophy className="w-6 h-6" />,
       title: "Winning Strategies",
-      description: "Learn proven techniques and strategies to maximize your chances of winning"
-    }
+      description:
+        "Learn proven techniques and strategies to maximize your chances of winning",
+    },
   ];
 
   const upcomingEvents = [
@@ -32,35 +44,44 @@ export const HackathonsPage: React.FC = () => {
       date: "Dec 15-17, 2024",
       type: "National",
       prize: "₹1,00,000",
-      status: "Open"
+      status: "Open",
     },
     {
       name: "HackWithInfy",
       date: "Jan 20-22, 2025",
       type: "Corporate",
       prize: "₹5,00,000",
-      status: "Coming Soon"
+      status: "Coming Soon",
     },
     {
       name: "NASA Space Apps Challenge",
       date: "Feb 10-12, 2025",
       type: "International",
       prize: "$30,000",
-      status: "Coming Soon"
+      status: "Coming Soon",
     },
     {
       name: "Microsoft Imagine Cup",
       date: "Mar 5-7, 2025",
       type: "Global",
       prize: "$100,000",
-      status: "Coming Soon"
-    }
+      status: "Coming Soon",
+    },
   ];
 
   const categories = [
-    "Web Development", "Mobile Apps", "AI/ML", "Blockchain", 
-    "IoT", "AR/VR", "Cybersecurity", "Game Development",
-    "Data Science", "Cloud Computing", "Open Innovation", "Social Good"
+    "Web Development",
+    "Mobile Apps",
+    "AI/ML",
+    "Blockchain",
+    "IoT",
+    "AR/VR",
+    "Cybersecurity",
+    "Game Development",
+    "Data Science",
+    "Cloud Computing",
+    "Open Innovation",
+    "Social Good",
   ];
 
   return (
@@ -77,16 +98,17 @@ export const HackathonsPage: React.FC = () => {
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full mb-8">
               <Zap className="w-10 h-10 text-white" />
             </div>
-            
+
             <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-gray-900 via-yellow-600 to-orange-600 bg-clip-text text-transparent dark:from-white dark:via-yellow-400 dark:to-orange-400 mb-6">
               ⚡ Hackathons & Tech Events
             </h1>
-            
+
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
-              Daily alerts, registration support, and project mentoring for events. 
-              Stay ahead of the competition with our comprehensive hackathon ecosystem.
+              Tech competitions, training courses, and skill-building events to
+              enhance your technical abilities. Join our hackathons and events
+              to learn, collaborate, and improve your skills on real projects.
             </p>
-            
+
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -105,7 +127,7 @@ export const HackathonsPage: React.FC = () => {
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">
             How We Support You
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
               <motion.div
@@ -137,7 +159,7 @@ export const HackathonsPage: React.FC = () => {
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">
             Upcoming Events
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {upcomingEvents.map((event, index) => (
               <motion.div
@@ -152,36 +174,44 @@ export const HackathonsPage: React.FC = () => {
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                     {event.name}
                   </h3>
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                    event.status === 'Open' 
-                      ? 'bg-green-100 text-green-800' 
-                      : 'bg-yellow-100 text-yellow-800'
-                  }`}>
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-medium ${
+                      event.status === "Open"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-yellow-100 text-yellow-800"
+                    }`}
+                  >
                     {event.status}
                   </span>
                 </div>
-                
+
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center">
                     <Calendar className="w-4 h-4 mr-2 text-gray-500" />
-                    <span className="text-gray-600 dark:text-gray-300">{event.date}</span>
+                    <span className="text-gray-600 dark:text-gray-300">
+                      {event.date}
+                    </span>
                   </div>
                   <div className="flex items-center">
                     <Trophy className="w-4 h-4 mr-2 text-gray-500" />
-                    <span className="text-gray-600 dark:text-gray-300">Prize Pool: {event.prize}</span>
+                    <span className="text-gray-600 dark:text-gray-300">
+                      Prize Pool: {event.prize}
+                    </span>
                   </div>
                   <div className="flex items-center">
                     <Zap className="w-4 h-4 mr-2 text-gray-500" />
-                    <span className="text-gray-600 dark:text-gray-300">{event.type} Event</span>
+                    <span className="text-gray-600 dark:text-gray-300">
+                      {event.type} Event
+                    </span>
                   </div>
                 </div>
-                
+
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="w-full mt-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-600 text-white rounded-lg font-medium hover:shadow-md transition-shadow duration-300"
                 >
-                  {event.status === 'Open' ? 'Register Now' : 'Get Notified'}
+                  {event.status === "Open" ? "Register Now" : "Get Notified"}
                 </motion.button>
               </motion.div>
             ))}
@@ -195,7 +225,7 @@ export const HackathonsPage: React.FC = () => {
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">
             Event Categories
           </h2>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {categories.map((category, index) => (
               <motion.div

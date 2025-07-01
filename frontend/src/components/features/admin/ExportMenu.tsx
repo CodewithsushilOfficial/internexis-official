@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Download, 
-  FileSpreadsheet, 
-  FileText, 
-  ChevronDown, 
-  Users, 
-  Briefcase, 
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Download,
+  FileSpreadsheet,
+  FileText,
+  ChevronDown,
+  Users,
+  Briefcase,
   GraduationCap,
   BarChart3,
   CheckCircle,
-  X
-} from 'lucide-react';
-import { ExportManager, type ApplicationData, type DashboardStats, type ApplicationCollection } from '../../../lib/utils/exportUtils';
+  X,
+} from "lucide-react";
+import {
+  ExportManager,
+  type ApplicationData,
+  type DashboardStats,
+  type ApplicationCollection,
+} from "../../../lib/utils/exportUtils";
 
 interface ExportMenuProps {
   applications: ApplicationData[];
@@ -29,45 +34,47 @@ export const ExportMenu: React.FC<ExportMenuProps> = ({
   stats,
   allApplications,
   isVisible,
-  onClose
+  onClose,
 }) => {
   const [isExporting, setIsExporting] = useState<string | null>(null);
   const [exportSuccess, setExportSuccess] = useState<string | null>(null);
 
-  const handleExport = async (type: 'current-xlsx' | 'current-csv' | 'all-xlsx' | 'summary') => {
+  const handleExport = async (
+    type: "current-xlsx" | "current-csv" | "all-xlsx" | "summary",
+  ) => {
     setIsExporting(type);
     setExportSuccess(null);
 
     try {
       switch (type) {
-        case 'current-xlsx':
+        case "current-xlsx":
           ExportManager.exportToExcel(applications, currentTab);
-          setExportSuccess('Excel file downloaded successfully!');
+          setExportSuccess("Excel file downloaded successfully!");
           break;
-        case 'current-csv':
+        case "current-csv":
           ExportManager.exportToCSV(applications, currentTab);
-          setExportSuccess('CSV file downloaded successfully!');
+          setExportSuccess("CSV file downloaded successfully!");
           break;
-        case 'all-xlsx':
+        case "all-xlsx":
           if (allApplications) {
             ExportManager.exportAllToExcel(
               allApplications.ambassadors,
               allApplications.careers,
-              allApplications.internships
+              allApplications.internships,
             );
-            setExportSuccess('All data exported successfully!');
+            setExportSuccess("All data exported successfully!");
           }
           break;
-        case 'summary':
+        case "summary":
           if (stats && allApplications) {
             ExportManager.exportSummaryReport(stats, allApplications);
-            setExportSuccess('Summary report downloaded successfully!');
+            setExportSuccess("Summary report downloaded successfully!");
           }
           break;
       }
     } catch (error) {
-      console.error('Export failed:', error);
-      alert('Export failed. Please try again.');
+      console.error("Export failed:", error);
+      alert("Export failed. Please try again.");
     } finally {
       setIsExporting(null);
       setTimeout(() => setExportSuccess(null), 3000);
@@ -76,24 +83,24 @@ export const ExportMenu: React.FC<ExportMenuProps> = ({
 
   const getTabDisplayName = (tab: string) => {
     switch (tab) {
-      case 'campus-ambassadors':
-        return 'Campus Ambassadors';
-      case 'careers':
-        return 'Career Applications';
-      case 'internships':
-        return 'Internship Applications';
+      case "campus-ambassadors":
+        return "Campus Ambassadors";
+      case "careers":
+        return "Career Applications";
+      case "internships":
+        return "Internship Applications";
       default:
-        return 'Applications';
+        return "Applications";
     }
   };
 
   const getTabIcon = (tab: string) => {
     switch (tab) {
-      case 'campus-ambassadors':
+      case "campus-ambassadors":
         return Users;
-      case 'careers':
+      case "careers":
         return Briefcase;
-      case 'internships':
+      case "internships":
         return GraduationCap;
       default:
         return FileText;
@@ -114,7 +121,7 @@ export const ExportMenu: React.FC<ExportMenuProps> = ({
             className="fixed inset-0 bg-black bg-opacity-50 z-40"
             onClick={onClose}
           />
-          
+
           {/* Export Menu */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: -20 }}
@@ -129,8 +136,12 @@ export const ExportMenu: React.FC<ExportMenuProps> = ({
                   <Download className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">Export Data</h3>
-                  <p className="text-sm text-gray-600">Download your data in various formats</p>
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    Export Data
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    Download your data in various formats
+                  </p>
                 </div>
               </div>
               <button
@@ -146,12 +157,14 @@ export const ExportMenu: React.FC<ExportMenuProps> = ({
               {exportSuccess && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
+                  animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   className="mx-6 mt-4 p-3 bg-green-50 border border-green-200 rounded-lg flex items-center space-x-2"
                 >
                   <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span className="text-sm text-green-800">{exportSuccess}</span>
+                  <span className="text-sm text-green-800">
+                    {exportSuccess}
+                  </span>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -166,18 +179,25 @@ export const ExportMenu: React.FC<ExportMenuProps> = ({
                 </h4>
                 <div className="space-y-2">
                   <button
-                    onClick={() => handleExport('current-xlsx')}
-                    disabled={isExporting === 'current-xlsx' || applications.length === 0}
+                    onClick={() => handleExport("current-xlsx")}
+                    disabled={
+                      isExporting === "current-xlsx" ||
+                      applications.length === 0
+                    }
                     className="w-full p-3 flex items-center justify-between bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 border border-green-200 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group"
                   >
                     <div className="flex items-center space-x-3">
                       <FileSpreadsheet className="w-5 h-5 text-green-600" />
                       <div className="text-left">
-                        <div className="font-medium text-gray-900">Excel Format (.xlsx)</div>
-                        <div className="text-xs text-gray-600">{applications.length} records • Formatted & styled</div>
+                        <div className="font-medium text-gray-900">
+                          Excel Format (.xlsx)
+                        </div>
+                        <div className="text-xs text-gray-600">
+                          {applications.length} records • Formatted & styled
+                        </div>
                       </div>
                     </div>
-                    {isExporting === 'current-xlsx' ? (
+                    {isExporting === "current-xlsx" ? (
                       <div className="w-5 h-5 border-2 border-green-600 border-t-transparent rounded-full animate-spin" />
                     ) : (
                       <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-green-600 transition-colors" />
@@ -185,18 +205,24 @@ export const ExportMenu: React.FC<ExportMenuProps> = ({
                   </button>
 
                   <button
-                    onClick={() => handleExport('current-csv')}
-                    disabled={isExporting === 'current-csv' || applications.length === 0}
+                    onClick={() => handleExport("current-csv")}
+                    disabled={
+                      isExporting === "current-csv" || applications.length === 0
+                    }
                     className="w-full p-3 flex items-center justify-between bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 border border-blue-200 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group"
                   >
                     <div className="flex items-center space-x-3">
                       <FileText className="w-5 h-5 text-blue-600" />
                       <div className="text-left">
-                        <div className="font-medium text-gray-900">CSV Format (.csv)</div>
-                        <div className="text-xs text-gray-600">{applications.length} records • Comma separated</div>
+                        <div className="font-medium text-gray-900">
+                          CSV Format (.csv)
+                        </div>
+                        <div className="text-xs text-gray-600">
+                          {applications.length} records • Comma separated
+                        </div>
                       </div>
                     </div>
-                    {isExporting === 'current-csv' ? (
+                    {isExporting === "current-csv" ? (
                       <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
                     ) : (
                       <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors" />
@@ -208,23 +234,30 @@ export const ExportMenu: React.FC<ExportMenuProps> = ({
               {/* All Data Section */}
               {allApplications && (
                 <div className="border-t border-gray-200 pt-4">
-                  <h4 className="text-sm font-medium text-gray-700 mb-3">Complete Database</h4>
+                  <h4 className="text-sm font-medium text-gray-700 mb-3">
+                    Complete Database
+                  </h4>
                   <div className="space-y-2">
                     <button
-                      onClick={() => handleExport('all-xlsx')}
-                      disabled={isExporting === 'all-xlsx'}
+                      onClick={() => handleExport("all-xlsx")}
+                      disabled={isExporting === "all-xlsx"}
                       className="w-full p-3 flex items-center justify-between bg-gradient-to-r from-purple-50 to-indigo-50 hover:from-purple-100 hover:to-indigo-100 border border-purple-200 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group"
                     >
                       <div className="flex items-center space-x-3">
                         <FileSpreadsheet className="w-5 h-5 text-purple-600" />
                         <div className="text-left">
-                          <div className="font-medium text-gray-900">All Applications (Excel)</div>
+                          <div className="font-medium text-gray-900">
+                            All Applications (Excel)
+                          </div>
                           <div className="text-xs text-gray-600">
-                            {(allApplications.ambassadors.length + allApplications.careers.length + allApplications.internships.length)} total records • Multiple sheets
+                            {allApplications.ambassadors.length +
+                              allApplications.careers.length +
+                              allApplications.internships.length}{" "}
+                            total records • Multiple sheets
                           </div>
                         </div>
                       </div>
-                      {isExporting === 'all-xlsx' ? (
+                      {isExporting === "all-xlsx" ? (
                         <div className="w-5 h-5 border-2 border-purple-600 border-t-transparent rounded-full animate-spin" />
                       ) : (
                         <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-purple-600 transition-colors" />
@@ -233,18 +266,22 @@ export const ExportMenu: React.FC<ExportMenuProps> = ({
 
                     {stats && (
                       <button
-                        onClick={() => handleExport('summary')}
-                        disabled={isExporting === 'summary'}
+                        onClick={() => handleExport("summary")}
+                        disabled={isExporting === "summary"}
                         className="w-full p-3 flex items-center justify-between bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 border border-orange-200 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group"
                       >
                         <div className="flex items-center space-x-3">
                           <BarChart3 className="w-5 h-5 text-orange-600" />
                           <div className="text-left">
-                            <div className="font-medium text-gray-900">Summary Report</div>
-                            <div className="text-xs text-gray-600">Statistics + data • Executive overview</div>
+                            <div className="font-medium text-gray-900">
+                              Summary Report
+                            </div>
+                            <div className="text-xs text-gray-600">
+                              Statistics + data • Executive overview
+                            </div>
                           </div>
                         </div>
-                        {isExporting === 'summary' ? (
+                        {isExporting === "summary" ? (
                           <div className="w-5 h-5 border-2 border-orange-600 border-t-transparent rounded-full animate-spin" />
                         ) : (
                           <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-orange-600 transition-colors" />
@@ -260,7 +297,9 @@ export const ExportMenu: React.FC<ExportMenuProps> = ({
                 <div className="text-center py-4 text-gray-500">
                   <FileText className="w-8 h-8 mx-auto mb-2 text-gray-300" />
                   <p className="text-sm">No data available to export</p>
-                  <p className="text-xs">Try adjusting your filters or search criteria</p>
+                  <p className="text-xs">
+                    Try adjusting your filters or search criteria
+                  </p>
                 </div>
               )}
             </div>

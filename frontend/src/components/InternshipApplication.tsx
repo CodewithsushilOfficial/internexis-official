@@ -1,28 +1,28 @@
-import React, { useState } from 'react';
-import { internshipService, InternshipFormData } from '../lib/services';
+import React, { useState } from "react";
+import { internshipService, InternshipFormData } from "../lib/services";
 
 const InternshipApplication: React.FC = () => {
   const [formData, setFormData] = useState<InternshipFormData>({
-    name: '',
-    email: '',
-    phone: '',
-    domain: '',
-    college: ''
+    name: "",
+    email: "",
+    phone: "",
+    domain: "",
+    college: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<{
-    type: 'success' | 'error';
+    type: "success" | "error";
     text: string;
   } | null>(null);
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev: InternshipFormData) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -33,33 +33,37 @@ const InternshipApplication: React.FC = () => {
 
     try {
       const result = await internshipService.submitApplication(formData);
-      
+
       if (result.success) {
         setMessage({
-          type: 'success',
-          text: result.message || 'Internship application submitted successfully!'
+          type: "success",
+          text:
+            result.message || "Internship application submitted successfully!",
         });
-        
+
         // Reset form
         setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          domain: '',
-          college: ''
+          name: "",
+          email: "",
+          phone: "",
+          domain: "",
+          college: "",
         });
       } else {
         setMessage({
-          type: 'error',
-          text: result.message || 'Failed to submit application'
+          type: "error",
+          text: result.message || "Failed to submit application",
         });
       }
     } catch (error: unknown) {
-      console.error('Submission error:', error);
-      const errorMessage = error instanceof Error ? error.message : 'Failed to submit application. Please try again.';
+      console.error("Submission error:", error);
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Failed to submit application. Please try again.";
       setMessage({
-        type: 'error',
-        text: errorMessage
+        type: "error",
+        text: errorMessage,
       });
     } finally {
       setIsSubmitting(false);
@@ -71,20 +75,25 @@ const InternshipApplication: React.FC = () => {
       <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
         Internship Application
       </h2>
-      
+
       {message && (
-        <div className={`mb-6 p-4 rounded-lg ${
-          message.type === 'success' 
-            ? 'bg-green-100 border border-green-400 text-green-700' 
-            : 'bg-red-100 border border-red-400 text-red-700'
-        }`}>
+        <div
+          className={`mb-6 p-4 rounded-lg ${
+            message.type === "success"
+              ? "bg-green-100 border border-green-400 text-green-700"
+              : "bg-red-100 border border-red-400 text-red-700"
+          }`}
+        >
           {message.text}
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+          <label
+            htmlFor="name"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
             Full Name *
           </label>
           <input
@@ -100,7 +109,10 @@ const InternshipApplication: React.FC = () => {
         </div>
 
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
             Email Address *
           </label>
           <input
@@ -116,7 +128,10 @@ const InternshipApplication: React.FC = () => {
         </div>
 
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+          <label
+            htmlFor="phone"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
             Phone Number *
           </label>
           <input
@@ -132,7 +147,10 @@ const InternshipApplication: React.FC = () => {
         </div>
 
         <div>
-          <label htmlFor="domain" className="block text-sm font-medium text-gray-700 mb-2">
+          <label
+            htmlFor="domain"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
             Domain *
           </label>
           <select
@@ -156,7 +174,10 @@ const InternshipApplication: React.FC = () => {
         </div>
 
         <div>
-          <label htmlFor="college" className="block text-sm font-medium text-gray-700 mb-2">
+          <label
+            htmlFor="college"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
             College Name *
           </label>
           <input
@@ -176,11 +197,11 @@ const InternshipApplication: React.FC = () => {
           disabled={isSubmitting}
           className={`w-full py-3 px-6 rounded-md font-medium text-white transition-colors ${
             isSubmitting
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           }`}
         >
-          {isSubmitting ? 'Submitting...' : 'Submit Application'}
+          {isSubmitting ? "Submitting..." : "Submit Application"}
         </button>
       </form>
     </div>

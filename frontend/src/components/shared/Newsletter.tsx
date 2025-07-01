@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { Send, Bell } from 'lucide-react';
+import React, { useState } from "react";
+import { Send, Bell } from "lucide-react";
 
 export const Newsletter: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus('success');
-    setEmail('');
-    setTimeout(() => setStatus('idle'), 3000);
+    setStatus("success");
+    setEmail("");
+    setTimeout(() => setStatus("idle"), 3000);
   };
 
   return (
@@ -21,7 +21,8 @@ export const Newsletter: React.FC = () => {
             Stay Updated with Latest Opportunities
           </h2>
           <p className="text-blue-100 mb-8">
-            Get exclusive internship alerts, industry insights, and career tips delivered to your inbox
+            Get exclusive internship alerts, industry insights, and career tips
+            delivered to your inbox
           </p>
 
           <form onSubmit={handleSubmit} className="max-w-md mx-auto">
@@ -44,15 +45,15 @@ export const Newsletter: React.FC = () => {
             </div>
           </form>
 
-          {status === 'success' && (
+          {status === "success" && (
             <p className="mt-4 text-sm text-blue-100">
               Thanks for subscribing! Check your email for confirmation.
             </p>
           )}
 
           <p className="mt-6 text-sm text-blue-100">
-            By subscribing, you agree to receive updates from Internexis.
-            You can unsubscribe at any time.
+            By subscribing, you agree to receive updates from Internexis. You
+            can unsubscribe at any time.
           </p>
         </div>
       </div>

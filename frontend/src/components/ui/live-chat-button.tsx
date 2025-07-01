@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { MessageCircle, X, Send } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from "react";
+import { MessageCircle, X, Send } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export const LiveChatButton: React.FC = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -19,13 +19,9 @@ export const LiveChatButton: React.FC = () => {
         whileTap={{ scale: 0.95 }}
         aria-label="Open chat support"
       >
-        {isChatOpen ? (
-          <X size={24} />
-        ) : (
-          <MessageCircle size={24} />
-        )}
+        {isChatOpen ? <X size={24} /> : <MessageCircle size={24} />}
       </motion.button>
-      
+
       {/* Chat window */}
       <AnimatePresence>
         {isChatOpen && (
@@ -51,7 +47,7 @@ export const LiveChatButton: React.FC = () => {
                     </div>
                   </div>
                 </div>
-                <button 
+                <button
                   onClick={toggleChat}
                   className="text-white/80 hover:text-white transition-colors"
                 >
@@ -59,7 +55,7 @@ export const LiveChatButton: React.FC = () => {
                 </button>
               </div>
             </div>
-            
+
             {/* Chat messages */}
             <div className="h-80 overflow-y-auto p-4 flex flex-col gap-3">
               <div className="flex items-start gap-2">
@@ -67,12 +63,17 @@ export const LiveChatButton: React.FC = () => {
                   A
                 </div>
                 <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 max-w-[85%]">
-                  <p className="text-gray-800 dark:text-gray-200 text-sm">Hi there! 👋 Welcome to Internexis Technologies. How can I assist you today?</p>
-                  <span className="text-xs text-gray-500 dark:text-gray-400 mt-1 block">10:32 AM</span>
+                  <p className="text-gray-800 dark:text-gray-200 text-sm">
+                    Hi there! 👋 Welcome to Internexis Technologies. How can I
+                    assist you today?
+                  </p>
+                  <span className="text-xs text-gray-500 dark:text-gray-400 mt-1 block">
+                    10:32 AM
+                  </span>
                 </div>
               </div>
             </div>
-            
+
             {/* Chat input */}
             <div className="border-t border-gray-200 dark:border-gray-700 p-3">
               <form className="flex items-center gap-2">
@@ -81,7 +82,7 @@ export const LiveChatButton: React.FC = () => {
                   placeholder="Type your message..."
                   className="flex-1 border border-gray-200 dark:border-gray-600 rounded-full py-2 px-4 text-sm focus:outline-none focus:border-primary-500 dark:focus:border-primary-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                 />
-                <button 
+                <button
                   type="submit"
                   className="w-8 h-8 rounded-full bg-primary-500 text-white flex items-center justify-center hover:bg-primary-600 transition-colors"
                 >

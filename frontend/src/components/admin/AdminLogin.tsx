@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { EyeIcon, EyeSlashIcon, LockClosedIcon } from '@heroicons/react/24/outline';
-import axios from 'axios';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  EyeIcon,
+  EyeSlashIcon,
+  LockClosedIcon,
+} from "@heroicons/react/24/outline";
+import axios from "axios";
 
 interface AdminLoginProps {
   onLogin: (token: string) => void;
@@ -9,33 +13,38 @@ interface AdminLoginProps {
 
 const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
   const [credentials, setCredentials] = useState({
-    username: '',
-    password: ''
+    username: "",
+    password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-      const response = await axios.post(`${API_URL}/api/admin/login`, credentials);
-      
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const response = await axios.post(
+        `${API_URL}/api/admin/login`,
+        credentials,
+      );
+
       if (response.data.success) {
-        const token = response.data.token || 'admin-token';
-        localStorage.setItem('adminToken', token);
+        const token = response.data.token || "admin-token";
+        localStorage.setItem("adminToken", token);
         onLogin(token);
       } else {
-        setError(response.data.message || 'Login failed');
-      }    } catch (error: unknown) {
-      console.error('Login error:', error);
-      const errorMessage = axios.isAxiosError(error) && error.response?.data?.message 
-        ? error.response.data.message 
-        : 'Login failed. Please try again.';
+        setError(response.data.message || "Login failed");
+      }
+    } catch (error: unknown) {
+      console.error("Login error:", error);
+      const errorMessage =
+        axios.isAxiosError(error) && error.response?.data?.message
+          ? error.response.data.message
+          : "Login failed. Please try again.";
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -44,11 +53,11 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setCredentials(prev => ({
+    setCredentials((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-    if (error) setError('');
+    if (error) setError("");
   };
 
   return (
@@ -72,16 +81,16 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
             Admin Dashboard
           </h1>
-          <p className="text-gray-600">
-            Sign in to access the admin panel
-          </p>
+          <p className="text-gray-600">Sign in to access the admin panel</p>
         </div>
-
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Username Field */}
           <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="username"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
               Username
             </label>
             <input
@@ -98,12 +107,15 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
 
           {/* Password Field */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
               Password
             </label>
             <div className="relative">
               <input
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 id="password"
                 name="password"
                 value={credentials.password}
@@ -145,8 +157,8 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
             whileTap={{ scale: 0.98 }}
             className={`w-full py-2 px-4 rounded-lg font-medium transition-colors duration-200 ${
               loading
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-indigo-600 text-white hover:bg-indigo-700'
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-indigo-600 text-white hover:bg-indigo-700"
             }`}
           >
             {loading ? (
@@ -155,10 +167,11 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
                 Signing in...
               </div>
             ) : (
-              'Sign in'
+              "Sign in"
             )}
           </motion.button>
-        </form>        {/* Footer */}
+        </form>{" "}
+        {/* Footer */}
         <div className="mt-8 pt-6 border-t border-gray-200">
           <p className="text-center text-sm text-gray-500">
             Internexis Technologies - Admin Panel

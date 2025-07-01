@@ -1,5 +1,5 @@
-import React from 'react';
-import AmbassadorForm from '../components/features/campus-ambassador/AmbassadorForm';
+import React from "react";
+import AmbassadorForm from "../components/features/campus-ambassador/AmbassadorForm";
 
 const CampusAmbassadorApplication: React.FC = () => {
   return <AmbassadorForm />;

@@ -1,22 +1,23 @@
-import React, { useState } from 'react';
-import HeroSection from './HeroSection';
-import ImageSlider from './ImageSlider';
-import BenefitsAndRewardsSection from './BenefitsAndRewardsSection';
-import Responsibilities from './Responsibilities';
-import AmbassadorForm from './AmbassadorForm';
-import AmbassadorHeader from './AmbassadorHeader';
-import AmbassadorTracker from './AmbassadorTracker';
+import React, { useState } from "react";
+import HeroSection from "./HeroSection";
+import ImageSlider from "./ImageSlider";
+import BenefitsAndRewardsSection from "./BenefitsAndRewardsSection";
+import Responsibilities from "./Responsibilities";
+import AmbassadorForm from "./AmbassadorForm";
+import AmbassadorHeader from "./AmbassadorHeader";
+import AmbassadorTracker from "./AmbassadorTracker";
 
 const CampusAmbassador: React.FC = () => {
-  const [currentTab, setCurrentTab] = useState<'apply' | 'track'>('apply');
-  
-  return (    <div className="min-h-screen">
+  const [currentTab, setCurrentTab] = useState<"apply" | "track">("apply");
+
+  return (
+    <div className="min-h-screen">
       <AmbassadorHeader />
       <HeroSection />
       <ImageSlider />
       <BenefitsAndRewardsSection />
       <Responsibilities />
-      
+
       {/* Tab Navigation */}
       <div className="bg-gray-100 py-8">
         <div className="container mx-auto px-6">
@@ -24,21 +25,21 @@ const CampusAmbassador: React.FC = () => {
             <div className="flex justify-center mb-8">
               <div className="flex space-x-2 p-1 bg-white rounded-lg shadow">
                 <button
-                  onClick={() => setCurrentTab('apply')}
+                  onClick={() => setCurrentTab("apply")}
                   className={`px-6 py-3 text-sm font-medium rounded-md transition-all duration-200 ${
-                    currentTab === 'apply'
-                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md'
-                      : 'text-gray-600 hover:text-gray-900'
+                    currentTab === "apply"
+                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
+                      : "text-gray-600 hover:text-gray-900"
                   }`}
                 >
                   Apply as Ambassador
                 </button>
                 <button
-                  onClick={() => setCurrentTab('track')}
+                  onClick={() => setCurrentTab("track")}
                   className={`px-6 py-3 text-sm font-medium rounded-md transition-all duration-200 ${
-                    currentTab === 'track'
-                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md'
-                      : 'text-gray-600 hover:text-gray-900'
+                    currentTab === "track"
+                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
+                      : "text-gray-600 hover:text-gray-900"
                   }`}
                 >
                   Track Referrals
@@ -48,8 +49,8 @@ const CampusAmbassador: React.FC = () => {
           </div>
         </div>
       </div>
-        {/* Content Based on Tab */}
-      {currentTab === 'apply' ? <AmbassadorForm /> : <AmbassadorTracker />}
+      {/* Content Based on Tab */}
+      {currentTab === "apply" ? <AmbassadorForm /> : <AmbassadorTracker />}
     </div>
   );
 };

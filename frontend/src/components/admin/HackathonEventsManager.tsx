@@ -1,32 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { PlusIcon, PencilIcon, TrashIcon, CalendarIcon, UsersIcon } from '@heroicons/react/24/outline';
-import { hackathonEventsAPI } from '../../services/api';
-import type { HackathonEvent } from '../../types/api';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  PlusIcon,
+  PencilIcon,
+  TrashIcon,
+  CalendarIcon,
+  UsersIcon,
+} from "@heroicons/react/24/outline";
+import { hackathonEventsAPI } from "../../services/api";
+import type { HackathonEvent } from "../../types/api";
 
 const HackathonEventsManager: React.FC = () => {
   const [events, setEvents] = useState<HackathonEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingEvent, setEditingEvent] = useState<HackathonEvent | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState<'all' | 'upcoming' | 'ongoing' | 'completed'>('all');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState<
+    "all" | "upcoming" | "ongoing" | "completed"
+  >("all");
 
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    eventType: 'hackathon' as 'hackathon' | 'tech-event' | 'workshop' | 'conference',
-    startDate: '',
-    endDate: '',
-    location: '',
-    registrationDeadline: '',
+    title: "",
+    description: "",
+    eventType: "hackathon" as
+      | "hackathon"
+      | "tech-event"
+      | "workshop"
+      | "conference",
+    startDate: "",
+    endDate: "",
+    location: "",
+    registrationDeadline: "",
     maxParticipants: 0,
     registrationFee: 0,
-    prizes: [''],
-    requirements: [''],
-    contactEmail: '',
-    websiteUrl: '',
-    isActive: true
+    prizes: [""],
+    requirements: [""],
+    contactEmail: "",
+    websiteUrl: "",
+    isActive: true,
   });
 
   useEffect(() => {
@@ -38,7 +50,7 @@ const HackathonEventsManager: React.FC = () => {
       const response = await hackathonEventsAPI.getAllAdmin();
       setEvents(response.data);
     } catch (error) {
-      console.error('Error fetching events:', error);
+      console.error("Error fetching events:", error);
     } finally {
       setLoading(false);
     }
@@ -50,8 +62,8 @@ const HackathonEventsManager: React.FC = () => {
         ...formData,
         maxParticipants: Number(formData.maxParticipants),
         registrationFee: Number(formData.registrationFee),
-        prizes: formData.prizes.filter(prize => prize.trim() !== ''),
-        requirements: formData.requirements.filter(req => req.trim() !== '')
+        prizes: formData.prizes.filter((prize) => prize.trim() !== ""),
+        requirements: formData.requirements.filter((req) => req.trim() !== ""),
       };
 
       if (editingEvent) {
@@ -59,41 +71,41 @@ const HackathonEventsManager: React.FC = () => {
       } else {
         await hackathonEventsAPI.create(eventData);
       }
-      
+
       fetchEvents();
       resetForm();
       setIsModalOpen(false);
     } catch (error) {
-      console.error('Error saving event:', error);
+      console.error("Error saving event:", error);
     }
   };
   const handleDelete = async (id: string) => {
-    if (window.confirm('Are you sure you want to delete this event?')) {
+    if (window.confirm("Are you sure you want to delete this event?")) {
       try {
         await hackathonEventsAPI.delete(id);
         fetchEvents();
       } catch (error) {
-        console.error('Error deleting event:', error);
+        console.error("Error deleting event:", error);
       }
     }
   };
 
   const resetForm = () => {
     setFormData({
-      title: '',
-      description: '',
-      eventType: 'hackathon',
-      startDate: '',
-      endDate: '',
-      location: '',
-      registrationDeadline: '',
+      title: "",
+      description: "",
+      eventType: "hackathon",
+      startDate: "",
+      endDate: "",
+      location: "",
+      registrationDeadline: "",
       maxParticipants: 0,
       registrationFee: 0,
-      prizes: [''],
-      requirements: [''],
-      contactEmail: '',
-      websiteUrl: '',
-      isActive: true
+      prizes: [""],
+      requirements: [""],
+      contactEmail: "",
+      websiteUrl: "",
+      isActive: true,
     });
     setEditingEvent(null);
   };
@@ -104,39 +116,46 @@ const HackathonEventsManager: React.FC = () => {
       title: event.title,
       description: event.description,
       eventType: event.eventType,
-      startDate: event.startDate.split('T')[0],
-      endDate: event.endDate.split('T')[0],
+      startDate: event.startDate.split("T")[0],
+      endDate: event.endDate.split("T")[0],
       location: event.location,
-      registrationDeadline: event.registrationDeadline.split('T')[0],
+      registrationDeadline: event.registrationDeadline.split("T")[0],
       maxParticipants: event.maxParticipants,
       registrationFee: event.registrationFee,
-      prizes: event.prizes.length > 0 ? event.prizes : [''],
-      requirements: event.requirements.length > 0 ? event.requirements : [''],
+      prizes: event.prizes.length > 0 ? event.prizes : [""],
+      requirements: event.requirements.length > 0 ? event.requirements : [""],
       contactEmail: event.contactEmail,
-      websiteUrl: event.websiteUrl || '',
-      isActive: event.isActive
+      websiteUrl: event.websiteUrl || "",
+      isActive: event.isActive,
     });
     setIsModalOpen(true);
   };
 
-  const addArrayField = (field: 'prizes' | 'requirements') => {
-    setFormData(prev => ({
+  const addArrayField = (field: "prizes" | "requirements") => {
+    setFormData((prev) => ({
       ...prev,
-      [field]: [...prev[field], '']
+      [field]: [...prev[field], ""],
     }));
   };
 
-  const updateArrayField = (field: 'prizes' | 'requirements', index: number, value: string) => {
-    setFormData(prev => ({
+  const updateArrayField = (
+    field: "prizes" | "requirements",
+    index: number,
+    value: string,
+  ) => {
+    setFormData((prev) => ({
       ...prev,
-      [field]: prev[field].map((item, i) => i === index ? value : item)
+      [field]: prev[field].map((item, i) => (i === index ? value : item)),
     }));
   };
 
-  const removeArrayField = (field: 'prizes' | 'requirements', index: number) => {
-    setFormData(prev => ({
+  const removeArrayField = (
+    field: "prizes" | "requirements",
+    index: number,
+  ) => {
+    setFormData((prev) => ({
       ...prev,
-      [field]: prev[field].filter((_, i) => i !== index)
+      [field]: prev[field].filter((_, i) => i !== index),
     }));
   };
 
@@ -144,16 +163,18 @@ const HackathonEventsManager: React.FC = () => {
     const now = new Date();
     const startDate = new Date(event.startDate);
     const endDate = new Date(event.endDate);
-    
-    if (now < startDate) return 'upcoming';
-    if (now >= startDate && now <= endDate) return 'ongoing';
-    return 'completed';
+
+    if (now < startDate) return "upcoming";
+    if (now >= startDate && now <= endDate) return "ongoing";
+    return "completed";
   };
 
-  const filteredEvents = events.filter(event => {
-    const matchesSearch = event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         event.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = statusFilter === 'all' || getEventStatus(event) === statusFilter;
+  const filteredEvents = events.filter((event) => {
+    const matchesSearch =
+      event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      event.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus =
+      statusFilter === "all" || getEventStatus(event) === statusFilter;
     return matchesSearch && matchesStatus;
   });
 
@@ -170,8 +191,12 @@ const HackathonEventsManager: React.FC = () => {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Hackathons & Events</h1>
-          <p className="text-gray-600">Manage hackathons, tech events, and workshops</p>
+          <h1 className="text-2xl font-bold text-gray-900">
+            Hackathons & Events
+          </h1>
+          <p className="text-gray-600">
+            Manage hackathons, tech events, and workshops
+          </p>
         </div>
         <motion.button
           whileHover={{ scale: 1.05 }}
@@ -195,9 +220,14 @@ const HackathonEventsManager: React.FC = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
-          </div>          <select
+          </div>{" "}
+          <select
             value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value as 'all' | 'upcoming' | 'ongoing' | 'completed')}
+            onChange={(e) =>
+              setStatusFilter(
+                e.target.value as "all" | "upcoming" | "ongoing" | "completed",
+              )
+            }
             className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="all">All Status</option>
@@ -213,9 +243,9 @@ const HackathonEventsManager: React.FC = () => {
         {filteredEvents.map((event) => {
           const status = getEventStatus(event);
           const statusColors = {
-            upcoming: 'bg-blue-100 text-blue-800',
-            ongoing: 'bg-green-100 text-green-800',
-            completed: 'bg-gray-100 text-gray-800'
+            upcoming: "bg-blue-100 text-blue-800",
+            ongoing: "bg-green-100 text-green-800",
+            completed: "bg-gray-100 text-gray-800",
           };
 
           return (
@@ -229,7 +259,9 @@ const HackathonEventsManager: React.FC = () => {
               <div className="p-6">
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[status]}`}>
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[status]}`}
+                    >
                       {status.charAt(0).toUpperCase() + status.slice(1)}
                     </span>
                     <span className="ml-2 px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
@@ -242,7 +274,8 @@ const HackathonEventsManager: React.FC = () => {
                       className="text-blue-600 hover:text-blue-800"
                     >
                       <PencilIcon className="h-4 w-4" />
-                    </button>                    <button
+                    </button>{" "}
+                    <button
                       onClick={() => handleDelete(event._id!)}
                       className="text-red-600 hover:text-red-800"
                     >
@@ -251,13 +284,19 @@ const HackathonEventsManager: React.FC = () => {
                   </div>
                 </div>
 
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{event.title}</h3>
-                <p className="text-gray-600 text-sm mb-4 line-clamp-3">{event.description}</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  {event.title}
+                </h3>
+                <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                  {event.description}
+                </p>
 
                 <div className="space-y-2 text-sm text-gray-500">
                   <div className="flex items-center gap-2">
                     <CalendarIcon className="h-4 w-4" />
-                    <span>{new Date(event.startDate).toLocaleDateString()}</span>
+                    <span>
+                      {new Date(event.startDate).toLocaleDateString()}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <UsersIcon className="h-4 w-4" />
@@ -278,8 +317,12 @@ const HackathonEventsManager: React.FC = () => {
       {filteredEvents.length === 0 && (
         <div className="text-center py-12">
           <CalendarIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No events found</h3>
-          <p className="text-gray-500">Get started by creating your first event.</p>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">
+            No events found
+          </h3>
+          <p className="text-gray-500">
+            Get started by creating your first event.
+          </p>
         </div>
       )}
 
@@ -299,7 +342,7 @@ const HackathonEventsManager: React.FC = () => {
               className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto"
             >
               <h2 className="text-xl font-bold text-gray-900 mb-6">
-                {editingEvent ? 'Edit Event' : 'Add New Event'}
+                {editingEvent ? "Edit Event" : "Add New Event"}
               </h2>
 
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -312,7 +355,12 @@ const HackathonEventsManager: React.FC = () => {
                       type="text"
                       required
                       value={formData.title}
-                      onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          title: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -325,7 +373,12 @@ const HackathonEventsManager: React.FC = () => {
                       required
                       rows={3}
                       value={formData.description}
-                      onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          description: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -337,7 +390,16 @@ const HackathonEventsManager: React.FC = () => {
                     <select
                       required
                       value={formData.eventType}
-                      onChange={(e) => setFormData(prev => ({ ...prev, eventType: e.target.value as 'hackathon' | 'tech-event' | 'workshop' | 'conference' }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          eventType: e.target.value as
+                            | "hackathon"
+                            | "tech-event"
+                            | "workshop"
+                            | "conference",
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       <option value="hackathon">Hackathon</option>
@@ -355,7 +417,12 @@ const HackathonEventsManager: React.FC = () => {
                       type="text"
                       required
                       value={formData.location}
-                      onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          location: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -368,7 +435,12 @@ const HackathonEventsManager: React.FC = () => {
                       type="date"
                       required
                       value={formData.startDate}
-                      onChange={(e) => setFormData(prev => ({ ...prev, startDate: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          startDate: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -381,7 +453,12 @@ const HackathonEventsManager: React.FC = () => {
                       type="date"
                       required
                       value={formData.endDate}
-                      onChange={(e) => setFormData(prev => ({ ...prev, endDate: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          endDate: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -394,7 +471,12 @@ const HackathonEventsManager: React.FC = () => {
                       type="date"
                       required
                       value={formData.registrationDeadline}
-                      onChange={(e) => setFormData(prev => ({ ...prev, registrationDeadline: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          registrationDeadline: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -408,7 +490,12 @@ const HackathonEventsManager: React.FC = () => {
                       required
                       min="1"
                       value={formData.maxParticipants}
-                      onChange={(e) => setFormData(prev => ({ ...prev, maxParticipants: parseInt(e.target.value) }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          maxParticipants: parseInt(e.target.value),
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -421,7 +508,12 @@ const HackathonEventsManager: React.FC = () => {
                       type="number"
                       min="0"
                       value={formData.registrationFee}
-                      onChange={(e) => setFormData(prev => ({ ...prev, registrationFee: parseInt(e.target.value) }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          registrationFee: parseInt(e.target.value),
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -434,7 +526,12 @@ const HackathonEventsManager: React.FC = () => {
                       type="email"
                       required
                       value={formData.contactEmail}
-                      onChange={(e) => setFormData(prev => ({ ...prev, contactEmail: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          contactEmail: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -446,7 +543,12 @@ const HackathonEventsManager: React.FC = () => {
                     <input
                       type="url"
                       value={formData.websiteUrl}
-                      onChange={(e) => setFormData(prev => ({ ...prev, websiteUrl: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          websiteUrl: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -461,14 +563,16 @@ const HackathonEventsManager: React.FC = () => {
                         <input
                           type="text"
                           value={prize}
-                          onChange={(e) => updateArrayField('prizes', index, e.target.value)}
+                          onChange={(e) =>
+                            updateArrayField("prizes", index, e.target.value)
+                          }
                           placeholder={`Prize ${index + 1}`}
                           className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         />
                         {formData.prizes.length > 1 && (
                           <button
                             type="button"
-                            onClick={() => removeArrayField('prizes', index)}
+                            onClick={() => removeArrayField("prizes", index)}
                             className="text-red-600 hover:text-red-800"
                           >
                             <TrashIcon className="h-5 w-5" />
@@ -478,7 +582,7 @@ const HackathonEventsManager: React.FC = () => {
                     ))}
                     <button
                       type="button"
-                      onClick={() => addArrayField('prizes')}
+                      onClick={() => addArrayField("prizes")}
                       className="text-blue-600 hover:text-blue-800 text-sm"
                     >
                       + Add Prize
@@ -495,14 +599,22 @@ const HackathonEventsManager: React.FC = () => {
                         <input
                           type="text"
                           value={req}
-                          onChange={(e) => updateArrayField('requirements', index, e.target.value)}
+                          onChange={(e) =>
+                            updateArrayField(
+                              "requirements",
+                              index,
+                              e.target.value,
+                            )
+                          }
                           placeholder={`Requirement ${index + 1}`}
                           className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         />
                         {formData.requirements.length > 1 && (
                           <button
                             type="button"
-                            onClick={() => removeArrayField('requirements', index)}
+                            onClick={() =>
+                              removeArrayField("requirements", index)
+                            }
                             className="text-red-600 hover:text-red-800"
                           >
                             <TrashIcon className="h-5 w-5" />
@@ -512,7 +624,7 @@ const HackathonEventsManager: React.FC = () => {
                     ))}
                     <button
                       type="button"
-                      onClick={() => addArrayField('requirements')}
+                      onClick={() => addArrayField("requirements")}
                       className="text-blue-600 hover:text-blue-800 text-sm"
                     >
                       + Add Requirement
@@ -524,7 +636,12 @@ const HackathonEventsManager: React.FC = () => {
                       <input
                         type="checkbox"
                         checked={formData.isActive}
-                        onChange={(e) => setFormData(prev => ({ ...prev, isActive: e.target.checked }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            isActive: e.target.checked,
+                          }))
+                        }
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
                       <span className="ml-2 text-sm text-gray-700">Active</span>
@@ -537,7 +654,7 @@ const HackathonEventsManager: React.FC = () => {
                     type="submit"
                     className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500"
                   >
-                    {editingEvent ? 'Update Event' : 'Create Event'}
+                    {editingEvent ? "Update Event" : "Create Event"}
                   </button>
                   <button
                     type="button"

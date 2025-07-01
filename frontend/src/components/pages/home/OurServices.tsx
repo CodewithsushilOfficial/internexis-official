@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { 
-  GraduationCap, 
-  Monitor, 
-  Zap, 
-  Users, 
-  UserCheck, 
-  TrendingUp, 
-  Briefcase, 
-  Building
-} from 'lucide-react';
-import AOS from 'aos';
+import React, { useEffect } from "react";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import {
+  GraduationCap,
+  Monitor,
+  Zap,
+  Users,
+  UserCheck,
+  TrendingUp,
+  Briefcase,
+  Building,
+} from "lucide-react";
+import AOS from "aos";
 
 interface Service {
   id: number;
@@ -23,32 +23,36 @@ interface Service {
   hoverGradient: string;
 }
 
-const services: Service[] = [  {
+const services: Service[] = [
+  {
     id: 1,
     title: "Internship",
-    description: "Real-world internships across domains with live projects & certificates",
+    description:
+      "Real-world internships across domains with live projects & certificates",
     icon: <GraduationCap className="w-8 h-8" />,
     route: "/all-programs",
     gradient: "from-blue-500 to-purple-600",
-    hoverGradient: "from-blue-600 to-purple-700"
+    hoverGradient: "from-blue-600 to-purple-700",
   },
   {
     id: 2,
     title: "Digital Solutions",
-    description: "Custom web/app development, AI tools, and automation services",
+    description:
+      "Custom web/app development, AI tools, and automation services",
     icon: <Monitor className="w-8 h-8" />,
     route: "/digital-solutions",
     gradient: "from-green-500 to-teal-600",
-    hoverGradient: "from-green-600 to-teal-700"
+    hoverGradient: "from-green-600 to-teal-700",
   },
   {
     id: 3,
     title: "Hackathons & Tech Events",
-    description: "Daily alerts, registration support, and project mentoring for events",
+    description:
+      "Daily alerts, registration support, and project mentoring for events",
     icon: <Zap className="w-8 h-8" />,
     route: "/hackathons",
     gradient: "from-yellow-500 to-orange-600",
-    hoverGradient: "from-yellow-600 to-orange-700"
+    hoverGradient: "from-yellow-600 to-orange-700",
   },
   {
     id: 4,
@@ -57,7 +61,7 @@ const services: Service[] = [  {
     icon: <Users className="w-8 h-8" />,
     route: "/work-with-us",
     gradient: "from-pink-500 to-rose-600",
-    hoverGradient: "from-pink-600 to-rose-700"
+    hoverGradient: "from-pink-600 to-rose-700",
   },
   {
     id: 5,
@@ -66,7 +70,7 @@ const services: Service[] = [  {
     icon: <UserCheck className="w-8 h-8" />,
     route: "/mentorship",
     gradient: "from-indigo-500 to-blue-600",
-    hoverGradient: "from-indigo-600 to-blue-700"
+    hoverGradient: "from-indigo-600 to-blue-700",
   },
   {
     id: 6,
@@ -75,26 +79,28 @@ const services: Service[] = [  {
     icon: <TrendingUp className="w-8 h-8" />,
     route: "/career-guidance",
     gradient: "from-purple-500 to-pink-600",
-    hoverGradient: "from-purple-600 to-pink-700"
+    hoverGradient: "from-purple-600 to-pink-700",
   },
   {
     id: 7,
     title: "Freelance Projects",
-    description: "Gain freelance experience through client-assigned real-world projects",
+    description:
+      "Gain freelance experience through client-assigned real-world projects",
     icon: <Briefcase className="w-8 h-8" />,
     route: "/freelance-projects",
     gradient: "from-red-500 to-pink-600",
-    hoverGradient: "from-red-600 to-pink-700"
+    hoverGradient: "from-red-600 to-pink-700",
   },
   {
     id: 8,
     title: "Career & Jobs",
-    description: "Find jobs, internships, and off-campus drives relevant to your domain",
+    description:
+      "Find jobs, internships, and off-campus drives relevant to your domain",
     icon: <Building className="w-8 h-8" />,
     route: "/career-jobs",
     gradient: "from-teal-500 to-green-600",
-    hoverGradient: "from-teal-600 to-green-700"
-  }
+    hoverGradient: "from-teal-600 to-green-700",
+  },
 ];
 
 export const OurServices: React.FC = () => {
@@ -103,9 +109,9 @@ export const OurServices: React.FC = () => {
   useEffect(() => {
     AOS.init({
       duration: 800,
-      easing: 'ease-out-cubic',
+      easing: "ease-out-cubic",
       once: true,
-      offset: 100
+      offset: 100,
     });
   }, []);
 
@@ -119,26 +125,26 @@ export const OurServices: React.FC = () => {
       opacity: 1,
       transition: {
         staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
+        delayChildren: 0.2,
+      },
+    },
   };
 
   const cardVariants = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       y: 50,
-      scale: 0.9
+      scale: 0.9,
     },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       scale: 1,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
-      }
-    }
+        ease: "easeOut",
+      },
+    },
   };
 
   const iconVariants = {
@@ -147,9 +153,9 @@ export const OurServices: React.FC = () => {
       scale: 1.1,
       transition: {
         duration: 0.6,
-        ease: "easeInOut"
-      }
-    }
+        ease: "easeInOut",
+      },
+    },
   };
 
   return (
@@ -172,14 +178,15 @@ export const OurServices: React.FC = () => {
           >
             <Zap className="w-8 h-8 text-white" />
           </motion.div>
-          
+
           <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-600 to-purple-600 bg-clip-text text-transparent dark:from-white dark:via-blue-400 dark:to-purple-400 mb-6">
             🎯 Our Services – Empowering You at Every Step
           </h2>
-          
+
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Explore the wide range of services offered by Internexis – crafted to support your academic journey, 
-            career growth, skill development, and real-world opportunities.
+            Explore the wide range of services offered by Internexis – crafted
+            to support your academic journey, career growth, skill development,
+            and real-world opportunities.
           </p>
         </motion.div>
 
@@ -195,9 +202,9 @@ export const OurServices: React.FC = () => {
             <motion.div
               key={service.id}
               variants={cardVariants}
-              whileHover={{ 
+              whileHover={{
                 y: -10,
-                transition: { duration: 0.3 }
+                transition: { duration: 0.3 },
               }}
               data-aos="fade-up"
               data-aos-delay={index * 100}
@@ -208,13 +215,17 @@ export const OurServices: React.FC = () => {
                 className="relative bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-100 dark:border-gray-700 hover:border-transparent overflow-hidden"
               >
                 {/* Background Gradient Overlay */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-3xl`} />
-                
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-3xl`}
+                />
+
                 {/* Animated Border */}
-                <div className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-[2px]`}>
+                <div
+                  className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-[2px]`}
+                >
                   <div className="w-full h-full bg-white dark:bg-gray-800 rounded-3xl" />
                 </div>
-                
+
                 {/* Content */}
                 <div className="relative z-10">
                   {/* Icon */}
@@ -251,7 +262,7 @@ export const OurServices: React.FC = () => {
                       transition={{
                         duration: 1.5,
                         repeat: Infinity,
-                        ease: "easeInOut"
+                        ease: "easeInOut",
                       }}
                     >
                       →
@@ -277,12 +288,12 @@ export const OurServices: React.FC = () => {
           className="text-center mt-16"
         >
           <motion.button
-            whileHover={{ 
+            whileHover={{
               scale: 1.05,
-              boxShadow: "0 20px 40px rgba(59, 130, 246, 0.3)"
+              boxShadow: "0 20px 40px rgba(59, 130, 246, 0.3)",
             }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => navigate('/all-programs')}
+            onClick={() => navigate("/all-programs")}
             className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <span className="mr-2">Explore All Programs</span>
@@ -293,7 +304,7 @@ export const OurServices: React.FC = () => {
               transition={{
                 duration: 1.5,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
             >
               →

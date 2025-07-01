@@ -1,37 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { PlusIcon, PencilIcon, TrashIcon, BookOpenIcon, EyeIcon, HeartIcon } from '@heroicons/react/24/outline';
-import { careerGuidanceAPI } from '../../services/api';
-import type { CareerGuidance } from '../../types/api';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  PlusIcon,
+  PencilIcon,
+  TrashIcon,
+  BookOpenIcon,
+  EyeIcon,
+  HeartIcon,
+} from "@heroicons/react/24/outline";
+import { careerGuidanceAPI } from "../../services/api";
+import type { CareerGuidance } from "../../types/api";
 
 const CareerGuidanceManager: React.FC = () => {
   const [guides, setGuides] = useState<CareerGuidance[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingGuide, setEditingGuide] = useState<CareerGuidance | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState<string>('all');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState<string>("all");
 
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    contentType: 'article' as 'article' | 'video' | 'podcast' | 'infographic' | 'guide',
-    category: '',
-    targetAudience: '',
-    content: '',
+    title: "",
+    description: "",
+    contentType: "article" as
+      | "article"
+      | "video"
+      | "podcast"
+      | "infographic"
+      | "guide",
+    category: "",
+    targetAudience: "",
+    content: "",
     author: {
-      name: '',
-      title: '',
-      image: ''
+      name: "",
+      title: "",
+      image: "",
     },
-    tags: [''],
-    featuredImage: '',
-    externalLink: '',
-    duration: '',
-    difficulty: 'beginner' as 'beginner' | 'intermediate' | 'advanced',
+    tags: [""],
+    featuredImage: "",
+    externalLink: "",
+    duration: "",
+    difficulty: "beginner" as "beginner" | "intermediate" | "advanced",
     isPublished: true,
     isFeatured: false,
-    publishedDate: new Date().toISOString().split('T')[0]
+    publishedDate: new Date().toISOString().split("T")[0],
   });
 
   useEffect(() => {
@@ -44,7 +56,7 @@ const CareerGuidanceManager: React.FC = () => {
       const response = await careerGuidanceAPI.getAllAdmin();
       setGuides(response.data);
     } catch (error) {
-      console.error('Error fetching guides:', error);
+      console.error("Error fetching guides:", error);
     } finally {
       setLoading(false);
     }
@@ -55,9 +67,9 @@ const CareerGuidanceManager: React.FC = () => {
     try {
       const guideData = {
         ...formData,
-        tags: formData.tags.filter(tag => tag.trim() !== ''),
+        tags: formData.tags.filter((tag) => tag.trim() !== ""),
         views: 0,
-        likes: 0
+        likes: 0,
       };
 
       if (editingGuide) {
@@ -65,47 +77,47 @@ const CareerGuidanceManager: React.FC = () => {
       } else {
         await careerGuidanceAPI.create(guideData);
       }
-      
+
       fetchGuides();
       resetForm();
       setIsModalOpen(false);
     } catch (error) {
-      console.error('Error saving guide:', error);
+      console.error("Error saving guide:", error);
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (window.confirm('Are you sure you want to delete this guide?')) {
+    if (window.confirm("Are you sure you want to delete this guide?")) {
       try {
         await careerGuidanceAPI.delete(id);
         fetchGuides();
       } catch (error) {
-        console.error('Error deleting guide:', error);
+        console.error("Error deleting guide:", error);
       }
     }
   };
 
   const resetForm = () => {
     setFormData({
-      title: '',
-      description: '',
-      contentType: 'article',
-      category: '',
-      targetAudience: '',
-      content: '',
+      title: "",
+      description: "",
+      contentType: "article",
+      category: "",
+      targetAudience: "",
+      content: "",
       author: {
-        name: '',
-        title: '',
-        image: ''
+        name: "",
+        title: "",
+        image: "",
       },
-      tags: [''],
-      featuredImage: '',
-      externalLink: '',
-      duration: '',
-      difficulty: 'beginner',
+      tags: [""],
+      featuredImage: "",
+      externalLink: "",
+      duration: "",
+      difficulty: "beginner",
       isPublished: true,
       isFeatured: false,
-      publishedDate: new Date().toISOString().split('T')[0]
+      publishedDate: new Date().toISOString().split("T")[0],
     });
     setEditingGuide(null);
   };
@@ -115,55 +127,64 @@ const CareerGuidanceManager: React.FC = () => {
     setFormData({
       title: guide.title,
       description: guide.description,
-      contentType: guide.contentType as 'article' | 'video' | 'podcast' | 'infographic' | 'guide',
+      contentType: guide.contentType as
+        | "article"
+        | "video"
+        | "podcast"
+        | "infographic"
+        | "guide",
       category: guide.category,
       targetAudience: guide.targetAudience,
       content: guide.content,
       author: {
         ...guide.author,
-        image: guide.author.image || ''
+        image: guide.author.image || "",
       },
-      tags: guide.tags.length > 0 ? guide.tags : [''],
-      featuredImage: guide.featuredImage || '',
-      externalLink: guide.externalLink || '',
-      duration: guide.duration || '',
-      difficulty: guide.difficulty as 'beginner' | 'intermediate' | 'advanced',
+      tags: guide.tags.length > 0 ? guide.tags : [""],
+      featuredImage: guide.featuredImage || "",
+      externalLink: guide.externalLink || "",
+      duration: guide.duration || "",
+      difficulty: guide.difficulty as "beginner" | "intermediate" | "advanced",
       isPublished: guide.isPublished,
       isFeatured: guide.isFeatured,
-      publishedDate: guide.publishedDate.split('T')[0]
+      publishedDate: guide.publishedDate.split("T")[0],
     });
     setIsModalOpen(true);
   };
 
   const addTag = () => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      tags: [...prev.tags, '']
+      tags: [...prev.tags, ""],
     }));
   };
 
   const updateTag = (index: number, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      tags: prev.tags.map((tag, i) => i === index ? value : tag)
+      tags: prev.tags.map((tag, i) => (i === index ? value : tag)),
     }));
   };
 
   const removeTag = (index: number) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      tags: prev.tags.filter((_, i) => i !== index)
+      tags: prev.tags.filter((_, i) => i !== index),
     }));
   };
 
-  const filteredGuides = guides.filter(guide => {
-    const matchesSearch = guide.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         guide.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = categoryFilter === 'all' || guide.category === categoryFilter;
+  const filteredGuides = guides.filter((guide) => {
+    const matchesSearch =
+      guide.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      guide.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory =
+      categoryFilter === "all" || guide.category === categoryFilter;
     return matchesSearch && matchesCategory;
   });
 
-  const categories = Array.from(new Set(guides.map(g => g.category))).filter(Boolean);
+  const categories = Array.from(new Set(guides.map((g) => g.category))).filter(
+    Boolean,
+  );
 
   if (loading) {
     return (
@@ -179,7 +200,9 @@ const CareerGuidanceManager: React.FC = () => {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Career Guidance</h1>
-          <p className="text-gray-600">Manage career guidance content and resources</p>
+          <p className="text-gray-600">
+            Manage career guidance content and resources
+          </p>
         </div>
         <motion.button
           whileHover={{ scale: 1.05 }}
@@ -210,8 +233,10 @@ const CareerGuidanceManager: React.FC = () => {
             className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="all">All Categories</option>
-            {categories.map(category => (
-              <option key={category} value={category}>{category}</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
             ))}
           </select>
         </div>
@@ -230,10 +255,14 @@ const CareerGuidanceManager: React.FC = () => {
             <div className="p-6">
               <div className="flex justify-between items-start mb-4">
                 <div className="flex flex-wrap gap-2">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    guide.isPublished ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                  }`}>
-                    {guide.isPublished ? 'Published' : 'Draft'}
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      guide.isPublished
+                        ? "bg-green-100 text-green-800"
+                        : "bg-gray-100 text-gray-800"
+                    }`}
+                  >
+                    {guide.isPublished ? "Published" : "Draft"}
                   </span>
                   {guide.isFeatured && (
                     <span className="px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
@@ -261,15 +290,19 @@ const CareerGuidanceManager: React.FC = () => {
               </div>
 
               {guide.featuredImage && (
-                <img 
-                  src={guide.featuredImage} 
+                <img
+                  src={guide.featuredImage}
                   alt={guide.title}
                   className="w-full h-32 object-cover rounded-lg mb-4"
                 />
               )}
 
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">{guide.title}</h3>
-              <p className="text-gray-600 text-sm mb-4 line-clamp-3">{guide.description}</p>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                {guide.title}
+              </h3>
+              <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                {guide.description}
+              </p>
 
               <div className="space-y-2 text-sm text-gray-500">
                 <div className="flex items-center gap-2">
@@ -287,10 +320,15 @@ const CareerGuidanceManager: React.FC = () => {
               </div>
 
               <div className="mt-4">
-                <p className="text-xs text-gray-500 mb-2">By {guide.author.name}</p>
+                <p className="text-xs text-gray-500 mb-2">
+                  By {guide.author.name}
+                </p>
                 <div className="flex flex-wrap gap-1">
                   {guide.tags.slice(0, 3).map((tag, index) => (
-                    <span key={index} className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">
+                    <span
+                      key={index}
+                      className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded"
+                    >
                       {tag}
                     </span>
                   ))}
@@ -309,8 +347,12 @@ const CareerGuidanceManager: React.FC = () => {
       {filteredGuides.length === 0 && (
         <div className="text-center py-12">
           <BookOpenIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No guides found</h3>
-          <p className="text-gray-500">Get started by creating your first career guide.</p>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">
+            No guides found
+          </h3>
+          <p className="text-gray-500">
+            Get started by creating your first career guide.
+          </p>
         </div>
       )}
 
@@ -330,7 +372,7 @@ const CareerGuidanceManager: React.FC = () => {
               className="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto"
             >
               <h2 className="text-xl font-bold text-gray-900 mb-6">
-                {editingGuide ? 'Edit Guide' : 'Add New Guide'}
+                {editingGuide ? "Edit Guide" : "Add New Guide"}
               </h2>
 
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -343,7 +385,12 @@ const CareerGuidanceManager: React.FC = () => {
                       type="text"
                       required
                       value={formData.title}
-                      onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          title: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -356,7 +403,12 @@ const CareerGuidanceManager: React.FC = () => {
                       required
                       rows={3}
                       value={formData.description}
-                      onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          description: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -368,7 +420,17 @@ const CareerGuidanceManager: React.FC = () => {
                     <select
                       required
                       value={formData.contentType}
-                      onChange={(e) => setFormData(prev => ({ ...prev, contentType: e.target.value as 'article' | 'video' | 'podcast' | 'infographic' | 'guide' }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          contentType: e.target.value as
+                            | "article"
+                            | "video"
+                            | "podcast"
+                            | "infographic"
+                            | "guide",
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       <option value="article">Article</option>
@@ -387,7 +449,12 @@ const CareerGuidanceManager: React.FC = () => {
                       type="text"
                       required
                       value={formData.category}
-                      onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          category: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -400,7 +467,12 @@ const CareerGuidanceManager: React.FC = () => {
                       type="text"
                       required
                       value={formData.targetAudience}
-                      onChange={(e) => setFormData(prev => ({ ...prev, targetAudience: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          targetAudience: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -412,7 +484,15 @@ const CareerGuidanceManager: React.FC = () => {
                     <select
                       required
                       value={formData.difficulty}
-                      onChange={(e) => setFormData(prev => ({ ...prev, difficulty: e.target.value as 'beginner' | 'intermediate' | 'advanced' }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          difficulty: e.target.value as
+                            | "beginner"
+                            | "intermediate"
+                            | "advanced",
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       <option value="beginner">Beginner</option>
@@ -429,7 +509,12 @@ const CareerGuidanceManager: React.FC = () => {
                       required
                       rows={6}
                       value={formData.content}
-                      onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          content: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -442,10 +527,12 @@ const CareerGuidanceManager: React.FC = () => {
                       type="text"
                       required
                       value={formData.author.name}
-                      onChange={(e) => setFormData(prev => ({ 
-                        ...prev, 
-                        author: { ...prev.author, name: e.target.value }
-                      }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          author: { ...prev.author, name: e.target.value },
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -458,10 +545,12 @@ const CareerGuidanceManager: React.FC = () => {
                       type="text"
                       required
                       value={formData.author.title}
-                      onChange={(e) => setFormData(prev => ({ 
-                        ...prev, 
-                        author: { ...prev.author, title: e.target.value }
-                      }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          author: { ...prev.author, title: e.target.value },
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -473,7 +562,12 @@ const CareerGuidanceManager: React.FC = () => {
                     <input
                       type="url"
                       value={formData.featuredImage}
-                      onChange={(e) => setFormData(prev => ({ ...prev, featuredImage: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          featuredImage: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -485,7 +579,12 @@ const CareerGuidanceManager: React.FC = () => {
                     <input
                       type="text"
                       value={formData.duration}
-                      onChange={(e) => setFormData(prev => ({ ...prev, duration: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          duration: e.target.value,
+                        }))
+                      }
                       placeholder="e.g., 10 min read, 30 min video"
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
@@ -499,7 +598,12 @@ const CareerGuidanceManager: React.FC = () => {
                       type="date"
                       required
                       value={formData.publishedDate}
-                      onChange={(e) => setFormData(prev => ({ ...prev, publishedDate: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          publishedDate: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -511,7 +615,12 @@ const CareerGuidanceManager: React.FC = () => {
                     <input
                       type="url"
                       value={formData.externalLink}
-                      onChange={(e) => setFormData(prev => ({ ...prev, externalLink: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          externalLink: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -555,20 +664,34 @@ const CareerGuidanceManager: React.FC = () => {
                       <input
                         type="checkbox"
                         checked={formData.isPublished}
-                        onChange={(e) => setFormData(prev => ({ ...prev, isPublished: e.target.checked }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            isPublished: e.target.checked,
+                          }))
+                        }
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
-                      <span className="ml-2 text-sm text-gray-700">Published</span>
+                      <span className="ml-2 text-sm text-gray-700">
+                        Published
+                      </span>
                     </label>
 
                     <label className="flex items-center">
                       <input
                         type="checkbox"
                         checked={formData.isFeatured}
-                        onChange={(e) => setFormData(prev => ({ ...prev, isFeatured: e.target.checked }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            isFeatured: e.target.checked,
+                          }))
+                        }
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
-                      <span className="ml-2 text-sm text-gray-700">Featured</span>
+                      <span className="ml-2 text-sm text-gray-700">
+                        Featured
+                      </span>
                     </label>
                   </div>
                 </div>
@@ -578,7 +701,7 @@ const CareerGuidanceManager: React.FC = () => {
                     type="submit"
                     className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500"
                   >
-                    {editingGuide ? 'Update Guide' : 'Create Guide'}
+                    {editingGuide ? "Update Guide" : "Create Guide"}
                   </button>
                   <button
                     type="button"

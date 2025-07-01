@@ -1,7 +1,14 @@
-import React from 'react';
-import { Globe, Smartphone, Brain, Code, ChevronRight, Zap } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import React from "react";
+import {
+  Globe,
+  Smartphone,
+  Brain,
+  Code,
+  ChevronRight,
+  Zap,
+} from "lucide-react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 interface Program {
   id: number;
@@ -20,52 +27,84 @@ export const Programs: React.FC = () => {
     {
       id: 1,
       title: "Web Development",
-      description: "Master frontend, backend, or full stack development with hands-on projects and industry-standard tools.",
+      description:
+        "Master frontend, backend, or full stack development with hands-on projects and industry-standard tools.",
       icon: <Globe size={32} />,
       iconBg: "bg-blue-500",
-      skills: ["HTML/CSS", "JavaScript", "React", "Node.js", "MongoDB", "Express"],
+      skills: [
+        "HTML/CSS",
+        "JavaScript",
+        "React",
+        "Node.js",
+        "MongoDB",
+        "Express",
+      ],
       color: "blue",
       duration: "8 weeks",
-      level: "Beginner to Advanced"
+      level: "Beginner to Advanced",
     },
     {
       id: 2,
       title: "Android App Development",
-      description: "Create fully functional mobile applications using Java, Kotlin, and modern Android development practices.",
+      description:
+        "Create fully functional mobile applications using Java, Kotlin, and modern Android development practices.",
       icon: <Smartphone size={32} />,
       iconBg: "bg-green-500",
-      skills: ["Java", "Kotlin", "Android SDK", "Firebase", "UI/UX Design", "API Integration"],
+      skills: [
+        "Java",
+        "Kotlin",
+        "Android SDK",
+        "Firebase",
+        "UI/UX Design",
+        "API Integration",
+      ],
       color: "green",
       duration: "10 weeks",
-      level: "Intermediate"
+      level: "Intermediate",
     },
     {
       id: 3,
       title: "AI & Machine Learning",
-      description: "Implement AI solutions, train models, and explore practical applications of machine learning.",
+      description:
+        "Implement AI solutions, train models, and explore practical applications of machine learning.",
       icon: <Brain size={32} />,
       iconBg: "bg-purple-500",
-      skills: ["Python", "TensorFlow", "Data Analysis", "Neural Networks", "Computer Vision", "NLP"],
+      skills: [
+        "Python",
+        "TensorFlow",
+        "Data Analysis",
+        "Neural Networks",
+        "Computer Vision",
+        "NLP",
+      ],
       color: "purple",
       duration: "12 weeks",
-      level: "Advanced"
+      level: "Advanced",
     },
     {
       id: 4,
       title: "Software Development",
-      description: "Build robust software applications using industry best practices and design patterns.",
+      description:
+        "Build robust software applications using industry best practices and design patterns.",
       icon: <Code size={32} />,
       iconBg: "bg-accent-500",
-      skills: ["C++", "Java", "Object-Oriented Design", "Testing", "Git", "CI/CD"],
+      skills: [
+        "C++",
+        "Java",
+        "Object-Oriented Design",
+        "Testing",
+        "Git",
+        "CI/CD",
+      ],
       color: "accent",
       duration: "8 weeks",
-      level: "All Levels"
-    }
+      level: "All Levels",
+    },
   ];
 
   const cardVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
 
   return (
@@ -92,14 +131,20 @@ export const Programs: React.FC = () => {
               animate="visible"
             >
               <div className={`p-6 flex-grow`}>
-                <div className={`h-12 w-12 rounded-lg ${program.iconBg} mb-6 flex items-center justify-center text-white`}>
+                <div
+                  className={`h-12 w-12 rounded-lg ${program.iconBg} mb-6 flex items-center justify-center text-white`}
+                >
                   {program.icon}
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white">{program.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">{program.description}</p>
+                <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white">
+                  {program.title}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">
+                  {program.description}
+                </p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {program.skills.map((skill, index) => (
-                    <span 
+                    <span
                       key={index}
                       className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
                     >
@@ -127,7 +172,7 @@ export const Programs: React.FC = () => {
             </motion.div>
           ))}
         </div>
-        
+
         {/* View All button */}
         <div className="flex justify-center mt-12">
           <motion.div

@@ -26,11 +26,17 @@ const AmbassadorTracker: React.FC = () => {
 
     try {
       // Simulate referral validation for demo purposes
-      await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate API delay
-      
+      await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate API delay
+
       // Mock referral codes for demo
-      const validReferralCodes = ['AMB0001', 'AMB0002', 'AMB0003', 'AMB001', 'AMB002'];
-      
+      const validReferralCodes = [
+        "AMB0001",
+        "AMB0002",
+        "AMB0003",
+        "AMB001",
+        "AMB002",
+      ];
+
       if (validReferralCodes.includes(referralCode.toUpperCase())) {
         setReferralStatus({
           valid: true,

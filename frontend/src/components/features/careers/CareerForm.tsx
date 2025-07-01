@@ -1,9 +1,9 @@
 /**
  * CareerForm - Single Comprehensive Career Application Form
- * 
+ *
  * This is the ONLY career form used throughout the application.
  * Combines all previous forms into one unified, feature-rich form.
- * 
+ *
  * Features:
  * - Multi-step form with progress indicator
  * - Comprehensive field validation
@@ -14,15 +14,15 @@
  * - Smooth animations and transitions
  */
 
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  User, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Briefcase, 
-  Code, 
+import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Briefcase,
+  Code,
   GraduationCap,
   Link,
   Send,
@@ -30,8 +30,8 @@ import {
   AlertCircle,
   Loader,
   Star,
-  Sparkles
-} from 'lucide-react';
+  Sparkles,
+} from "lucide-react";
 
 interface FormData {
   // Basic Information
@@ -40,41 +40,41 @@ interface FormData {
   email: string;
   phone: string;
   location: string;
-  
+
   // Professional Information
   linkedIn: string;
   github: string;
   portfolio: string;
   resumeUrl: string;
-  
+
   // Role and Skills
   roleType: string;
   secondaryRole: string;
   skills: string[];
   experience: string;
-  
+
   // Education
   university: string;
   course: string;
   yearOfStudy: string;
   cgpa: string;
-  
+
   // Mentor-specific fields
   mentorExperience: string;
   mentorAreas: string[];
   availabilityHours: string;
-  
+
   // Availability and Salary
   availability: string;
   expectedSalary: string;
   startDate: string;
   timeCommitment: string;
-  
+
   // Motivation
   whyJoin: string;
   motivation: string;
   previousWork: string;
-  
+
   // Additional
   referralSource: string;
   additionalInfo: string;
@@ -86,7 +86,10 @@ interface CareerFormProps {
 }
 
 // Wrapper component definition moved outside to prevent re-creation
-const FormWrapper: React.FC<{ children: React.ReactNode; isEmbedded: boolean }> = ({ children, isEmbedded }) => {
+const FormWrapper: React.FC<{
+  children: React.ReactNode;
+  isEmbedded: boolean;
+}> = ({ children, isEmbedded }) => {
   if (isEmbedded) {
     return (
       <div className="bg-white rounded-2xl max-w-4xl w-full mx-auto shadow-2xl">
@@ -96,13 +99,13 @@ const FormWrapper: React.FC<{ children: React.ReactNode; isEmbedded: boolean }> 
   }
 
   return (
-    <motion.div 
+    <motion.div
       className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <motion.div 
+      <motion.div
         className="bg-white rounded-2xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-hidden shadow-2xl"
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -114,9 +117,9 @@ const FormWrapper: React.FC<{ children: React.ReactNode; isEmbedded: boolean }> 
   );
 };
 
-const CareerForm: React.FC<CareerFormProps> = ({ 
-  onClose, 
-  isEmbedded = false 
+const CareerForm: React.FC<CareerFormProps> = ({
+  onClose,
+  isEmbedded = false,
 }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -124,126 +127,241 @@ const CareerForm: React.FC<CareerFormProps> = ({
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<FormData>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    location: '',
-    linkedIn: '',
-    github: '',
-    portfolio: '',
-    resumeUrl: '',
-    roleType: '',
-    secondaryRole: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    location: "",
+    linkedIn: "",
+    github: "",
+    portfolio: "",
+    resumeUrl: "",
+    roleType: "",
+    secondaryRole: "",
     skills: [],
-    experience: '',
-    university: '',
-    course: '',
-    yearOfStudy: '',
-    cgpa: '',
-    mentorExperience: '',
+    experience: "",
+    university: "",
+    course: "",
+    yearOfStudy: "",
+    cgpa: "",
+    mentorExperience: "",
     mentorAreas: [],
-    availabilityHours: '',
-    availability: '',
-    expectedSalary: '',
-    startDate: '',
-    timeCommitment: '',
-    whyJoin: '',
-    motivation: '',
-    previousWork: '',
-    referralSource: '',
-    additionalInfo: ''
+    availabilityHours: "",
+    availability: "",
+    expectedSalary: "",
+    startDate: "",
+    timeCommitment: "",
+    whyJoin: "",
+    motivation: "",
+    previousWork: "",
+    referralSource: "",
+    additionalInfo: "",
   });
-  const roleTypes = useMemo(() => [
-    { value: 'web-developer', label: 'Web Developer', icon: '💻' },
-    { value: 'app-developer', label: 'App Developer', icon: '📱' },
-    { value: 'ai-ml-engineer', label: 'AI/ML Engineer', icon: '🤖' },
-    { value: 'data-scientist', label: 'Data Scientist', icon: '📊' },
-    { value: 'backend-developer', label: 'Backend Developer', icon: '⚙️' },
-    { value: 'fullstack-developer', label: 'Full Stack Developer', icon: '🔧' },
-    { value: 'ui-ux-designer', label: 'UI/UX Designer', icon: '🎨' },
-    { value: 'graphic-designer', label: 'Graphic Designer', icon: '✨' },
-    { value: 'video-editor', label: 'Video Editor', icon: '🎬' },
-    { value: 'digital-marketer', label: 'Digital Marketer', icon: '📈' },
-    { value: 'content-creator', label: 'Content Creator', icon: '✍️' },
-    { value: 'social-media-manager', label: 'Social Media Manager', icon: '📱' },
-    { value: 'student-team-member', label: 'Student Team Member', icon: '🎓' },
-    { value: 'campus-ambassador', label: 'Campus Ambassador', icon: '🎯' },
-    { value: 'mentor', label: 'Mentor', icon: '👨‍🏫' },
-    { value: 'freelancer', label: 'Freelancer', icon: '🚀' },
-    { value: 'volunteer', label: 'Volunteer', icon: '❤️' },
-    { value: 'project-manager', label: 'Project Manager', icon: '📋' },
-    { value: 'business-analyst', label: 'Business Analyst', icon: '📊' }
-  ], []);
+  const roleTypes = useMemo(
+    () => [
+      { value: "web-developer", label: "Web Developer", icon: "💻" },
+      { value: "app-developer", label: "App Developer", icon: "📱" },
+      { value: "ai-ml-engineer", label: "AI/ML Engineer", icon: "🤖" },
+      { value: "data-scientist", label: "Data Scientist", icon: "📊" },
+      { value: "backend-developer", label: "Backend Developer", icon: "⚙️" },
+      {
+        value: "fullstack-developer",
+        label: "Full Stack Developer",
+        icon: "🔧",
+      },
+      { value: "ui-ux-designer", label: "UI/UX Designer", icon: "🎨" },
+      { value: "graphic-designer", label: "Graphic Designer", icon: "✨" },
+      { value: "video-editor", label: "Video Editor", icon: "🎬" },
+      { value: "digital-marketer", label: "Digital Marketer", icon: "📈" },
+      { value: "content-creator", label: "Content Creator", icon: "✍️" },
+      {
+        value: "social-media-manager",
+        label: "Social Media Manager",
+        icon: "📱",
+      },
+      {
+        value: "student-team-member",
+        label: "Student Team Member",
+        icon: "🎓",
+      },
+      { value: "campus-ambassador", label: "Campus Ambassador", icon: "🎯" },
+      { value: "mentor", label: "Mentor", icon: "👨‍🏫" },
+      { value: "freelancer", label: "Freelancer", icon: "🚀" },
+      { value: "volunteer", label: "Volunteer", icon: "❤️" },
+      { value: "project-manager", label: "Project Manager", icon: "📋" },
+      { value: "business-analyst", label: "Business Analyst", icon: "📊" },
+    ],
+    [],
+  );
 
-  const skillOptions = useMemo(() => [
-    // Frontend Development
-    'React', 'Vue.js', 'Angular', 'JavaScript', 'TypeScript', 'HTML/CSS', 'Tailwind CSS', 'Bootstrap',
-    'Next.js', 'Nuxt.js', 'Svelte', 'jQuery', 'SASS/SCSS', 'Webpack', 'Vite',
-    
-    // Backend Development
-    'Node.js', 'Express.js', 'Python', 'Django', 'Flask', 'FastAPI', 'Java', 'Spring Boot',
-    'C#', '.NET', 'PHP', 'Laravel', 'Ruby', 'Ruby on Rails', 'Go', 'Rust',
-    
-    // Mobile Development
-    'React Native', 'Flutter', 'Swift', 'Kotlin', 'Ionic', 'Xamarin',
-    
-    // Database & Cloud
-    'MongoDB', 'PostgreSQL', 'MySQL', 'Redis', 'Firebase', 'AWS', 'Azure', 'Google Cloud',
-    'Docker', 'Kubernetes', 'GraphQL', 'REST APIs', 'Microservices',
-    
-    // AI/ML & Data Science
-    'Machine Learning', 'Deep Learning', 'TensorFlow', 'PyTorch', 'Pandas', 'NumPy',
-    'Scikit-learn', 'OpenCV', 'NLP', 'Computer Vision', 'Data Analysis', 'Jupyter',
-    
-    // Design & Creative
-    'Figma', 'Adobe XD', 'Photoshop', 'Illustrator', 'After Effects', 'Canva',
-    'Sketch', 'InVision', 'Principle', 'Framer', 'UI/UX Design', 'Prototyping',
-    
-    // Marketing & Content
-    'SEO', 'Google Analytics', 'Social Media Marketing', 'Content Marketing', 'Email Marketing',
-    'Google Ads', 'Facebook Ads', 'Content Writing', 'Copywriting', 'Video Editing',
-    
-    // Soft Skills & Management
-    'Leadership', 'Project Management', 'Communication', 'Problem Solving', 'Team Management',
-    'Agile/Scrum', 'Product Management', 'Strategic Planning', 'Time Management'
-  ], []);
+  const skillOptions = useMemo(
+    () => [
+      // Frontend Development
+      "React",
+      "Vue.js",
+      "Angular",
+      "JavaScript",
+      "TypeScript",
+      "HTML/CSS",
+      "Tailwind CSS",
+      "Bootstrap",
+      "Next.js",
+      "Nuxt.js",
+      "Svelte",
+      "jQuery",
+      "SASS/SCSS",
+      "Webpack",
+      "Vite",
 
-  const mentorAreas = useMemo(() => [
-    'Web Development', 'Mobile Development', 'AI/ML', 'Data Science', 'UI/UX Design',
-    'Digital Marketing', 'Career Guidance', 'Entrepreneurship', 'Project Management',
-    'Technical Writing', 'Public Speaking', 'Interview Preparation'
-  ], []);const handleInputChange = useCallback((field: keyof FormData, value: string | string[]) => {
-    setFormData(prev => {
-      // Only update if the value has actually changed to prevent unnecessary re-renders
-      if (prev[field] === value) return prev;
-      return { ...prev, [field]: value };
-    });
-  }, []);
-  
+      // Backend Development
+      "Node.js",
+      "Express.js",
+      "Python",
+      "Django",
+      "Flask",
+      "FastAPI",
+      "Java",
+      "Spring Boot",
+      "C#",
+      ".NET",
+      "PHP",
+      "Laravel",
+      "Ruby",
+      "Ruby on Rails",
+      "Go",
+      "Rust",
+
+      // Mobile Development
+      "React Native",
+      "Flutter",
+      "Swift",
+      "Kotlin",
+      "Ionic",
+      "Xamarin",
+
+      // Database & Cloud
+      "MongoDB",
+      "PostgreSQL",
+      "MySQL",
+      "Redis",
+      "Firebase",
+      "AWS",
+      "Azure",
+      "Google Cloud",
+      "Docker",
+      "Kubernetes",
+      "GraphQL",
+      "REST APIs",
+      "Microservices",
+
+      // AI/ML & Data Science
+      "Machine Learning",
+      "Deep Learning",
+      "TensorFlow",
+      "PyTorch",
+      "Pandas",
+      "NumPy",
+      "Scikit-learn",
+      "OpenCV",
+      "NLP",
+      "Computer Vision",
+      "Data Analysis",
+      "Jupyter",
+
+      // Design & Creative
+      "Figma",
+      "Adobe XD",
+      "Photoshop",
+      "Illustrator",
+      "After Effects",
+      "Canva",
+      "Sketch",
+      "InVision",
+      "Principle",
+      "Framer",
+      "UI/UX Design",
+      "Prototyping",
+
+      // Marketing & Content
+      "SEO",
+      "Google Analytics",
+      "Social Media Marketing",
+      "Content Marketing",
+      "Email Marketing",
+      "Google Ads",
+      "Facebook Ads",
+      "Content Writing",
+      "Copywriting",
+      "Video Editing",
+
+      // Soft Skills & Management
+      "Leadership",
+      "Project Management",
+      "Communication",
+      "Problem Solving",
+      "Team Management",
+      "Agile/Scrum",
+      "Product Management",
+      "Strategic Planning",
+      "Time Management",
+    ],
+    [],
+  );
+
+  const mentorAreas = useMemo(
+    () => [
+      "Web Development",
+      "Mobile Development",
+      "AI/ML",
+      "Data Science",
+      "UI/UX Design",
+      "Digital Marketing",
+      "Career Guidance",
+      "Entrepreneurship",
+      "Project Management",
+      "Technical Writing",
+      "Public Speaking",
+      "Interview Preparation",
+    ],
+    [],
+  );
+  const handleInputChange = useCallback(
+    (field: keyof FormData, value: string | string[]) => {
+      setFormData((prev) => {
+        // Only update if the value has actually changed to prevent unnecessary re-renders
+        if (prev[field] === value) return prev;
+        return { ...prev, [field]: value };
+      });
+    },
+    [],
+  );
+
   // Debounced input handler to prevent too frequent updates
-  const handleTextareaChange = useCallback((field: keyof FormData, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value
-    }));
-  }, []);
-  
+  const handleTextareaChange = useCallback(
+    (field: keyof FormData, value: string) => {
+      setFormData((prev) => ({
+        ...prev,
+        [field]: value,
+      }));
+    },
+    [],
+  );
+
   const handleSkillToggle = useCallback((skill: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       skills: prev.skills.includes(skill)
-        ? prev.skills.filter(s => s !== skill)
-        : [...prev.skills, skill]
+        ? prev.skills.filter((s) => s !== skill)
+        : [...prev.skills, skill],
     }));
   }, []);
 
   const handleMentorAreaToggle = useCallback((area: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       mentorAreas: prev.mentorAreas.includes(area)
-        ? prev.mentorAreas.filter(a => a !== area)
-        : [...prev.mentorAreas, area]
+        ? prev.mentorAreas.filter((a) => a !== area)
+        : [...prev.mentorAreas, area],
     }));
   }, []);
 
@@ -252,42 +370,43 @@ const CareerForm: React.FC<CareerFormProps> = ({
     setCurrentStep(1);
     setSubmitError(null);
     setFormData({
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      location: '',
-      linkedIn: '',
-      github: '',
-      portfolio: '',
-      resumeUrl: '',
-      roleType: '',
-      secondaryRole: '',
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      location: "",
+      linkedIn: "",
+      github: "",
+      portfolio: "",
+      resumeUrl: "",
+      roleType: "",
+      secondaryRole: "",
       skills: [],
-      experience: '',
-      university: '',
-      course: '',
-      yearOfStudy: '',
-      cgpa: '',
-      mentorExperience: '',
+      experience: "",
+      university: "",
+      course: "",
+      yearOfStudy: "",
+      cgpa: "",
+      mentorExperience: "",
       mentorAreas: [],
-      availabilityHours: '',
-      availability: '',
-      expectedSalary: '',
-      startDate: '',
-      timeCommitment: '',
-      whyJoin: '',
-      motivation: '',
-      previousWork: '',
-      referralSource: '',
-      additionalInfo: ''
+      availabilityHours: "",
+      availability: "",
+      expectedSalary: "",
+      startDate: "",
+      timeCommitment: "",
+      whyJoin: "",
+      motivation: "",
+      previousWork: "",
+      referralSource: "",
+      additionalInfo: "",
     });
-  };  const handleSubmit = async (e: React.FormEvent) => {
+  };
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Prevent double submission
     if (isSubmitting) return;
-    
+
     setIsSubmitting(true);
     setSubmitError(null);
 
@@ -297,21 +416,24 @@ const CareerForm: React.FC<CareerFormProps> = ({
         name: `${formData.firstName} ${formData.lastName}`.trim(),
         email: formData.email,
         phone: formData.phone,
-        position: formData.roleType || 'Other',
-        resumeLink: formData.resumeUrl || formData.portfolio || 'https://example.com/resume.pdf'
+        position: formData.roleType || "Other",
+        resumeLink:
+          formData.resumeUrl ||
+          formData.portfolio ||
+          "https://example.com/resume.pdf",
       };
 
-      console.log('Submitting career application:', apiData);
-      
+      console.log("Submitting career application:", apiData);
+
       // Use the career service to submit
-      const { careerService } = await import('../../../lib/services');
+      const { careerService } = await import("../../../lib/services");
       const result = await careerService.submitApplication(apiData);
-      
+
       if (result.success) {
-        console.log('✅ Career Application Submitted Successfully!');
-        console.log('Application ID:', result.data?.id);
+        console.log("✅ Career Application Submitted Successfully!");
+        console.log("Application ID:", result.data?.id);
         setIsSubmitted(true);
-        
+
         if (!isEmbedded && onClose) {
           // Close modal after 3 seconds only for modal mode
           setTimeout(() => {
@@ -319,12 +441,12 @@ const CareerForm: React.FC<CareerFormProps> = ({
           }, 3000);
         }
       } else {
-        console.error('❌ Submission failed:', result.message);
-        setSubmitError(result.message || 'Failed to submit application');
+        console.error("❌ Submission failed:", result.message);
+        setSubmitError(result.message || "Failed to submit application");
       }
     } catch (error) {
-      console.error('❌ Submission error:', error);
-      setSubmitError('Failed to submit application. Please try again.');
+      console.error("❌ Submission error:", error);
+      setSubmitError("Failed to submit application. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -336,9 +458,20 @@ const CareerForm: React.FC<CareerFormProps> = ({
 
   const prevStep = () => {
     if (currentStep > 1) setCurrentStep(currentStep - 1);
-  };  const isMentorRole = useMemo(() => formData.roleType === 'mentor', [formData.roleType]);
-  const isStudentRole = useMemo(() => ['student-team-member', 'campus-ambassador'].includes(formData.roleType), [formData.roleType]);
-  const showEducationFields = useMemo(() => isStudentRole || formData.university, [isStudentRole, formData.university]);
+  };
+  const isMentorRole = useMemo(
+    () => formData.roleType === "mentor",
+    [formData.roleType],
+  );
+  const isStudentRole = useMemo(
+    () =>
+      ["student-team-member", "campus-ambassador"].includes(formData.roleType),
+    [formData.roleType],
+  );
+  const showEducationFields = useMemo(
+    () => isStudentRole || formData.university,
+    [isStudentRole, formData.university],
+  );
   // Prevent unwanted form resets
   useEffect(() => {
     // Prevent form reset on component re-render
@@ -349,13 +482,17 @@ const CareerForm: React.FC<CareerFormProps> = ({
 
   if (isSubmitted) {
     return (
-      <motion.div 
-        className={isEmbedded ? "flex items-center justify-center p-8" : "fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"}
+      <motion.div
+        className={
+          isEmbedded
+            ? "flex items-center justify-center p-8"
+            : "fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+        }
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        <motion.div 
+        <motion.div
           className="bg-white rounded-2xl p-8 max-w-md w-full text-center shadow-2xl"
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -369,8 +506,7 @@ const CareerForm: React.FC<CareerFormProps> = ({
           >
             <CheckCircle className="w-10 h-10 text-white" />
           </motion.div>
-          
-          <motion.h3 
+          <motion.h3
             className="text-2xl font-bold text-gray-800 mb-4"
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -378,30 +514,32 @@ const CareerForm: React.FC<CareerFormProps> = ({
           >
             Application Submitted!
           </motion.h3>
-          
-          <motion.p 
+          <motion.p
             className="text-gray-600 mb-6"
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            Thank you for applying! We'll review your application and get back to you soon.
+            Thank you for applying! We'll review your application and get back
+            to you soon.
           </motion.p>
-
           <motion.div
             className="w-full bg-gradient-to-r from-green-400 to-emerald-500 h-1 rounded-full mb-4"
             initial={{ width: 0 }}
             animate={{ width: "100%" }}
             transition={{ delay: 0.5, duration: 2 }}
-          />          <motion.p 
+          />{" "}
+          <motion.p
             className="text-sm text-gray-500"
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.6 }}
           >
-            {isEmbedded ? "Application submitted successfully!" : "This window will close automatically..."}
+            {isEmbedded
+              ? "Application submitted successfully!"
+              : "This window will close automatically..."}
           </motion.p>
-            {isEmbedded && (
+          {isEmbedded && (
             <motion.button
               type="button"
               onClick={resetForm}
@@ -429,7 +567,7 @@ const CareerForm: React.FC<CareerFormProps> = ({
               Career Form - Join Internexis
             </h2>
             {!isEmbedded && onClose && (
-              <button 
+              <button
                 onClick={onClose}
                 className="text-white/80 hover:text-white transition-colors p-2 hover:bg-white/20 rounded-lg"
               >
@@ -437,40 +575,49 @@ const CareerForm: React.FC<CareerFormProps> = ({
               </button>
             )}
           </div>
-          
+
           {/* Progress Bar */}
           <div className="flex items-center gap-4">
             {[1, 2, 3, 4].map((step) => (
               <div key={step} className="flex items-center">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-all ${
-                  step <= currentStep 
-                    ? 'bg-white text-blue-600 shadow-lg' 
-                    : 'bg-white/30 text-white/70'
-                }`}>
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-all ${
+                    step <= currentStep
+                      ? "bg-white text-blue-600 shadow-lg"
+                      : "bg-white/30 text-white/70"
+                  }`}
+                >
                   {step}
                 </div>
                 {step < 4 && (
-                  <div className={`w-12 h-1 mx-2 transition-all ${
-                    step < currentStep ? 'bg-white' : 'bg-white/30'
-                  }`} />
+                  <div
+                    className={`w-12 h-1 mx-2 transition-all ${
+                      step < currentStep ? "bg-white" : "bg-white/30"
+                    }`}
+                  />
                 )}
               </div>
             ))}
           </div>
-          
+
           <div className="mt-4 text-sm opacity-90">
-            Step {currentStep} of 4: {
-              currentStep === 1 ? 'Personal Information' :
-              currentStep === 2 ? 'Professional Details' :
-              currentStep === 3 ? 'Availability & Motivation' :
-              'Review & Submit'
-            }
+            Step {currentStep} of 4:{" "}
+            {currentStep === 1
+              ? "Personal Information"
+              : currentStep === 2
+                ? "Professional Details"
+                : currentStep === 3
+                  ? "Availability & Motivation"
+                  : "Review & Submit"}
           </div>
         </div>
       </div>
-
       {/* Form Content */}
-      <div className={`p-6 ${isEmbedded ? 'max-h-none' : 'overflow-y-auto max-h-[calc(90vh-200px)]'}`}>        <form onSubmit={handleSubmit} key="career-form">
+      <div
+        className={`p-6 ${isEmbedded ? "max-h-none" : "overflow-y-auto max-h-[calc(90vh-200px)]"}`}
+      >
+        {" "}
+        <form onSubmit={handleSubmit} key="career-form">
           <AnimatePresence mode="wait">
             {/* Step 1: Personal Information */}
             {currentStep === 1 && (
@@ -487,11 +634,14 @@ const CareerForm: React.FC<CareerFormProps> = ({
                     <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
                       <User className="w-4 h-4" />
                       First Name *
-                    </label>                    <input
+                    </label>{" "}
+                    <input
                       id="firstName"
                       type="text"
                       value={formData.firstName}
-                      onChange={(e) => handleInputChange('firstName', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("firstName", e.target.value)
+                      }
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       placeholder="Enter your first name"
                       required
@@ -502,11 +652,14 @@ const CareerForm: React.FC<CareerFormProps> = ({
                     <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
                       <User className="w-4 h-4" />
                       Last Name *
-                    </label>                    <input
+                    </label>{" "}
+                    <input
                       id="lastName"
                       type="text"
                       value={formData.lastName}
-                      onChange={(e) => handleInputChange('lastName', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("lastName", e.target.value)
+                      }
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       placeholder="Enter your last name"
                       required
@@ -518,11 +671,12 @@ const CareerForm: React.FC<CareerFormProps> = ({
                   <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
                     <Mail className="w-4 h-4" />
                     Email Address *
-                  </label>                  <input
+                  </label>{" "}
+                  <input
                     id="email"
                     type="email"
                     value={formData.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    onChange={(e) => handleInputChange("email", e.target.value)}
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                     placeholder="Enter your email address"
                     required
@@ -534,11 +688,14 @@ const CareerForm: React.FC<CareerFormProps> = ({
                     <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
                       <Phone className="w-4 h-4" />
                       Phone Number *
-                    </label>                    <input
+                    </label>{" "}
+                    <input
                       id="phone"
                       type="tel"
                       value={formData.phone}
-                      onChange={(e) => handleInputChange('phone', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("phone", e.target.value)
+                      }
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       placeholder="Enter your phone number"
                       required
@@ -549,11 +706,14 @@ const CareerForm: React.FC<CareerFormProps> = ({
                     <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
                       <MapPin className="w-4 h-4" />
                       Location *
-                    </label>                    <input
+                    </label>{" "}
+                    <input
                       id="location"
                       type="text"
                       value={formData.location}
-                      onChange={(e) => handleInputChange('location', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("location", e.target.value)
+                      }
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       placeholder="City, State/Country"
                       required
@@ -583,11 +743,13 @@ const CareerForm: React.FC<CareerFormProps> = ({
                       <button
                         key={role.value}
                         type="button"
-                        onClick={() => handleInputChange('roleType', role.value)}
+                        onClick={() =>
+                          handleInputChange("roleType", role.value)
+                        }
                         className={`p-3 text-sm border rounded-lg transition-all text-left hover:shadow-md ${
                           formData.roleType === role.value
-                            ? 'border-blue-500 bg-blue-50 text-blue-700'
-                            : 'border-gray-300 hover:border-gray-400'
+                            ? "border-blue-500 bg-blue-50 text-blue-700"
+                            : "border-gray-300 hover:border-gray-400"
                         }`}
                       >
                         <div className="text-lg mb-1">{role.icon}</div>
@@ -596,7 +758,6 @@ const CareerForm: React.FC<CareerFormProps> = ({
                     ))}
                   </div>
                 </div>
-
                 <div className="space-y-2">
                   <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
                     <Code className="w-4 h-4" />
@@ -605,7 +766,10 @@ const CareerForm: React.FC<CareerFormProps> = ({
                   <div className="max-h-40 overflow-y-auto border border-gray-300 rounded-lg p-3">
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                       {skillOptions.map((skill) => (
-                        <label key={skill} className="flex items-center space-x-2 cursor-pointer">
+                        <label
+                          key={skill}
+                          className="flex items-center space-x-2 cursor-pointer"
+                        >
                           <input
                             type="checkbox"
                             checked={formData.skills.includes(skill)}
@@ -618,31 +782,41 @@ const CareerForm: React.FC<CareerFormProps> = ({
                     </div>
                   </div>
                   <div className="text-sm text-gray-500">
-                    Selected: {formData.skills.length} skill{formData.skills.length !== 1 ? 's' : ''}
+                    Selected: {formData.skills.length} skill
+                    {formData.skills.length !== 1 ? "s" : ""}
                   </div>
-                </div>                <div className="space-y-2">
+                </div>{" "}
+                <div className="space-y-2">
                   <label className="block text-sm font-semibold text-gray-700">
                     Experience *
-                  </label>                  <textarea
+                  </label>{" "}
+                  <textarea
                     id="experience"
                     value={formData.experience}
-                    onChange={(e) => handleTextareaChange('experience', e.target.value)}
+                    onChange={(e) =>
+                      handleTextareaChange("experience", e.target.value)
+                    }
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                     rows={4}
                     placeholder="Describe your relevant experience, projects, and achievements..."
                     required
                   />
                 </div>
-
                 {/* Mentor-specific fields */}
                 {isMentorRole && (
                   <>
                     <div className="space-y-2">
                       <label className="block text-sm font-semibold text-gray-700">
                         Mentoring Experience
-                      </label>                      <textarea
+                      </label>{" "}
+                      <textarea
                         value={formData.mentorExperience}
-                        onChange={(e) => handleTextareaChange('mentorExperience', e.target.value)}
+                        onChange={(e) =>
+                          handleTextareaChange(
+                            "mentorExperience",
+                            e.target.value,
+                          )
+                        }
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                         rows={3}
                         placeholder="Describe your mentoring experience and approach..."
@@ -655,7 +829,10 @@ const CareerForm: React.FC<CareerFormProps> = ({
                       </label>
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                         {mentorAreas.map((area) => (
-                          <label key={area} className="flex items-center space-x-2 cursor-pointer">
+                          <label
+                            key={area}
+                            className="flex items-center space-x-2 cursor-pointer"
+                          >
                             <input
                               type="checkbox"
                               checked={formData.mentorAreas.includes(area)}
@@ -668,7 +845,8 @@ const CareerForm: React.FC<CareerFormProps> = ({
                       </div>
                     </div>
                   </>
-                )}                {/* Education fields for students */}
+                )}{" "}
+                {/* Education fields for students */}
                 {showEducationFields && (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
@@ -679,7 +857,9 @@ const CareerForm: React.FC<CareerFormProps> = ({
                       <input
                         type="text"
                         value={formData.university}
-                        onChange={(e) => handleInputChange('university', e.target.value)}
+                        onChange={(e) =>
+                          handleInputChange("university", e.target.value)
+                        }
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                         placeholder="Institution name"
                       />
@@ -692,7 +872,9 @@ const CareerForm: React.FC<CareerFormProps> = ({
                       <input
                         type="text"
                         value={formData.course}
-                        onChange={(e) => handleInputChange('course', e.target.value)}
+                        onChange={(e) =>
+                          handleInputChange("course", e.target.value)
+                        }
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                         placeholder="Your field of study"
                       />
@@ -721,7 +903,9 @@ const CareerForm: React.FC<CareerFormProps> = ({
                     <input
                       type="url"
                       value={formData.portfolio}
-                      onChange={(e) => handleInputChange('portfolio', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("portfolio", e.target.value)
+                      }
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       placeholder="https://your-portfolio.com"
                     />
@@ -735,7 +919,9 @@ const CareerForm: React.FC<CareerFormProps> = ({
                     <input
                       type="url"
                       value={formData.linkedIn}
-                      onChange={(e) => handleInputChange('linkedIn', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("linkedIn", e.target.value)
+                      }
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       placeholder="https://linkedin.com/in/yourprofile"
                     />
@@ -749,13 +935,14 @@ const CareerForm: React.FC<CareerFormProps> = ({
                     <input
                       type="url"
                       value={formData.github}
-                      onChange={(e) => handleInputChange('github', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("github", e.target.value)
+                      }
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       placeholder="https://github.com/yourprofile"
                     />
                   </div>
                 </div>
-
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="block text-sm font-semibold text-gray-700">
@@ -763,7 +950,9 @@ const CareerForm: React.FC<CareerFormProps> = ({
                     </label>
                     <select
                       value={formData.availability}
-                      onChange={(e) => handleInputChange('availability', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("availability", e.target.value)
+                      }
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       required
                     >
@@ -784,31 +973,39 @@ const CareerForm: React.FC<CareerFormProps> = ({
                     <input
                       type="text"
                       value={formData.expectedSalary}
-                      onChange={(e) => handleInputChange('expectedSalary', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("expectedSalary", e.target.value)
+                      }
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       placeholder="e.g., $50,000/year or Negotiable"
                     />
                   </div>
-                </div>                <div className="space-y-2">
+                </div>{" "}
+                <div className="space-y-2">
                   <label className="block text-sm font-semibold text-gray-700">
                     Why do you want to join Internexis? *
-                  </label>                  <textarea
+                  </label>{" "}
+                  <textarea
                     id="whyJoin"
                     value={formData.whyJoin}
-                    onChange={(e) => handleTextareaChange('whyJoin', e.target.value)}
+                    onChange={(e) =>
+                      handleTextareaChange("whyJoin", e.target.value)
+                    }
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                     rows={4}
                     placeholder="Tell us about your motivation and what you hope to achieve..."
                     required
                   />
                 </div>
-
                 <div className="space-y-2">
                   <label className="block text-sm font-semibold text-gray-700">
                     Previous Work/Projects (Optional)
-                  </label>                  <textarea
+                  </label>{" "}
+                  <textarea
                     value={formData.previousWork}
-                    onChange={(e) => handleTextareaChange('previousWork', e.target.value)}
+                    onChange={(e) =>
+                      handleTextareaChange("previousWork", e.target.value)
+                    }
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                     rows={3}
                     placeholder="Describe any relevant previous work or personal projects..."
@@ -828,12 +1025,16 @@ const CareerForm: React.FC<CareerFormProps> = ({
                 className="space-y-6"
               >
                 <div className="bg-gray-50 rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-4">Application Review</h3>
-                  
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                    Application Review
+                  </h3>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                     <div>
                       <span className="font-medium text-gray-600">Name:</span>
-                      <span className="ml-2">{formData.firstName} {formData.lastName}</span>
+                      <span className="ml-2">
+                        {formData.firstName} {formData.lastName}
+                      </span>
                     </div>
                     <div>
                       <span className="font-medium text-gray-600">Email:</span>
@@ -844,15 +1045,24 @@ const CareerForm: React.FC<CareerFormProps> = ({
                       <span className="ml-2">{formData.phone}</span>
                     </div>
                     <div>
-                      <span className="font-medium text-gray-600">Location:</span>
+                      <span className="font-medium text-gray-600">
+                        Location:
+                      </span>
                       <span className="ml-2">{formData.location}</span>
                     </div>
                     <div>
                       <span className="font-medium text-gray-600">Role:</span>
-                      <span className="ml-2">{roleTypes.find(r => r.value === formData.roleType)?.label}</span>
+                      <span className="ml-2">
+                        {
+                          roleTypes.find((r) => r.value === formData.roleType)
+                            ?.label
+                        }
+                      </span>
                     </div>
                     <div>
-                      <span className="font-medium text-gray-600">Availability:</span>
+                      <span className="font-medium text-gray-600">
+                        Availability:
+                      </span>
                       <span className="ml-2">{formData.availability}</span>
                     </div>
                   </div>
@@ -861,7 +1071,10 @@ const CareerForm: React.FC<CareerFormProps> = ({
                     <span className="font-medium text-gray-600">Skills:</span>
                     <div className="flex flex-wrap gap-2 mt-2">
                       {formData.skills.map((skill) => (
-                        <span key={skill} className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                        <span
+                          key={skill}
+                          className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full"
+                        >
                           {skill}
                         </span>
                       ))}
@@ -880,10 +1093,13 @@ const CareerForm: React.FC<CareerFormProps> = ({
                   <div className="flex items-start gap-3">
                     <Star className="w-5 h-5 text-blue-600 mt-0.5" />
                     <div>
-                      <h4 className="font-medium text-blue-800 mb-1">Ready to submit?</h4>
+                      <h4 className="font-medium text-blue-800 mb-1">
+                        Ready to submit?
+                      </h4>
                       <p className="text-sm text-blue-600">
-                        By submitting this application, you confirm that all information provided is accurate. 
-                        We'll review your application and contact you within 2-3 business days.
+                        By submitting this application, you confirm that all
+                        information provided is accurate. We'll review your
+                        application and contact you within 2-3 business days.
                       </p>
                     </div>
                   </div>
@@ -892,7 +1108,8 @@ const CareerForm: React.FC<CareerFormProps> = ({
             )}
           </AnimatePresence>
         </form>
-      </div>      {/* Footer */}
+      </div>{" "}
+      {/* Footer */}
       <div className="bg-gray-50 px-6 py-4 border-t">
         <div className="flex justify-between items-center">
           <button
@@ -901,8 +1118,8 @@ const CareerForm: React.FC<CareerFormProps> = ({
             disabled={currentStep === 1}
             className={`px-6 py-2 rounded-lg font-medium transition-all ${
               currentStep === 1
-                ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
             }`}
           >
             Previous
@@ -938,7 +1155,8 @@ const CareerForm: React.FC<CareerFormProps> = ({
               </button>
             )}
           </div>
-        </div>      </div>
+        </div>{" "}
+      </div>
     </FormWrapper>
   );
 };

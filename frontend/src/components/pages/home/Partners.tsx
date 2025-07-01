@@ -1,38 +1,38 @@
-import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper/modules';
-import 'swiper/css';
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 
 export const Partners: React.FC = () => {
   const partners = [
     {
-      name: 'AICTE',
-      logo: 'https://upload.wikimedia.org/wikipedia/en/e/eb/All_India_Council_for_Technical_Education_logo.png'
+      name: "AICTE",
+      logo: "https://upload.wikimedia.org/wikipedia/en/e/eb/All_India_Council_for_Technical_Education_logo.png",
     },
     {
-      name: 'Google',
-      logo: 'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png'
+      name: "Google",
+      logo: "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
     },
     {
-      name: 'Microsoft',
-      logo: 'https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31'
+      name: "Microsoft",
+      logo: "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31",
     },
     {
-      name: 'HCL Technologies',
-      logo: 'https://www.hcltech.com/themes/custom/hcltech/images/hcltech-new-logo.svg'
+      name: "HCL Technologies",
+      logo: "https://www.hcltech.com/themes/custom/hcltech/images/hcltech-new-logo.svg",
     },
     {
-      name: 'IBM',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg'
+      name: "IBM",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg",
     },
     {
-      name: 'Ministry of Technical Education',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg'
+      name: "Ministry of Technical Education",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg",
     },
     {
-      name: 'ISO Certified',
-      logo: 'https://iili.io/3jSsNhg.png'
-    }
+      name: "ISO Certified",
+      logo: "https://iili.io/3jSsNhg.png",
+    },
   ];
 
   return (

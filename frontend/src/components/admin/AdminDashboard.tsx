@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import {
   PlusIcon,
   PencilIcon,
@@ -11,8 +11,8 @@ import {
   CalendarIcon,
   DocumentTextIcon,
   ComputerDesktopIcon,
-  AcademicCapIcon
-} from '@heroicons/react/24/outline';
+  AcademicCapIcon,
+} from "@heroicons/react/24/outline";
 
 interface AdminDashboardProps {
   onNavigate: (section: string) => void;
@@ -34,7 +34,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) => {
     totalMentors: 0,
     totalProjects: 0,
     totalEvents: 0,
-    totalApplications: 0
+    totalApplications: 0,
   });
 
   const [loading, setLoading] = useState(true);
@@ -53,111 +53,111 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) => {
         totalMentors: 12,
         totalProjects: 18,
         totalEvents: 8,
-        totalApplications: 156
+        totalApplications: 156,
       });
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching dashboard stats:', error);
+      console.error("Error fetching dashboard stats:", error);
       setLoading(false);
     }
   };
 
   const navigationCards = [
     {
-      title: 'Digital Solutions',
-      description: 'Manage digital services and solutions',
+      title: "Digital Solutions",
+      description: "Manage digital services and solutions",
       icon: ComputerDesktopIcon,
-      color: 'bg-blue-500',
-      section: 'digital-solutions',
-      count: 12
+      color: "bg-blue-500",
+      section: "digital-solutions",
+      count: 12,
     },
     {
-      title: 'Internship Opportunities',
-      description: 'Add and manage internship listings',
+      title: "Internship Opportunities",
+      description: "Add and manage internship listings",
       icon: AcademicCapIcon,
-      color: 'bg-green-500',
-      section: 'internship-opportunities',
-      count: stats.totalInternships
+      color: "bg-green-500",
+      section: "internship-opportunities",
+      count: stats.totalInternships,
     },
     {
-      title: 'Job Opportunities',
-      description: 'Manage job listings and career opportunities',
+      title: "Job Opportunities",
+      description: "Manage job listings and career opportunities",
       icon: BriefcaseIcon,
-      color: 'bg-purple-500',
-      section: 'job-opportunities',
-      count: stats.totalJobs
+      color: "bg-purple-500",
+      section: "job-opportunities",
+      count: stats.totalJobs,
     },
     {
-      title: 'Hackathons & Events',
-      description: 'Manage tech events and hackathons',
+      title: "Hackathons & Events",
+      description: "Manage tech events and hackathons",
       icon: CalendarIcon,
-      color: 'bg-red-500',
-      section: 'hackathon-events',
-      count: stats.totalEvents
+      color: "bg-red-500",
+      section: "hackathon-events",
+      count: stats.totalEvents,
     },
     {
-      title: 'Work With Us',
-      description: 'Manage team openings and collaborations',
+      title: "Work With Us",
+      description: "Manage team openings and collaborations",
       icon: UserGroupIcon,
-      color: 'bg-indigo-500',
-      section: 'work-with-us',
-      count: 8
+      color: "bg-indigo-500",
+      section: "work-with-us",
+      count: 8,
     },
     {
-      title: 'Mentorship',
-      description: 'Manage mentor profiles and sessions',
+      title: "Mentorship",
+      description: "Manage mentor profiles and sessions",
       icon: UserGroupIcon,
-      color: 'bg-yellow-500',
-      section: 'mentorship',
-      count: stats.totalMentors
+      color: "bg-yellow-500",
+      section: "mentorship",
+      count: stats.totalMentors,
     },
     {
-      title: 'Career Guidance',
-      description: 'Manage guidance content and resources',
+      title: "Career Guidance",
+      description: "Manage guidance content and resources",
       icon: DocumentTextIcon,
-      color: 'bg-teal-500',
-      section: 'career-guidance',
-      count: 24
+      color: "bg-teal-500",
+      section: "career-guidance",
+      count: 24,
     },
     {
-      title: 'Freelance Projects',
-      description: 'Track and showcase project portfolio',
+      title: "Freelance Projects",
+      description: "Track and showcase project portfolio",
       icon: ChartBarIcon,
-      color: 'bg-orange-500',
-      section: 'freelance-projects',
-      count: stats.totalProjects
-    }
+      color: "bg-orange-500",
+      section: "freelance-projects",
+      count: stats.totalProjects,
+    },
   ];
 
   const statsCards = [
     {
-      title: 'Total Applications',
+      title: "Total Applications",
       value: stats.totalApplications,
       icon: DocumentTextIcon,
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-100'
+      color: "text-blue-600",
+      bgColor: "bg-blue-100",
     },
     {
-      title: 'Active Opportunities',
+      title: "Active Opportunities",
       value: stats.totalInternships + stats.totalJobs,
       icon: BriefcaseIcon,
-      color: 'text-green-600',
-      bgColor: 'bg-green-100'
+      color: "text-green-600",
+      bgColor: "bg-green-100",
     },
     {
-      title: 'Active Mentors',
+      title: "Active Mentors",
       value: stats.totalMentors,
       icon: UserGroupIcon,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-100'
+      color: "text-purple-600",
+      bgColor: "bg-purple-100",
     },
     {
-      title: 'Ongoing Projects',
+      title: "Ongoing Projects",
       value: stats.totalProjects,
       icon: ChartBarIcon,
-      color: 'text-orange-600',
-      bgColor: 'bg-orange-100'
-    }
+      color: "text-orange-600",
+      bgColor: "bg-orange-100",
+    },
   ];
   if (loading) {
     return (
@@ -224,14 +224,24 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { label: 'Add Internship', section: 'internship-opportunities', action: 'add' },
-              { label: 'Add Job', section: 'job-opportunities', action: 'add' },
-              { label: 'Add Event', section: 'hackathon-events', action: 'add' },
-              { label: 'Add Mentor', section: 'mentorship', action: 'add' }
+              {
+                label: "Add Internship",
+                section: "internship-opportunities",
+                action: "add",
+              },
+              { label: "Add Job", section: "job-opportunities", action: "add" },
+              {
+                label: "Add Event",
+                section: "hackathon-events",
+                action: "add",
+              },
+              { label: "Add Mentor", section: "mentorship", action: "add" },
             ].map((action, index) => (
               <button
                 key={index}
-                onClick={() => onNavigate(`${action.section}?action=${action.action}`)}
+                onClick={() =>
+                  onNavigate(`${action.section}?action=${action.action}`)
+                }
                 className="bg-white border border-gray-300 rounded-lg p-4 hover:bg-gray-50 transition-colors duration-200 flex items-center justify-center space-x-2"
               >
                 <PlusIcon className="h-5 w-5 text-gray-600" />
@@ -273,9 +283,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) => {
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">
                     {card.title}
                   </h3>
-                  <p className="text-gray-600 text-sm">
-                    {card.description}
-                  </p>
+                  <p className="text-gray-600 text-sm">{card.description}</p>
                 </div>
                 <div className="bg-gray-50 px-6 py-3 border-t border-gray-200">
                   <div className="flex items-center justify-between text-sm">
@@ -305,19 +313,43 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) => {
           <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
             <div className="space-y-4">
               {[
-                { action: 'New internship application', time: '2 minutes ago', type: 'application' },
-                { action: 'Job posting updated', time: '1 hour ago', type: 'update' },
-                { action: 'New mentor registered', time: '3 hours ago', type: 'registration' },
-                { action: 'Event deadline approaching', time: '5 hours ago', type: 'reminder' }
+                {
+                  action: "New internship application",
+                  time: "2 minutes ago",
+                  type: "application",
+                },
+                {
+                  action: "Job posting updated",
+                  time: "1 hour ago",
+                  type: "update",
+                },
+                {
+                  action: "New mentor registered",
+                  time: "3 hours ago",
+                  type: "registration",
+                },
+                {
+                  action: "Event deadline approaching",
+                  time: "5 hours ago",
+                  type: "reminder",
+                },
               ].map((activity, index) => (
-                <div key={index} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0">
+                <div
+                  key={index}
+                  className="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0"
+                >
                   <div className="flex items-center space-x-3">
-                    <div className={`w-2 h-2 rounded-full ${
-                      activity.type === 'application' ? 'bg-blue-500' :
-                      activity.type === 'update' ? 'bg-green-500' :
-                      activity.type === 'registration' ? 'bg-purple-500' :
-                      'bg-orange-500'
-                    }`}></div>
+                    <div
+                      className={`w-2 h-2 rounded-full ${
+                        activity.type === "application"
+                          ? "bg-blue-500"
+                          : activity.type === "update"
+                            ? "bg-green-500"
+                            : activity.type === "registration"
+                              ? "bg-purple-500"
+                              : "bg-orange-500"
+                      }`}
+                    ></div>
                     <span className="text-gray-900">{activity.action}</span>
                   </div>
                   <span className="text-gray-500 text-sm">{activity.time}</span>

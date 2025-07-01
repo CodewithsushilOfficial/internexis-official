@@ -1,39 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { PlusIcon, PencilIcon, TrashIcon, BriefcaseIcon, ClockIcon, CurrencyDollarIcon } from '@heroicons/react/24/outline';
-import { workWithUsAPI } from '../../services/api';
-import type { WorkWithUs } from '../../types/api';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  PlusIcon,
+  PencilIcon,
+  TrashIcon,
+  BriefcaseIcon,
+  ClockIcon,
+  CurrencyDollarIcon,
+} from "@heroicons/react/24/outline";
+import { workWithUsAPI } from "../../services/api";
+import type { WorkWithUs } from "../../types/api";
 
 const WorkWithUsManager: React.FC = () => {
   const [positions, setPositions] = useState<WorkWithUs[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingPosition, setEditingPosition] = useState<WorkWithUs | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [departmentFilter, setDepartmentFilter] = useState<string>('all');
+  const [editingPosition, setEditingPosition] = useState<WorkWithUs | null>(
+    null,
+  );
+  const [searchTerm, setSearchTerm] = useState("");
+  const [departmentFilter, setDepartmentFilter] = useState<string>("all");
 
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    jobType: 'full-time' as 'full-time' | 'part-time' | 'contract' | 'intern',
-    department: '',
-    location: '',
-    experience: '',
-    skills: [''],
-    responsibilities: [''],
-    requirements: [''],
+    title: "",
+    description: "",
+    jobType: "full-time" as "full-time" | "part-time" | "contract" | "intern",
+    department: "",
+    location: "",
+    experience: "",
+    skills: [""],
+    responsibilities: [""],
+    requirements: [""],
     salary: {
       min: 0,
       max: 0,
-      currency: 'INR',
-      negotiable: false
+      currency: "INR",
+      negotiable: false,
     },
-    benefits: [''],
-    applicationLink: '',
-    contactEmail: '',
-    deadline: '',
+    benefits: [""],
+    applicationLink: "",
+    contactEmail: "",
+    deadline: "",
     isActive: true,
-    isUrgent: false
+    isUrgent: false,
   });
 
   useEffect(() => {
@@ -46,7 +55,7 @@ const WorkWithUsManager: React.FC = () => {
       const response = await workWithUsAPI.getAllAdmin();
       setPositions(response.data);
     } catch (error) {
-      console.error('Error fetching positions:', error);
+      console.error("Error fetching positions:", error);
     } finally {
       setLoading(false);
     }
@@ -60,12 +69,14 @@ const WorkWithUsManager: React.FC = () => {
         salary: {
           ...formData.salary,
           min: Number(formData.salary.min),
-          max: Number(formData.salary.max)
+          max: Number(formData.salary.max),
         },
-        skills: formData.skills.filter(skill => skill.trim() !== ''),
-        responsibilities: formData.responsibilities.filter(resp => resp.trim() !== ''),
-        requirements: formData.requirements.filter(req => req.trim() !== ''),
-        benefits: formData.benefits.filter(benefit => benefit.trim() !== '')
+        skills: formData.skills.filter((skill) => skill.trim() !== ""),
+        responsibilities: formData.responsibilities.filter(
+          (resp) => resp.trim() !== "",
+        ),
+        requirements: formData.requirements.filter((req) => req.trim() !== ""),
+        benefits: formData.benefits.filter((benefit) => benefit.trim() !== ""),
       };
 
       if (editingPosition) {
@@ -73,49 +84,49 @@ const WorkWithUsManager: React.FC = () => {
       } else {
         await workWithUsAPI.create(positionData);
       }
-      
+
       fetchPositions();
       resetForm();
       setIsModalOpen(false);
     } catch (error) {
-      console.error('Error saving position:', error);
+      console.error("Error saving position:", error);
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (window.confirm('Are you sure you want to delete this position?')) {
+    if (window.confirm("Are you sure you want to delete this position?")) {
       try {
         await workWithUsAPI.delete(id);
         fetchPositions();
       } catch (error) {
-        console.error('Error deleting position:', error);
+        console.error("Error deleting position:", error);
       }
     }
   };
 
   const resetForm = () => {
     setFormData({
-      title: '',
-      description: '',
-      jobType: 'full-time',
-      department: '',
-      location: '',
-      experience: '',
-      skills: [''],
-      responsibilities: [''],
-      requirements: [''],
+      title: "",
+      description: "",
+      jobType: "full-time",
+      department: "",
+      location: "",
+      experience: "",
+      skills: [""],
+      responsibilities: [""],
+      requirements: [""],
       salary: {
         min: 0,
         max: 0,
-        currency: 'INR',
-        negotiable: false
+        currency: "INR",
+        negotiable: false,
       },
-      benefits: [''],
-      applicationLink: '',
-      contactEmail: '',
-      deadline: '',
+      benefits: [""],
+      applicationLink: "",
+      contactEmail: "",
+      deadline: "",
       isActive: true,
-      isUrgent: false
+      isUrgent: false,
     });
     setEditingPosition(null);
   };
@@ -125,53 +136,72 @@ const WorkWithUsManager: React.FC = () => {
     setFormData({
       title: position.title,
       description: position.description,
-      jobType: position.jobType as 'full-time' | 'part-time' | 'contract' | 'intern',
+      jobType: position.jobType as
+        | "full-time"
+        | "part-time"
+        | "contract"
+        | "intern",
       department: position.department,
       location: position.location,
       experience: position.experience,
-      skills: position.skills.length > 0 ? position.skills : [''],
-      responsibilities: position.responsibilities.length > 0 ? position.responsibilities : [''],
-      requirements: position.requirements.length > 0 ? position.requirements : [''],
+      skills: position.skills.length > 0 ? position.skills : [""],
+      responsibilities:
+        position.responsibilities.length > 0 ? position.responsibilities : [""],
+      requirements:
+        position.requirements.length > 0 ? position.requirements : [""],
       salary: position.salary,
-      benefits: position.benefits.length > 0 ? position.benefits : [''],
+      benefits: position.benefits.length > 0 ? position.benefits : [""],
       applicationLink: position.applicationLink,
       contactEmail: position.contactEmail,
-      deadline: position.deadline.split('T')[0],
+      deadline: position.deadline.split("T")[0],
       isActive: position.isActive,
-      isUrgent: position.isUrgent
+      isUrgent: position.isUrgent,
     });
     setIsModalOpen(true);
   };
 
-  const addArrayField = (field: 'skills' | 'responsibilities' | 'requirements' | 'benefits') => {
-    setFormData(prev => ({
+  const addArrayField = (
+    field: "skills" | "responsibilities" | "requirements" | "benefits",
+  ) => {
+    setFormData((prev) => ({
       ...prev,
-      [field]: [...prev[field], '']
+      [field]: [...prev[field], ""],
     }));
   };
 
-  const updateArrayField = (field: 'skills' | 'responsibilities' | 'requirements' | 'benefits', index: number, value: string) => {
-    setFormData(prev => ({
+  const updateArrayField = (
+    field: "skills" | "responsibilities" | "requirements" | "benefits",
+    index: number,
+    value: string,
+  ) => {
+    setFormData((prev) => ({
       ...prev,
-      [field]: prev[field].map((item, i) => i === index ? value : item)
+      [field]: prev[field].map((item, i) => (i === index ? value : item)),
     }));
   };
 
-  const removeArrayField = (field: 'skills' | 'responsibilities' | 'requirements' | 'benefits', index: number) => {
-    setFormData(prev => ({
+  const removeArrayField = (
+    field: "skills" | "responsibilities" | "requirements" | "benefits",
+    index: number,
+  ) => {
+    setFormData((prev) => ({
       ...prev,
-      [field]: prev[field].filter((_, i) => i !== index)
+      [field]: prev[field].filter((_, i) => i !== index),
     }));
   };
 
-  const filteredPositions = positions.filter(position => {
-    const matchesSearch = position.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         position.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesDepartment = departmentFilter === 'all' || position.department === departmentFilter;
+  const filteredPositions = positions.filter((position) => {
+    const matchesSearch =
+      position.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      position.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesDepartment =
+      departmentFilter === "all" || position.department === departmentFilter;
     return matchesSearch && matchesDepartment;
   });
 
-  const departments = Array.from(new Set(positions.map(p => p.department))).filter(Boolean);
+  const departments = Array.from(
+    new Set(positions.map((p) => p.department)),
+  ).filter(Boolean);
 
   if (loading) {
     return (
@@ -187,7 +217,9 @@ const WorkWithUsManager: React.FC = () => {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Work With Us</h1>
-          <p className="text-gray-600">Manage career opportunities and job positions</p>
+          <p className="text-gray-600">
+            Manage career opportunities and job positions
+          </p>
         </div>
         <motion.button
           whileHover={{ scale: 1.05 }}
@@ -218,8 +250,10 @@ const WorkWithUsManager: React.FC = () => {
             className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="all">All Departments</option>
-            {departments.map(dept => (
-              <option key={dept} value={dept}>{dept}</option>
+            {departments.map((dept) => (
+              <option key={dept} value={dept}>
+                {dept}
+              </option>
             ))}
           </select>
         </div>
@@ -238,10 +272,14 @@ const WorkWithUsManager: React.FC = () => {
             <div className="p-6">
               <div className="flex justify-between items-start mb-4">
                 <div className="flex flex-wrap gap-2">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    position.isActive ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                  }`}>
-                    {position.isActive ? 'Active' : 'Inactive'}
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      position.isActive
+                        ? "bg-green-100 text-green-800"
+                        : "bg-gray-100 text-gray-800"
+                    }`}
+                  >
+                    {position.isActive ? "Active" : "Inactive"}
                   </span>
                   {position.isUrgent && (
                     <span className="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
@@ -268,8 +306,12 @@ const WorkWithUsManager: React.FC = () => {
                 </div>
               </div>
 
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">{position.title}</h3>
-              <p className="text-gray-600 text-sm mb-4 line-clamp-3">{position.description}</p>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                {position.title}
+              </h3>
+              <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                {position.description}
+              </p>
 
               <div className="space-y-2 text-sm text-gray-500">
                 <div className="flex items-center gap-2">
@@ -282,7 +324,10 @@ const WorkWithUsManager: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <CurrencyDollarIcon className="h-4 w-4" />
-                  <span>₹{position.salary.min.toLocaleString()} - ₹{position.salary.max.toLocaleString()}</span>
+                  <span>
+                    ₹{position.salary.min.toLocaleString()} - ₹
+                    {position.salary.max.toLocaleString()}
+                  </span>
                 </div>
               </div>
             </div>
@@ -293,8 +338,12 @@ const WorkWithUsManager: React.FC = () => {
       {filteredPositions.length === 0 && (
         <div className="text-center py-12">
           <BriefcaseIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No positions found</h3>
-          <p className="text-gray-500">Get started by creating your first job position.</p>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">
+            No positions found
+          </h3>
+          <p className="text-gray-500">
+            Get started by creating your first job position.
+          </p>
         </div>
       )}
 
@@ -314,7 +363,7 @@ const WorkWithUsManager: React.FC = () => {
               className="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto"
             >
               <h2 className="text-xl font-bold text-gray-900 mb-6">
-                {editingPosition ? 'Edit Position' : 'Add New Position'}
+                {editingPosition ? "Edit Position" : "Add New Position"}
               </h2>
 
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -327,7 +376,12 @@ const WorkWithUsManager: React.FC = () => {
                       type="text"
                       required
                       value={formData.title}
-                      onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          title: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -340,7 +394,12 @@ const WorkWithUsManager: React.FC = () => {
                       required
                       rows={3}
                       value={formData.description}
-                      onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          description: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -352,7 +411,16 @@ const WorkWithUsManager: React.FC = () => {
                     <select
                       required
                       value={formData.jobType}
-                      onChange={(e) => setFormData(prev => ({ ...prev, jobType: e.target.value as 'full-time' | 'part-time' | 'contract' | 'intern' }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          jobType: e.target.value as
+                            | "full-time"
+                            | "part-time"
+                            | "contract"
+                            | "intern",
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       <option value="full-time">Full Time</option>
@@ -370,7 +438,12 @@ const WorkWithUsManager: React.FC = () => {
                       type="text"
                       required
                       value={formData.department}
-                      onChange={(e) => setFormData(prev => ({ ...prev, department: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          department: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -383,7 +456,12 @@ const WorkWithUsManager: React.FC = () => {
                       type="text"
                       required
                       value={formData.location}
-                      onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          location: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -396,7 +474,12 @@ const WorkWithUsManager: React.FC = () => {
                       type="text"
                       required
                       value={formData.experience}
-                      onChange={(e) => setFormData(prev => ({ ...prev, experience: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          experience: e.target.value,
+                        }))
+                      }
                       placeholder="e.g., 2-4 years"
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
@@ -411,10 +494,15 @@ const WorkWithUsManager: React.FC = () => {
                       required
                       min="0"
                       value={formData.salary.min}
-                      onChange={(e) => setFormData(prev => ({ 
-                        ...prev, 
-                        salary: { ...prev.salary, min: parseInt(e.target.value) }
-                      }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          salary: {
+                            ...prev.salary,
+                            min: parseInt(e.target.value),
+                          },
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -428,10 +516,15 @@ const WorkWithUsManager: React.FC = () => {
                       required
                       min="0"
                       value={formData.salary.max}
-                      onChange={(e) => setFormData(prev => ({ 
-                        ...prev, 
-                        salary: { ...prev.salary, max: parseInt(e.target.value) }
-                      }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          salary: {
+                            ...prev.salary,
+                            max: parseInt(e.target.value),
+                          },
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -444,7 +537,12 @@ const WorkWithUsManager: React.FC = () => {
                       type="url"
                       required
                       value={formData.applicationLink}
-                      onChange={(e) => setFormData(prev => ({ ...prev, applicationLink: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          applicationLink: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -457,7 +555,12 @@ const WorkWithUsManager: React.FC = () => {
                       type="email"
                       required
                       value={formData.contactEmail}
-                      onChange={(e) => setFormData(prev => ({ ...prev, contactEmail: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          contactEmail: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -470,7 +573,12 @@ const WorkWithUsManager: React.FC = () => {
                       type="date"
                       required
                       value={formData.deadline}
-                      onChange={(e) => setFormData(prev => ({ ...prev, deadline: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          deadline: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -485,14 +593,16 @@ const WorkWithUsManager: React.FC = () => {
                         <input
                           type="text"
                           value={skill}
-                          onChange={(e) => updateArrayField('skills', index, e.target.value)}
+                          onChange={(e) =>
+                            updateArrayField("skills", index, e.target.value)
+                          }
                           placeholder={`Skill ${index + 1}`}
                           className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         />
                         {formData.skills.length > 1 && (
                           <button
                             type="button"
-                            onClick={() => removeArrayField('skills', index)}
+                            onClick={() => removeArrayField("skills", index)}
                             className="text-red-600 hover:text-red-800"
                           >
                             <TrashIcon className="h-5 w-5" />
@@ -502,7 +612,7 @@ const WorkWithUsManager: React.FC = () => {
                     ))}
                     <button
                       type="button"
-                      onClick={() => addArrayField('skills')}
+                      onClick={() => addArrayField("skills")}
                       className="text-blue-600 hover:text-blue-800 text-sm"
                     >
                       + Add Skill
@@ -516,20 +626,32 @@ const WorkWithUsManager: React.FC = () => {
                       <input
                         type="checkbox"
                         checked={formData.salary.negotiable}
-                        onChange={(e) => setFormData(prev => ({ 
-                          ...prev, 
-                          salary: { ...prev.salary, negotiable: e.target.checked }
-                        }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            salary: {
+                              ...prev.salary,
+                              negotiable: e.target.checked,
+                            },
+                          }))
+                        }
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
-                      <span className="ml-2 text-sm text-gray-700">Salary Negotiable</span>
+                      <span className="ml-2 text-sm text-gray-700">
+                        Salary Negotiable
+                      </span>
                     </label>
 
                     <label className="flex items-center">
                       <input
                         type="checkbox"
                         checked={formData.isActive}
-                        onChange={(e) => setFormData(prev => ({ ...prev, isActive: e.target.checked }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            isActive: e.target.checked,
+                          }))
+                        }
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
                       <span className="ml-2 text-sm text-gray-700">Active</span>
@@ -539,7 +661,12 @@ const WorkWithUsManager: React.FC = () => {
                       <input
                         type="checkbox"
                         checked={formData.isUrgent}
-                        onChange={(e) => setFormData(prev => ({ ...prev, isUrgent: e.target.checked }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            isUrgent: e.target.checked,
+                          }))
+                        }
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
                       <span className="ml-2 text-sm text-gray-700">Urgent</span>
@@ -552,7 +679,7 @@ const WorkWithUsManager: React.FC = () => {
                     type="submit"
                     className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500"
                   >
-                    {editingPosition ? 'Update Position' : 'Create Position'}
+                    {editingPosition ? "Update Position" : "Create Position"}
                   </button>
                   <button
                     type="button"

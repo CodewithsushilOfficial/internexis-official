@@ -1,77 +1,90 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Lock, User, Eye, EyeOff, LogIn, ArrowLeft } from 'lucide-react';
-import { useNavigate, Link } from 'react-router-dom';
-import { adminService } from '../../../lib/services';
-import { AxiosError } from 'axios';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Lock, User, Eye, EyeOff, LogIn, ArrowLeft } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
+import { adminService } from "../../../lib/services";
+import { AxiosError } from "axios";
 
-const SimpleAdminLogin: React.FC = () => {  const [credentials, setCredentials] = useState({
-    email: '',
-    password: ''
+const SimpleAdminLogin: React.FC = () => {
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-  
+  const [error, setError] = useState("");
+
   const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setCredentials(prev => ({
+    setCredentials((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-    setError(''); // Clear error when user types
-  };  const handleSubmit = async (e: React.FormEvent) => {
+    setError(""); // Clear error when user types
+  };
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError('');
+    setError("");
 
     try {
-      console.log('Attempting admin login with:', { 
+      console.log("Attempting admin login with:", {
         email: credentials.email,
-        passwordLength: credentials.password.length 
+        passwordLength: credentials.password.length,
       });
-      
-      const result = await adminService.login(credentials.email, credentials.password);
-      
-      console.log('Login response:', result);      if (result.success) {
+
+      const result = await adminService.login(
+        credentials.email,
+        credentials.password,
+      );
+
+      console.log("Login response:", result);
+      if (result.success) {
         // Successful login
-        console.log('Login successful, storing data and redirecting...');
-        localStorage.setItem('adminLoggedIn', 'true');
-        localStorage.setItem('adminToken', result.data.token);
-        localStorage.setItem('adminId', result.data.adminId);
-        localStorage.setItem('adminEmail', result.data.email);
-        localStorage.setItem('adminRole', result.data.role);
+        console.log("Login successful, storing data and redirecting...");
+        localStorage.setItem("adminLoggedIn", "true");
+        localStorage.setItem("adminToken", result.data.token);
+        localStorage.setItem("adminId", result.data.adminId);
+        localStorage.setItem("adminEmail", result.data.email);
+        localStorage.setItem("adminRole", result.data.role);
         // Dispatch custom event to update footer
-        window.dispatchEvent(new Event('adminAuthChanged'));
-        navigate('/admin-dashboard');
+        window.dispatchEvent(new Event("adminAuthChanged"));
+        navigate("/admin-dashboard");
       } else {
-        console.error('Login failed:', result.message);
-        setError(result.message || 'Login failed. Please check your credentials.');
+        console.error("Login failed:", result.message);
+        setError(
+          result.message || "Login failed. Please check your credentials.",
+        );
       }
     } catch (error: unknown) {
-      console.error('Login error:', error);
-      
+      console.error("Login error:", error);
+
       // Extract error message
-      let errorMessage = 'Login failed. Please check your credentials.';
-      
-      if (error && typeof error === 'object') {
-        if ('message' in error) {
-          errorMessage = (error as { message: string }).message;        } else if ('response' in error) {
+      let errorMessage = "Login failed. Please check your credentials.";
+
+      if (error && typeof error === "object") {
+        if ("message" in error) {
+          errorMessage = (error as { message: string }).message;
+        } else if ("response" in error) {
           const axiosError = error as AxiosError<{ message?: string }>;
           if (axiosError.response?.data?.message) {
             errorMessage = axiosError.response.data.message;
           } else if (axiosError.response?.status === 401) {
-            errorMessage = 'Invalid email or password. Please try again.';
+            errorMessage = "Invalid email or password. Please try again.";
           } else if (axiosError.response && axiosError.response.status >= 500) {
-            errorMessage = 'Server error. Please try again later.';
-          } else if (axiosError.code === 'NETWORK_ERROR' || axiosError.code === 'ERR_NETWORK') {
-            errorMessage = 'Connection failed. Please check if the backend server is running.';
+            errorMessage = "Server error. Please try again later.";
+          } else if (
+            axiosError.code === "NETWORK_ERROR" ||
+            axiosError.code === "ERR_NETWORK"
+          ) {
+            errorMessage =
+              "Connection failed. Please check if the backend server is running.";
           }
         }
       }
-      
+
       setError(errorMessage);
     } finally {
       setIsLoading(false);
@@ -80,8 +93,8 @@ const SimpleAdminLogin: React.FC = () => {  const [credentials, setCredentials] 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center p-4">
       {/* Back to Website Link */}
-      <Link 
-        to="/" 
+      <Link
+        to="/"
         className="absolute top-6 left-6 flex items-center space-x-2 text-white/70 hover:text-white transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
@@ -108,15 +121,17 @@ const SimpleAdminLogin: React.FC = () => {  const [credentials, setCredentials] 
             <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Admin Login
             </h1>
-            <p className="text-gray-600 mt-2">
-              Access the admin dashboard
-            </p>
+            <p className="text-gray-600 mt-2">Access the admin dashboard</p>
           </div>
-
           {/* Login Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">            {/* Email Field */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {" "}
+            {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Email
               </label>
               <div className="relative">
@@ -133,16 +148,18 @@ const SimpleAdminLogin: React.FC = () => {  const [credentials, setCredentials] 
                 />
               </div>
             </div>
-
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Password
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   name="password"
                   value={credentials.password}
@@ -156,11 +173,14 @@ const SimpleAdminLogin: React.FC = () => {  const [credentials, setCredentials] 
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
                 </button>
               </div>
             </div>
-
             {/* Error Message */}
             {error && (
               <motion.div
@@ -171,7 +191,6 @@ const SimpleAdminLogin: React.FC = () => {  const [credentials, setCredentials] 
                 {error}
               </motion.div>
             )}
-
             {/* Submit Button */}
             <motion.button
               type="submit"
@@ -193,13 +212,14 @@ const SimpleAdminLogin: React.FC = () => {  const [credentials, setCredentials] 
                 </>
               )}
             </motion.button>
-          </form>          {/* Footer */}
+          </form>{" "}
+          {/* Footer */}
           <div className="mt-8 text-center">
             <p className="text-sm text-gray-500">
               Secure admin access - Contact support for credentials
             </p>
             <button
-              onClick={() => navigate('/')}
+              onClick={() => navigate("/")}
               className="text-blue-600 hover:text-blue-700 text-sm font-medium mt-2"
             >
               ← Back to Home

@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { UserCheck, Target, TrendingUp } from 'lucide-react';
+import React from "react";
+import { motion } from "framer-motion";
+import { UserCheck, Target, TrendingUp } from "lucide-react";
 
 export const MentorshipPage: React.FC = () => {
   return (
@@ -74,7 +74,8 @@ export const FreelanceProjectsPage: React.FC = () => {
               🛠️ Freelance Projects
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Gain freelance experience through client-assigned real-world projects
+              Gain freelance experience through client-assigned real-world
+              projects
             </p>
           </motion.div>
         </div>
@@ -101,7 +102,8 @@ export const CareerJobsPage: React.FC = () => {
               💼 Career & Jobs
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Find jobs, internships, and off-campus drives relevant to your domain
+              Find jobs, internships, and off-campus drives relevant to your
+              domain
             </p>
           </motion.div>
         </div>

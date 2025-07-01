@@ -1,35 +1,49 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { GraduationCap, Award, Users, Clock, CheckCircle, ArrowRight } from 'lucide-react';
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  GraduationCap,
+  Award,
+  Users,
+  Clock,
+  CheckCircle,
+  ArrowRight,
+} from "lucide-react";
 
 export const InternshipPage: React.FC = () => {
   const benefits = [
     {
       icon: <Award className="w-6 h-6" />,
       title: "Industry Certificates",
-      description: "Get recognized certificates from top companies"
+      description: "Get recognized certificates from top companies",
     },
     {
       icon: <Users className="w-6 h-6" />,
       title: "Expert Mentorship",
-      description: "Learn from industry professionals and experts"
+      description: "Learn from industry professionals and experts",
     },
     {
       icon: <Clock className="w-6 h-6" />,
       title: "Flexible Duration",
-      description: "Choose internship duration that fits your schedule"
+      description: "Choose internship duration that fits your schedule",
     },
     {
       icon: <CheckCircle className="w-6 h-6" />,
       title: "Real Projects",
-      description: "Work on live projects with real-world impact"
-    }
+      description: "Work on live projects with real-world impact",
+    },
   ];
 
   const domains = [
-    "Web Development", "Mobile App Development", "Data Science", 
-    "Machine Learning", "Digital Marketing", "UI/UX Design",
-    "Cloud Computing", "DevOps", "Cybersecurity", "Blockchain"
+    "Web Development",
+    "Mobile App Development",
+    "Data Science",
+    "Machine Learning",
+    "Digital Marketing",
+    "UI/UX Design",
+    "Cloud Computing",
+    "DevOps",
+    "Cybersecurity",
+    "Blockchain",
   ];
 
   return (
@@ -46,16 +60,18 @@ export const InternshipPage: React.FC = () => {
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mb-8">
               <GraduationCap className="w-10 h-10 text-white" />
             </div>
-            
+
             <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-gray-900 via-blue-600 to-purple-600 bg-clip-text text-transparent dark:from-white dark:via-blue-400 dark:to-purple-400 mb-6">
               🎓 Internship Programs
             </h1>
-            
+
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
-              Real-world internships across domains with live projects & certificates. 
-              Gain practical experience and boost your career with our comprehensive internship programs.
+              Real industry-based internships with hands-on projects, training,
+              and certifications. Gain practical experience, improve your
+              skills, and boost your career with our comprehensive internship
+              programs.
             </p>
-            
+
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -74,7 +90,7 @@ export const InternshipPage: React.FC = () => {
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">
             Why Choose Our Internship Programs?
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {benefits.map((benefit, index) => (
               <motion.div
@@ -106,7 +122,7 @@ export const InternshipPage: React.FC = () => {
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">
             Available Domains
           </h2>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {domains.map((domain, index) => (
               <motion.div

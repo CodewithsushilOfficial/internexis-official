@@ -27,7 +27,10 @@ export interface DigitalSolution {
   updatedAt?: string;
 }
 
-export type CreateDigitalSolutionData = Omit<DigitalSolution, '_id' | 'createdAt' | 'updatedAt'>;
+export type CreateDigitalSolutionData = Omit<
+  DigitalSolution,
+  "_id" | "createdAt" | "updatedAt"
+>;
 export type UpdateDigitalSolutionData = Partial<CreateDigitalSolutionData>;
 
 // Internship Opportunity Types
@@ -67,8 +70,12 @@ export interface InternshipOpportunity {
   updatedAt?: string;
 }
 
-export type CreateInternshipOpportunityData = Omit<InternshipOpportunity, '_id' | 'createdAt' | 'updatedAt' | 'applicationsCount'>;
-export type UpdateInternshipOpportunityData = Partial<CreateInternshipOpportunityData>;
+export type CreateInternshipOpportunityData = Omit<
+  InternshipOpportunity,
+  "_id" | "createdAt" | "updatedAt" | "applicationsCount"
+>;
+export type UpdateInternshipOpportunityData =
+  Partial<CreateInternshipOpportunityData>;
 
 // Job Opportunity Types
 export interface JobOpportunity {
@@ -110,7 +117,10 @@ export interface JobOpportunity {
   updatedAt?: string;
 }
 
-export type CreateJobOpportunityData = Omit<JobOpportunity, '_id' | 'createdAt' | 'updatedAt' | 'applicationsCount' | 'views'>;
+export type CreateJobOpportunityData = Omit<
+  JobOpportunity,
+  "_id" | "createdAt" | "updatedAt" | "applicationsCount" | "views"
+>;
 export type UpdateJobOpportunityData = Partial<CreateJobOpportunityData>;
 
 // Hackathon Event Types
@@ -118,7 +128,7 @@ export interface HackathonEvent {
   _id?: string;
   title: string;
   description: string;
-  eventType: 'hackathon' | 'tech-event' | 'workshop' | 'conference';
+  eventType: "hackathon" | "tech-event" | "workshop" | "conference";
   startDate: string;
   endDate: string;
   location: string;
@@ -136,7 +146,10 @@ export interface HackathonEvent {
   updatedAt?: string;
 }
 
-export type CreateHackathonEventData = Omit<HackathonEvent, '_id' | 'createdAt' | 'updatedAt'>;
+export type CreateHackathonEventData = Omit<
+  HackathonEvent,
+  "_id" | "createdAt" | "updatedAt"
+>;
 export type UpdateHackathonEventData = Partial<CreateHackathonEventData>;
 
 // Work With Us Types
@@ -168,7 +181,10 @@ export interface WorkWithUs {
   updatedAt?: string;
 }
 
-export type CreateWorkWithUsData = Omit<WorkWithUs, '_id' | 'createdAt' | 'updatedAt' | 'applicationsCount'>;
+export type CreateWorkWithUsData = Omit<
+  WorkWithUs,
+  "_id" | "createdAt" | "updatedAt" | "applicationsCount"
+>;
 export type UpdateWorkWithUsData = Partial<CreateWorkWithUsData>;
 
 // Mentorship Types
@@ -204,7 +220,10 @@ export interface Mentorship {
   updatedAt?: string;
 }
 
-export type CreateMentorshipData = Omit<Mentorship, '_id' | 'createdAt' | 'updatedAt' | 'totalSessions'>;
+export type CreateMentorshipData = Omit<
+  Mentorship,
+  "_id" | "createdAt" | "updatedAt" | "totalSessions"
+>;
 export type UpdateMentorshipData = Partial<CreateMentorshipData>;
 
 // Career Guidance Types
@@ -235,7 +254,10 @@ export interface CareerGuidance {
   updatedAt?: string;
 }
 
-export type CreateCareerGuidanceData = Omit<CareerGuidance, '_id' | 'createdAt' | 'updatedAt' | 'views' | 'likes'>;
+export type CreateCareerGuidanceData = Omit<
+  CareerGuidance,
+  "_id" | "createdAt" | "updatedAt" | "views" | "likes"
+>;
 export type UpdateCareerGuidanceData = Partial<CreateCareerGuidanceData>;
 
 // Freelance Project Types
@@ -275,7 +297,10 @@ export interface FreelanceProject {
   updatedAt?: string;
 }
 
-export type CreateFreelanceProjectData = Omit<FreelanceProject, '_id' | 'createdAt' | 'updatedAt'>;
+export type CreateFreelanceProjectData = Omit<
+  FreelanceProject,
+  "_id" | "createdAt" | "updatedAt"
+>;
 export type UpdateFreelanceProjectData = Partial<CreateFreelanceProjectData>;
 
 export interface ProjectStatusUpdate {
