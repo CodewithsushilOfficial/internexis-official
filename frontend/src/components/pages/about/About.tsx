@@ -551,10 +551,13 @@ export const About: React.FC = () => {
               <div className="relative flex flex-col md:flex-row items-center gap-12">
                 <div className="md:w-1/2 md:pr-12 text-center md:text-right">
                   <div className="relative inline-block mb-6">
-                    <img
-                      src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=500&q=80"
-                      alt="Learning Environment"
-                      className="w-80 h-48 object-cover rounded-2xl shadow-xl border-4 border-white dark:border-gray-700"
+                    <video
+                      src="https://d1jj76g3lut4fe.cloudfront.net/processed/thumb/23V93fQ68ObuGdrn08.mp4?Expires=1752417085&Signature=S1eqDdF3fiAzze9GsUqOs0KzHGvCWevWaAADFgo4qH0sIf4LSI~hWejY9AQoYlNKWG7k6E5V~CRN-V4YNpHpY54U2LeJlnjCxE9U4I7rjO6gisMZEGwc3IJz4jpAIhWFi6YYskbGSt5y26WmVM5kUqz6yEHkirqmBSI0AiqZpUgYGkwhlYOVZ7d7R9FbPjaVV48K9~~D-WTiXE6hfzxJ4eBh38OOfCtEnNZ408dn0h~yPdMlCersO~isIxT5C2BGRyWzQKFJaczt~3qhBMgONqNRwSE0L52jG~aXlPETMNLWcsGX~dpqTZMqQ5K-Yx4l0HdHJ~82Nl6yXGaguobvUA__&Key-Pair-Id=K2YEDJLVZ3XRI#t=0.001"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="w-96 h-56 object-cover rounded-2xl shadow-xl"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-blue-500/20 to-transparent rounded-2xl" />
                   </div>
@@ -594,10 +597,13 @@ export const About: React.FC = () => {
               <div className="relative flex flex-col md:flex-row-reverse items-center gap-12">
                 <div className="md:w-1/2 md:pl-12 text-center md:text-left">
                   <div className="relative inline-block mb-6">
-                    <img
-                      src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=500&q=80"
-                      alt="Building Projects"
-                      className="w-80 h-48 object-cover rounded-2xl shadow-xl border-4 border-white dark:border-gray-700"
+                    <video
+                      src="https://d1jj76g3lut4fe.cloudfront.net/processed/thumb/C16590VRcX46OM2jlw.mp4?Expires=1752417342&Signature=oQwn036QcP3lV3wQH2s9Bve0cslzKunVTctsfIY0k9SmUXGErmQ3M6y5TqhNGyZttY9eINfg3eqyvy6N~P51YKgk3JDTH4BwJYDaqeMOu83GzjXaIV9aQZ0kD~WT2QCvor6SCypTPxdDkNr24Aik8jGkLTEtS4GN5~yzl67bHTGhm2attFGEWv732lE~CCxqGXSaIfM7xV0gGFYn~ddq8Uvz-iNk7~sPvnpGwhxCU20FpOCAfrSEfeb50AQI0dDtz6ZEXzsMPK~Rniul1VI~9rtjiS6JWIGmYonISSISWqbmhjfkWvvqQT5DiqtfNSNSzF-uNSazh1gp7Ko0nqcjAQ__&Key-Pair-Id=K2YEDJLVZ3XRI#t=0.001"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="w-96 h-56 object-cover rounded-2xl shadow-xl"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-purple-500/20 to-transparent rounded-2xl" />
                   </div>
@@ -637,10 +643,13 @@ export const About: React.FC = () => {
               <div className="relative flex flex-col md:flex-row items-center gap-12">
                 <div className="md:w-1/2 md:pr-12 text-center md:text-right">
                   <div className="relative inline-block mb-6">
-                    <img
-                      src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=500&q=80"
-                      alt="Business Growth"
-                      className="w-80 h-48 object-cover rounded-2xl shadow-xl border-4 border-white dark:border-gray-700"
+                    <video
+                      src="https://d1jj76g3lut4fe.cloudfront.net/processed/thumb/gih0laK9mjW35VN74a.mp4?Expires=1752417538&Signature=hUv8B4Fc1nEBvulzB0K1znMFBkFu2vGbGhKd8NCg63QuUnaBQqpurksXE~Eul9fQB93V7JAmMMPu93mG42bVoR1bHB878R09NRkH3I636CA6q5GF-FOjHWzWuWMVjYKF5iMOXdGKaZXFMs~8fJWSpADzsGsNkcEqjbgwnhSIVQBME2n5E38MYs4CnnAQnUoarR9KDQGBtkclgs7OBhGlJZsi4ZCwDxI~AMJjepxCS2LqbfIXhbSKmoNrDAHjYO7ryWWSaPgFcb9AsW570LDGS~KNA5lB9ZGkEhsgnFbVXFfhrKBM5b6K7h7EHOkJI-EVgMwfqm9kKwrN85Ot3xhoBg__&Key-Pair-Id=K2YEDJLVZ3XRI#t=0.001"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="w-96 h-56 object-cover rounded-2xl shadow-xl"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-teal-500/20 to-transparent rounded-2xl" />
                   </div>
