@@ -110,12 +110,15 @@ export const About: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-teal-500/10 rounded-3xl transform -rotate-2 scale-102" />
 
               <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-700 backdrop-blur-sm transform hover:scale-105 transition-all duration-500">
-                {/* Hero Image */}
+                {/* Hero Video */}
                 <div className="relative mb-6">
-                  <img
-                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80"
-                    alt="Team collaboration"
-                    className="w-full h-48 object-cover rounded-2xl shadow-lg"
+                  <video
+                    src="https://d1jj76g3lut4fe.cloudfront.net/processed/thumb/L4dfL70N59xASoar34.mp4?Expires=1752415488&Signature=A-r9O7eixiaqDXtj8bgcG8-9irkxWQsrDvQzpa4L-RexOxA89SpY8kT3ATJPzEc-~J~uBO~TnyjLWlNzWH6XlKHVkqTxAtNiD8~ohzheC8vQd5xohxozgo-WC~KhwBFJNzD2x55CFrI~1Ao6L94m6kbPy-ezxbEEnOSmhOitXgDJbBjBxwSlqTSxZ~o79c1f3dxQRdJny3-IAA79dcuOvWQlT68qXTydz1hHSWQVWwJGwQqSWM5rebNXypgpcuRrXuQvUxthWBOKqTllMpwmpOkQK-AyLXUXcW5xTXHyd3P5i-6BXezRFJKj5rcKJWxjABzL6D4o7iZu3-syKhTu7Q__&Key-Pair-Id=K2YEDJLVZ3XRI#t=0.001"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="w-full h-80 object-cover rounded-2xl shadow-lg"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-blue-500/20 to-transparent rounded-2xl" />
                 </div>
