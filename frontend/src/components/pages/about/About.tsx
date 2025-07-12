@@ -118,7 +118,7 @@ export const About: React.FC = () => {
                     muted
                     loop
                     playsInline
-                    className="w-full h-80 object-cover rounded-2xl shadow-lg"
+                    className="w-[99%] h-80 object-cover rounded-2xl shadow-lg mx-auto"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-blue-500/20 to-transparent rounded-2xl" />
                 </div>
