@@ -431,16 +431,7 @@ export const OurServices: React.FC = () => {
                     </motion.div>
                   )}
 
-                  {/* Icon Overlay */}
-                  <motion.div
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                    className={`absolute bottom-2 right-2 inline-flex items-center justify-center w-8 h-8 bg-gradient-to-r ${service.gradient} rounded-lg text-white shadow-lg backdrop-blur-sm z-30`}
-                  >
-                    <div className="w-4 h-4">
-                      {service.icon}
-                    </div>
-                  </motion.div>
+
                 </div>
 
                 {/* Background Pattern for Content Area */}

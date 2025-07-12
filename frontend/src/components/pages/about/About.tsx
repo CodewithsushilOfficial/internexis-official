@@ -203,16 +203,6 @@ export const About: React.FC = () => {
               <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-2 overflow-hidden">
                 <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-bl-3xl" />
                 
-                {/* Feature Image */}
-                <div className="relative mb-6">
-                  <img
-                    src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=400&q=80"
-                    alt="Self-Independent Platform"
-                    className="w-full h-32 object-cover rounded-xl opacity-80 group-hover:opacity-100 transition-opacity duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-500/30 to-transparent rounded-xl" />
-                </div>
-
                 <div className="relative">
                   <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                     <Shield className="w-8 h-8 text-white" />
