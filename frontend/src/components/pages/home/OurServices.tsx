@@ -360,7 +360,7 @@ export const OurServices: React.FC = () => {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
         >
           {services.map((service, index) => (
             <motion.div
@@ -396,7 +396,7 @@ export const OurServices: React.FC = () => {
                 transition={{ duration: 0.3 }}
               >
                 {/* Image Section */}
-                <div className="relative h-32 sm:h-36 md:h-40 overflow-hidden rounded-t-2xl z-20">
+                <div className="relative h-44 sm:h-48 md:h-52 lg:h-56 overflow-hidden rounded-t-2xl z-20">
                   <motion.img
                     src={service.image}
                     alt={service.title}
@@ -435,7 +435,7 @@ export const OurServices: React.FC = () => {
                 </div>
 
                 {/* Background Pattern for Content Area */}
-                <div className="absolute inset-0 top-32 sm:top-36 md:top-40 opacity-5 group-hover:opacity-10 transition-opacity duration-500 z-0">
+                <div className="absolute inset-0 top-44 sm:top-48 md:top-52 lg:top-56 opacity-5 group-hover:opacity-10 transition-opacity duration-500 z-0">
                   <div 
                     className={`w-full h-full bg-gradient-to-br ${service.gradient}`}
                     style={{
@@ -465,14 +465,14 @@ export const OurServices: React.FC = () => {
                 </motion.div>
 
                 {/* Content Section */}
-                <div className="relative z-10 flex flex-col flex-grow p-3 md:p-4">
+                <div className="relative z-10 flex flex-col flex-grow p-4 md:p-5 lg:p-6">
                   {/* Title */}
-                  <h3 className="text-sm md:text-base lg:text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-blue-600 group-hover:to-purple-600 transition-all duration-500 leading-tight">
+                  <h3 className="text-base md:text-lg lg:text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-blue-600 group-hover:to-purple-600 transition-all duration-500 leading-tight">
                     {service.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-xs md:text-sm mb-3 flex-grow overflow-hidden" style={{
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm md:text-base mb-4 flex-grow overflow-hidden" style={{
                     display: '-webkit-box',
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: 'vertical',
