@@ -20,6 +20,35 @@ import {
 export const About: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-blue-950 overflow-hidden">
+      {/* Hero Banner Section */}
+      <div className="relative h-96 overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80"
+          alt="Internexis Technologies - Empowering Future Innovators"
+          className="w-full h-full object-cover opacity-80"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/80 via-purple-600/80 to-teal-600/80" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+        
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center text-white px-4">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 drop-shadow-lg">
+              About <span className="text-yellow-300">Internexis</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto drop-shadow-md">
+              Empowering the next generation of innovators through self-built, independent learning experiences
+            </p>
+          </div>
+        </div>
+        
+        {/* Animated scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
+          </div>
+        </div>
+      </div>
+
       {/* Animated Background Pattern */}
       <div className="absolute inset-0 bg-grid-slate-200 dark:bg-grid-slate-700/25 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" />
       {/* Floating Particles */}
@@ -110,6 +139,16 @@ export const About: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-teal-500/10 rounded-3xl transform -rotate-2 scale-102" />
 
               <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-700 backdrop-blur-sm transform hover:scale-105 transition-all duration-500">
+                {/* Hero Image */}
+                <div className="relative mb-6">
+                  <img
+                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80"
+                    alt="Team collaboration"
+                    className="w-full h-48 object-cover rounded-2xl shadow-lg"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-blue-500/20 to-transparent rounded-2xl" />
+                </div>
+
                 <div className="flex items-center mb-6">
                   <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center mr-4">
                     <Globe className="w-8 h-8 text-white" />
@@ -190,8 +229,18 @@ export const About: React.FC = () => {
             {/* Advantage 1 */}
             <div className="group relative">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110" />
-              <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-2">
+              <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-2 overflow-hidden">
                 <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-bl-3xl" />
+                
+                {/* Feature Image */}
+                <div className="relative mb-6">
+                  <img
+                    src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=400&q=80"
+                    alt="Self-Independent Platform"
+                    className="w-full h-32 object-cover rounded-xl opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-blue-500/30 to-transparent rounded-xl" />
+                </div>
 
                 <div className="relative">
                   <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
@@ -404,17 +453,21 @@ export const About: React.FC = () => {
             <div className="group text-center relative">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-3xl transform rotate-1 group-hover:rotate-2 transition-transform duration-500" />
 
-              <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-4 transition-all duration-500">
-                <div className="relative inline-block mb-8">
-                  <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500 animate-pulse" />
-                  <div className="relative w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-2xl">
-                    <Sparkles className="w-12 h-12 text-white" />
-                  </div>
-                  {/* Floating Elements */}
-                  <div className="absolute -top-2 -right-2 w-4 h-4 bg-yellow-400 rounded-full animate-bounce [animation-delay:0s]" />
-                  <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-blue-400 rounded-full animate-bounce [animation-delay:0.5s]" />
+              <div className="relative bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-4 transition-all duration-500 overflow-hidden">
+                {/* Benefit Video */}
+                <div className="relative">
+                  <video
+                    src="https://d1jj76g3lut4fe.cloudfront.net/processed/thumb/gih0laK9mjW35VN74a.mp4?Expires=1752411571&Signature=gUH8887mSmMAc8VqEMNs9bhQJ-UjXl~vMcO3vi3ECjIQWxsXb0ipFn~sgSh~xW5AeFrIi1n0w3BBC-I2BCXwAEpDeEdjM1GBCQINAE8doGgPdCiA7XWxgYxljEm81JCt2kQLrWbAi4ouCl4xxEtDTo8wLuZ~tDHAlo0L4FWcQEzZivcHQKKaA-ChKwvByAkV7y3ZEH6koQjdsOo7lHSYuo49~dyZEjFJz1tCl7IMlwGCpsc32d94yu0gTCAztiJKEEebvUYaTmnHYS-oqqYc2IFpaEKfl~Y8MFM~glBgaRU~oKJN2qWMTDFKRqlh-tRx1f7bx8hce529UqaqVsT3tg__&Key-Pair-Id=K2YEDJLVZ3XRI#t=0.001"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="w-full h-64 object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-blue-500/30 to-transparent" />
                 </div>
 
+                <div className="p-8">
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
                   Launch Your Career Early
                 </h3>
@@ -424,10 +477,10 @@ export const About: React.FC = () => {
 
                 {/* Achievement Badge */}
                 <div className="inline-flex items-center px-4 py-2 bg-blue-100 dark:bg-blue-900/30 rounded-full">
-                  <TrendingUp className="w-4 h-4 text-blue-600 dark:text-blue-400 mr-2" />
                   <span className="text-sm font-semibold text-blue-600 dark:text-blue-400">
                     Career Acceleration
                   </span>
+                </div>
                 </div>
               </div>
             </div>
@@ -436,17 +489,21 @@ export const About: React.FC = () => {
             <div className="group text-center relative">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-pink-500/5 rounded-3xl transform -rotate-1 group-hover:-rotate-2 transition-transform duration-500" />
 
-              <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-4 transition-all duration-500">
-                <div className="relative inline-block mb-8">
-                  <div className="absolute inset-0 bg-purple-500/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500 animate-pulse [animation-delay:0.5s]" />
-                  <div className="relative w-24 h-24 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-2xl">
-                    <Brain className="w-12 h-12 text-white" />
-                  </div>
-                  {/* Floating Elements */}
-                  <div className="absolute -top-2 -right-2 w-4 h-4 bg-purple-400 rounded-full animate-bounce [animation-delay:0.2s]" />
-                  <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-pink-400 rounded-full animate-bounce [animation-delay:0.7s]" />
+              <div className="relative bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-4 transition-all duration-500 overflow-hidden">
+                {/* Benefit Video */}
+                <div className="relative">
+                  <video
+                    src="https://d1jj76g3lut4fe.cloudfront.net/processed/thumb/o44ZQK2H2Pl4NihT00.mp4?Expires=1752412243&Signature=c~W5Neb101ZUWwPt4p~ehHpwbPDittdeYgoVb~cZc75jqaoMZyr0Xdi~BwNUOHpcbf36LYWNuGqIpH2n-hV8ahXg94gD2lcda2IKPRTTqM90x-VMgYy-ERX8LWfmUex2eq5HTrg4dn-TBuMPWeOSKpCiKONjsGo-S9qCaNLQ21AyYs8SnZ4aWnrn1YUmUod5LYfqZx0dDelkrzWVxLS3fksMQJrikGNuv4qsMc7MMVNkoV6ZfkgqKcw9BT5QAx43vazJql4dLtyX61Tvbr~Zk-yUpP~tezodvdrUcQj7413G4MDOArTR8kYOOd7Z-i1K3HNQKemSGh4MrJUXqvQoTQ__&Key-Pair-Id=K2YEDJLVZ3XRI#t=0.001"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="w-full h-64 object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-purple-500/30 to-transparent" />
                 </div>
 
+                <div className="p-8">
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
                   Placement-Ready Profiles
                 </h3>
@@ -456,10 +513,10 @@ export const About: React.FC = () => {
 
                 {/* Achievement Badge */}
                 <div className="inline-flex items-center px-4 py-2 bg-purple-100 dark:bg-purple-900/30 rounded-full">
-                  <Award className="w-4 h-4 text-purple-600 dark:text-purple-400 mr-2" />
                   <span className="text-sm font-semibold text-purple-600 dark:text-purple-400">
                     Placement Support
                   </span>
+                </div>
                 </div>
               </div>
             </div>
@@ -468,17 +525,21 @@ export const About: React.FC = () => {
             <div className="group text-center relative">
               <div className="absolute inset-0 bg-gradient-to-r from-teal-500/5 to-green-500/5 rounded-3xl transform rotate-1 group-hover:rotate-2 transition-transform duration-500" />
 
-              <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-4 transition-all duration-500">
-                <div className="relative inline-block mb-8">
-                  <div className="absolute inset-0 bg-teal-500/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500 animate-pulse [animation-delay:1s]" />
-                  <div className="relative w-24 h-24 bg-gradient-to-br from-teal-500 to-teal-600 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-2xl">
-                    <Target className="w-12 h-12 text-white" />
-                  </div>
-                  {/* Floating Elements */}
-                  <div className="absolute -top-2 -right-2 w-4 h-4 bg-teal-400 rounded-full animate-bounce [animation-delay:0.3s]" />
-                  <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-green-400 rounded-full animate-bounce [animation-delay:0.8s]" />
+              <div className="relative bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-4 transition-all duration-500 overflow-hidden">
+                {/* Benefit Video */}
+                <div className="relative">
+                  <video
+                    src="https://d1jj76g3lut4fe.cloudfront.net/processed/thumb/zSuxtsSY2lV59R8efW.mp4?Expires=1752412450&Signature=VrMyNBc3kFnOWly9goopyGOZbGHxZFjuOFxC2NUV~VwKA0SL8msoUpKAjYI1dJ5zSUrug2hfMfMulagsEwIXrE6JPa-UtRYtXtgUg4zuQVJCGzg-9Q77vpLg3w2eQwt1n5Lscadk7p3zLoZgZ1EfLZrGp~bPUuB8nGqeS6kCTG40li4mv0iJCU1aa8E5Wy4nsjFyb6c3iJBj9neTC3C44cN1WKaSOk7K00VHRqsXqIHuuzNHhhQDt1KY9UY6ULTalsmXdKsmQCVjiBEjbQigP~5E6rySI3ZmOOKEyTcH20liKb~~rhJDZFNzAkG6GA1FOBunoaNdv4UDHL3XQrxn4Q__&Key-Pair-Id=K2YEDJLVZ3XRI#t=0.001"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="w-full h-64 object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-teal-500/30 to-transparent" />
                 </div>
 
+                <div className="p-8">
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
                   Lifetime Learning Support
                 </h3>
@@ -488,10 +549,10 @@ export const About: React.FC = () => {
 
                 {/* Achievement Badge */}
                 <div className="inline-flex items-center px-4 py-2 bg-teal-100 dark:bg-teal-900/30 rounded-full">
-                  <Star className="w-4 h-4 text-teal-600 dark:text-teal-400 mr-2" />
                   <span className="text-sm font-semibold text-teal-600 dark:text-teal-400">
                     Lifetime Access
                   </span>
+                </div>
                 </div>
               </div>
             </div>
