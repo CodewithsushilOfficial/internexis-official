@@ -1,11 +1,7 @@
 import React from "react";
 import {
   Globe,
-  Code,
-  Bot,
-  Repeat,
   Users,
-  Lightbulb,
   BookOpen,
   Wrench,
   BarChart3,
@@ -56,19 +52,14 @@ export const About: React.FC = () => {
               <div className="relative">
                 <div className="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-blue-500 to-purple-500 rounded-full" />
                 <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed pl-8">
-                  Internexis Technologies is pioneering the future of
-                  professional development by creating seamless connections
-                  between academic excellence and industry innovation. We
-                  specialize in transforming theoretical knowledge into
-                  practical expertise through hands-on experience.
+                  Internexis Technologies is a <span className="font-bold text-blue-600 dark:text-blue-400">self-independent platform</span> built with a vision to empower the next generation of innovators, developers, and leaders. We are a community-driven tech ecosystem offering real-world internships, practical training, and career mentorship to students and professionals across the country.
                 </p>
               </div>
 
               <div className="relative">
                 <div className="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-purple-500 to-teal-500 rounded-full" />
                 <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed pl-8">
-                  Our comprehensive platform spans multiple cutting-edge domains
-                  including
+                  Our platform is designed, developed, and managed entirely by a team of passionate educators, developers, and entrepreneurs, <span className="font-bold text-purple-600 dark:text-purple-400">without relying on third-party systems</span>. We believe in learning by doing through
                   <span className="font-bold text-blue-600 dark:text-blue-400">
                     {" "}
                     Web Development
@@ -76,19 +67,19 @@ export const About: React.FC = () => {
                   ,
                   <span className="font-bold text-purple-600 dark:text-purple-400">
                     {" "}
-                    Agentic AI
+                    AI/ML
                   </span>
                   ,
                   <span className="font-bold text-teal-600 dark:text-teal-400">
                     {" "}
-                    Automation
+                    Cybersecurity
                   </span>
-                  , and
+                  ,
                   <span className="font-bold text-orange-600 dark:text-orange-400">
                     {" "}
-                    Freelance Projects
+                    UI/UX Design
                   </span>
-                  .
+                  , and more.
                 </p>
               </div>
 
@@ -96,18 +87,18 @@ export const About: React.FC = () => {
               <div className="grid grid-cols-2 gap-4 mt-8">
                 <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 transform hover:scale-105 transition-all duration-300">
                   <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                    50+
+                    1000+
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">
-                    Projects Completed
+                    Students Trained
                   </div>
                 </div>
                 <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 transform hover:scale-105 transition-all duration-300">
                   <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">
-                    500+
+                    100%
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">
-                    Students Trained
+                    Self-Independent
                   </div>
                 </div>
               </div>
@@ -138,9 +129,7 @@ export const About: React.FC = () => {
                   </div>
                 </div>
                 <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-6">
-                  Connecting learners worldwide with industry opportunities and
-                  real-world projects that make a difference in the global
-                  technology landscape.
+                  Empowering learners across India with self-built resources, expert guidance, and meaningful opportunities through our 100% online and flexible learning platform.
                 </p>
 
                 {/* Progress Bars */}
@@ -148,27 +137,27 @@ export const About: React.FC = () => {
                   <div>
                     <div className="flex justify-between text-sm mb-2">
                       <span className="text-gray-600 dark:text-gray-400">
-                        Innovation
+                        Self-Independent
                       </span>
                       <span className="text-blue-600 dark:text-blue-400">
-                        95%
+                        100%
                       </span>
                     </div>
                     <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full w-[95%]"></div>
+                      <div className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full w-full"></div>
                     </div>
                   </div>
                   <div>
                     <div className="flex justify-between text-sm mb-2">
                       <span className="text-gray-600 dark:text-gray-400">
-                        Quality
+                        Career-Ready Skills
                       </span>
                       <span className="text-purple-600 dark:text-purple-400">
-                        98%
+                        100%
                       </span>
                     </div>
                     <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div className="bg-gradient-to-r from-purple-500 to-teal-500 h-2 rounded-full w-[98%]"></div>
+                      <div className="bg-gradient-to-r from-purple-500 to-teal-500 h-2 rounded-full w-full"></div>
                     </div>
                   </div>
                 </div>
@@ -188,17 +177,17 @@ export const About: React.FC = () => {
               </span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Digital Solutions That
+              Why Choose
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 {" "}
-                Transform
+                Internexis Technologies
               </span>
             </h2>
             <div className="w-32 h-1.5 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-8 rounded-full" />
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Solution 1 */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Advantage 1 */}
             <div className="group relative">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110" />
               <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-2">
@@ -206,30 +195,29 @@ export const About: React.FC = () => {
 
                 <div className="relative">
                   <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                    <Code className="w-8 h-8 text-white" />
+                    <Shield className="w-8 h-8 text-white" />
                   </div>
 
                   <div className="flex items-center mb-4">
-                    <Check className="w-6 h-6 text-green-500 mr-3" />
+                    <span className="text-2xl mr-3">⭐</span>
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                      Custom Web & App Development
+                      Self-Independent & Original
                     </h3>
                   </div>
 
                   <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-                    Build scalable, modern applications tailored to your
-                    specific business needs with cutting-edge technologies.
+                    Not a franchise or affiliate — we're a self-built, self-driven platform rooted in originality, vision, and value creation.
                   </p>
 
                   <div className="flex items-center text-blue-600 dark:text-blue-400 font-semibold group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300">
-                    <span className="mr-2">Learn More</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    <span className="mr-2">100% Original</span>
+                    <Check className="w-4 h-4" />
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Solution 2 */}
+            {/* Advantage 2 */}
             <div className="group relative">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110" />
               <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-2">
@@ -237,30 +225,29 @@ export const About: React.FC = () => {
 
                 <div className="relative">
                   <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                    <Bot className="w-8 h-8 text-white" />
+                    <Award className="w-8 h-8 text-white" />
                   </div>
 
                   <div className="flex items-center mb-4">
-                    <span className="text-3xl mr-3">🤖</span>
+                    <span className="text-2xl mr-3">🎓</span>
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                      AI Solutions & Workflow Automation
+                      Real Internship Experience
                     </h3>
                   </div>
 
                   <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-                    Intelligent automation solutions that streamline processes
-                    and boost productivity with AI-powered workflows.
+                    Gain hands-on knowledge through live projects, weekly tasks, and career-focused guidance — just like working in a real tech company.
                   </p>
 
                   <div className="flex items-center text-purple-600 dark:text-purple-400 font-semibold group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors duration-300">
-                    <span className="mr-2">Learn More</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    <span className="mr-2">Real Experience</span>
+                    <Target className="w-4 h-4" />
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Solution 3 */}
+            {/* Advantage 3 */}
             <div className="group relative">
               <div className="absolute inset-0 bg-gradient-to-r from-teal-500/20 to-green-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110" />
               <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-2">
@@ -268,30 +255,29 @@ export const About: React.FC = () => {
 
                 <div className="relative">
                   <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-teal-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                    <Repeat className="w-8 h-8 text-white" />
+                    <Award className="w-8 h-8 text-white" />
                   </div>
 
                   <div className="flex items-center mb-4">
-                    <span className="text-3xl mr-3">🔁</span>
+                    <span className="text-2xl mr-3">🏆</span>
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                      Process Optimization
+                      ISO & Recognized Certification
                     </h3>
                   </div>
 
                   <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-                    Enhance efficiency through strategic process analysis and
-                    optimization methodologies.
+                    Boost your portfolio with government & industry-recognized certificates — perfect for resumes, LinkedIn, and placements.
                   </p>
 
                   <div className="flex items-center text-teal-600 dark:text-teal-400 font-semibold group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300">
-                    <span className="mr-2">Learn More</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    <span className="mr-2">Certified</span>
+                    <Star className="w-4 h-4" />
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Solution 4 */}
+            {/* Advantage 4 */}
             <div className="group relative">
               <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110" />
               <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-2">
@@ -303,20 +289,79 @@ export const About: React.FC = () => {
                   </div>
 
                   <div className="flex items-center mb-4">
-                    <span className="text-3xl mr-3">🧑‍💻</span>
+                    <span className="text-2xl mr-3">�</span>
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                      Freelance Tech Project Execution
+                      Affordable & Accessible
                     </h3>
                   </div>
 
                   <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-                    Expert project delivery with flexible engagement models for
-                    all your technology needs.
+                    Top-tier tech learning available to all — without burning a hole in your pocket. Quality education at affordable prices.
                   </p>
 
                   <div className="flex items-center text-orange-600 dark:text-orange-400 font-semibold group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300">
-                    <span className="mr-2">Learn More</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    <span className="mr-2">Affordable</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Advantage 5 */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-blue-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110" />
+              <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-2">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-indigo-500/10 to-blue-500/10 rounded-bl-3xl" />
+
+                <div className="relative">
+                  <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <Globe className="w-8 h-8 text-white" />
+                  </div>
+
+                  <div className="flex items-center mb-4">
+                    <span className="text-2xl mr-3">🌐</span>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                      100% Online & Flexible
+                    </h3>
+                  </div>
+
+                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                    Study from anywhere in India with live sessions, recorded lectures, and mentor guidance — your learning, your time.
+                  </p>
+
+                  <div className="flex items-center text-indigo-600 dark:text-indigo-400 font-semibold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                    <span className="mr-2">Flexible</span>
+                    <Rocket className="w-4 h-4" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Advantage 6 */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 to-rose-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110" />
+              <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200 dark:border-gray-700 transform group-hover:-translate-y-2">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-pink-500/10 to-rose-500/10 rounded-bl-3xl" />
+
+                <div className="relative">
+                  <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <Brain className="w-8 h-8 text-white" />
+                  </div>
+
+                  <div className="flex items-center mb-4">
+                    <span className="text-2xl mr-3">🧠</span>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                      Career-Ready Skills
+                    </h3>
+                  </div>
+
+                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                    Skills that matter in the job market: React, Python, MongoDB, AI, Freelancing, GitHub, Deployment, and more.
+                  </p>
+
+                  <div className="flex items-center text-pink-600 dark:text-pink-400 font-semibold group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors duration-300">
+                    <span className="mr-2">Job-Ready</span>
+                    <TrendingUp className="w-4 h-4" />
                   </div>
                 </div>
               </div>
@@ -339,16 +384,16 @@ export const About: React.FC = () => {
         <div className="max-w-7xl mx-auto relative">
           <div className="text-center mb-16">
             <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-full mb-6">
-              <Shield className="w-5 h-5 text-blue-500 mr-2" />
+              <Rocket className="w-5 h-5 text-blue-500 mr-2" />
               <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                OUR COMMITMENT
+                YOUR BENEFITS
               </span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              What Drives Us
+              How Internexis is
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 {" "}
-                Forward
+                Beneficial for You
               </span>
             </h2>
             <div className="w-32 h-1.5 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-8 rounded-full" />
@@ -371,19 +416,17 @@ export const About: React.FC = () => {
                 </div>
 
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                  Nurturing Talent
+                  Launch Your Career Early
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-6">
-                  We believe in cultivating potential and transforming it into
-                  exceptional performance through personalized guidance and
-                  mentorship programs.
+                  Get certified internships and projects you can proudly add to your resume and GitHub. Build a strong foundation with real-world experience.
                 </p>
 
                 {/* Achievement Badge */}
                 <div className="inline-flex items-center px-4 py-2 bg-blue-100 dark:bg-blue-900/30 rounded-full">
                   <TrendingUp className="w-4 h-4 text-blue-600 dark:text-blue-400 mr-2" />
                   <span className="text-sm font-semibold text-blue-600 dark:text-blue-400">
-                    500+ Students Mentored
+                    Career Acceleration
                   </span>
                 </div>
               </div>
@@ -405,19 +448,17 @@ export const About: React.FC = () => {
                 </div>
 
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                  Driving Innovation
+                  Placement-Ready Profiles
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-6">
-                  We push boundaries and embrace cutting-edge technologies to
-                  create solutions that shape the future of digital
-                  transformation.
+                  Resume help, interview prep, and referral guidance to help you crack top roles. We prepare you for success in the competitive job market.
                 </p>
 
                 {/* Achievement Badge */}
                 <div className="inline-flex items-center px-4 py-2 bg-purple-100 dark:bg-purple-900/30 rounded-full">
-                  <Lightbulb className="w-4 h-4 text-purple-600 dark:text-purple-400 mr-2" />
+                  <Award className="w-4 h-4 text-purple-600 dark:text-purple-400 mr-2" />
                   <span className="text-sm font-semibold text-purple-600 dark:text-purple-400">
-                    50+ Innovations Delivered
+                    Placement Support
                   </span>
                 </div>
               </div>
@@ -439,19 +480,17 @@ export const About: React.FC = () => {
                 </div>
 
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                  Delivering Results
+                  Lifetime Learning Support
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-6">
-                  Our commitment to excellence ensures measurable outcomes that
-                  exceed expectations and drive sustainable growth for our
-                  partners.
+                  Once you're in, you get access to recorded sessions, resources, and community updates — for life. Your learning journey never stops.
                 </p>
 
                 {/* Achievement Badge */}
                 <div className="inline-flex items-center px-4 py-2 bg-teal-100 dark:bg-teal-900/30 rounded-full">
-                  <Award className="w-4 h-4 text-teal-600 dark:text-teal-400 mr-2" />
+                  <Star className="w-4 h-4 text-teal-600 dark:text-teal-400 mr-2" />
                   <span className="text-sm font-semibold text-teal-600 dark:text-teal-400">
-                    98% Success Rate
+                    Lifetime Access
                   </span>
                 </div>
               </div>
@@ -510,17 +549,17 @@ export const About: React.FC = () => {
                   <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
                     Comprehensive internships combined with expert mentorship to
                     build foundational knowledge and industry-relevant skills
-                    through structured learning paths.
+                    through structured learning paths and real-world projects.
                   </p>
                   <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                     <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-sm font-medium">
                       Mentorship
                     </span>
                     <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-sm font-medium">
-                      Internships
+                      ISO Certified
                     </span>
                     <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-sm font-medium">
-                      Skills
+                      Live Projects
                     </span>
                   </div>
                 </div>
@@ -551,19 +590,19 @@ export const About: React.FC = () => {
                     <span className="text-4xl">🛠️</span>
                   </div>
                   <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-                    Work on real projects that matter, creating a compelling
+                    Work on real-world projects that matter, creating a compelling
                     portfolio while gaining hands-on experience with
-                    cutting-edge technologies and industry best practices.
+                    cutting-edge technologies like React, Python, AI/ML, and industry best practices.
                   </p>
                   <div className="flex flex-wrap gap-2 justify-center md:justify-end">
                     <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full text-sm font-medium">
                       Real Projects
                     </span>
                     <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full text-sm font-medium">
-                      Portfolio
+                      GitHub Portfolio
                     </span>
                     <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full text-sm font-medium">
-                      Experience
+                      AI/ML
                     </span>
                   </div>
                 </div>
@@ -590,23 +629,21 @@ export const About: React.FC = () => {
                   <div className="flex items-center justify-center md:justify-start mb-4">
                     <span className="text-4xl mr-4">📈</span>
                     <h3 className="text-3xl font-bold text-gray-900 dark:text-white">
-                      Scale
+                      Grow
                     </h3>
                   </div>
                   <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-                    Accelerate business growth through our comprehensive digital
-                    solutions and strategic technology implementations that
-                    drive measurable results.
+                    Build a personal brand and become a confident, skilled professional through our growth-focused environment and lifetime learning support with community updates.
                   </p>
                   <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                     <span className="px-3 py-1 bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 rounded-full text-sm font-medium">
-                      Growth
+                      Personal Brand
                     </span>
                     <span className="px-3 py-1 bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 rounded-full text-sm font-medium">
-                      Digital Solutions
+                      Professional Growth
                     </span>
                     <span className="px-3 py-1 bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 rounded-full text-sm font-medium">
-                      Results
+                      Community
                     </span>
                   </div>
                 </div>
