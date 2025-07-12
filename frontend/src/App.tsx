@@ -11,7 +11,6 @@ import { About } from "./components/pages/about/About";
 import { Programs } from "./components/pages/programs/Programs";
 import { OurServices } from "./components/pages/home/OurServices";
 import { Pricing } from "./components/features/internships/Pricing";
-import { ApplicationTracker } from "./components/features/internships/ApplicationTracker";
 import { Certificates } from "./components/features/internships/Certificates";
 import { Testimonials } from "./components/pages/home/Testimonials";
 import { FAQ } from "./components/shared/FAQ";
@@ -116,7 +115,6 @@ function AppLayout() {
               <About />
               <Programs />
               <Pricing />
-              <ApplicationTracker />
               <Certificates />
               <Testimonials />
               <FAQ />

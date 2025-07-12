@@ -7,7 +7,6 @@ import {
   BarChart3,
   ArrowRight,
   Check,
-  Sparkles,
   Target,
   Award,
   Shield,
