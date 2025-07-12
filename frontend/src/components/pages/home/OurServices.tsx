@@ -295,7 +295,7 @@ export const OurServices: React.FC = () => {
     <section className="relative py-32 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950 overflow-hidden">
       <FuturisticBackground />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <motion.div
           ref={containerRef}
@@ -360,7 +360,7 @@ export const OurServices: React.FC = () => {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10"
         >
           {services.map((service, index) => (
             <motion.div
@@ -375,7 +375,7 @@ export const OurServices: React.FC = () => {
               onHoverEnd={() => setHoveredService(null)}
               data-aos="fade-up"
               data-aos-delay={index * 150}
-              className="group relative h-full"
+              className="group relative h-full min-w-[280px] w-full"
               style={{ willChange: "transform" }}
             >
               <motion.div
