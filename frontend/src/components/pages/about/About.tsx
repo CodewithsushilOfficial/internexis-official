@@ -468,16 +468,16 @@ export const About: React.FC = () => {
                 </div>
 
                 <div className="p-8">
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-teal-600 bg-clip-text text-transparent mb-6 hover:scale-105 transition-transform duration-300 cursor-pointer">
                   Launch Your Career Early
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-6">
+                <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-6 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 cursor-pointer">
                   Get certified internships and projects you can proudly add to your resume and GitHub. Build a strong foundation with real-world experience.
                 </p>
 
                 {/* Achievement Badge */}
-                <div className="inline-flex items-center px-4 py-2 bg-blue-100 dark:bg-blue-900/30 rounded-full">
-                  <span className="text-sm font-semibold text-blue-600 dark:text-blue-400">
+                <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-full hover:from-blue-200 hover:to-purple-200 dark:hover:from-blue-800/40 dark:hover:to-purple-800/40 transition-all duration-300 transform hover:scale-110 cursor-pointer">
+                  <span className="text-sm font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                     Career Acceleration
                   </span>
                 </div>
@@ -504,16 +504,16 @@ export const About: React.FC = () => {
                 </div>
 
                 <div className="p-8">
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 bg-clip-text text-transparent mb-6 hover:scale-105 transition-transform duration-300 cursor-pointer">
                   Placement-Ready Profiles
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-6">
+                <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-6 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-300 cursor-pointer">
                   Resume help, interview prep, and referral guidance to help you crack top roles. We prepare you for success in the competitive job market.
                 </p>
 
                 {/* Achievement Badge */}
-                <div className="inline-flex items-center px-4 py-2 bg-purple-100 dark:bg-purple-900/30 rounded-full">
-                  <span className="text-sm font-semibold text-purple-600 dark:text-purple-400">
+                <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 rounded-full hover:from-purple-200 hover:to-pink-200 dark:hover:from-purple-800/40 dark:hover:to-pink-800/40 transition-all duration-300 transform hover:scale-110 cursor-pointer">
+                  <span className="text-sm font-semibold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                     Placement Support
                   </span>
                 </div>
@@ -540,16 +540,16 @@ export const About: React.FC = () => {
                 </div>
 
                 <div className="p-8">
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-teal-600 via-emerald-600 to-green-600 bg-clip-text text-transparent mb-6 hover:scale-105 transition-transform duration-300 cursor-pointer">
                   Lifetime Learning Support
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-6">
+                <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-6 hover:text-teal-600 dark:hover:text-teal-400 transition-colors duration-300 cursor-pointer">
                   Once you're in, you get access to recorded sessions, resources, and community updates — for life. Your learning journey never stops.
                 </p>
 
                 {/* Achievement Badge */}
-                <div className="inline-flex items-center px-4 py-2 bg-teal-100 dark:bg-teal-900/30 rounded-full">
-                  <span className="text-sm font-semibold text-teal-600 dark:text-teal-400">
+                <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-teal-100 to-emerald-100 dark:from-teal-900/30 dark:to-emerald-900/30 rounded-full hover:from-teal-200 hover:to-emerald-200 dark:hover:from-teal-800/40 dark:hover:to-emerald-800/40 transition-all duration-300 transform hover:scale-110 cursor-pointer">
+                  <span className="text-sm font-semibold bg-gradient-to-r from-teal-600 to-emerald-600 bg-clip-text text-transparent">
                     Lifetime Access
                   </span>
                 </div>
