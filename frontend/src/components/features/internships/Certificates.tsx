@@ -246,10 +246,10 @@ export const Certificates: React.FC = () => {
         </motion.div>
 
         {/* Enhanced Content Layout */}
-        <div className="grid lg:grid-cols-5 gap-8 items-start">
+        <div className="grid lg:grid-cols-5 gap-8 items-center">
           {/* Certificate Display - Left Side */}
           <motion.div 
-            className="lg:col-span-3 order-2 lg:order-1"
+            className="lg:col-span-3 order-2 lg:order-1 flex items-center justify-center"
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8, delay: 0.8 }}
@@ -270,12 +270,6 @@ export const Certificates: React.FC = () => {
               }}
               transition={{ duration: 0.3 }}
             >
-              {/* Animated border gradient */}
-              <motion.div 
-                className="absolute inset-0 rounded-3xl p-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                initial={false}
-              />
-              
               <div className="relative z-10">
                 <AnimatePresence mode="wait">
                   <motion.img
@@ -326,7 +320,7 @@ export const Certificates: React.FC = () => {
 
           {/* Tabs and Content - Right Side */}
           <motion.div 
-            className="lg:col-span-2 order-1 lg:order-2"
+            className="lg:col-span-2 order-1 lg:order-2 flex flex-col justify-center"
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.8, delay: 1 }}
