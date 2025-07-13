@@ -14,10 +14,12 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence, useInView } from "framer-motion";
+import { useFAQ } from "../../lib/hooks/use-faq";
 
 export const Footer: React.FC = () => {
   const footerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(footerRef, { once: true, amount: 0.2 });
+  const { openFAQ } = useFAQ();
   
   const scrollToTop = () => {
     window.scrollTo({
@@ -397,7 +399,6 @@ export const Footer: React.FC = () => {
                   { name: "Career Page", path: "/careers", icon: "💼" },
                   { name: "Pricing", path: "/#pricing", icon: "💰" },
                   { name: "Testimonials", path: "/#testimonials", icon: "⭐" },
-                  { name: "FAQ", path: "/#faq", icon: "❓" },
                   { name: "Contact Us", path: "/#contact", icon: "📞" },
                 ].map((item, index) => (
                   <motion.li
@@ -433,6 +434,38 @@ export const Footer: React.FC = () => {
                     </Link>
                   </motion.li>
                 ))}
+                {/* FAQ Link with Click Handler */}
+                <motion.li
+                  whileHover={{ x: 6 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
+                  <button
+                    onClick={openFAQ}
+                    className="text-gray-300 hover:text-white transition-all duration-300 flex items-center group relative text-base w-full text-left"
+                  >
+                    <motion.div
+                      className="w-6 h-6 rounded-lg bg-gradient-to-br from-primary-500/20 to-secondary-500/20 backdrop-blur-sm border border-white/10 mr-2 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-all duration-300"
+                      whileHover={{ scale: 1.1, rotate: 10 }}
+                    >
+                      ❓
+                    </motion.div>
+                    <span className="relative">
+                      FAQ
+                      <motion.span
+                        className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-primary-500 to-secondary-500 origin-left"
+                        initial={{ scaleX: 0 }}
+                        whileHover={{ scaleX: 1 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </span>
+                    <motion.span
+                      className="ml-auto opacity-0 group-hover:opacity-100 transition-all duration-300 text-sm"
+                      whileHover={{ x: 3 }}
+                    >
+                      →
+                    </motion.span>
+                  </button>
+                </motion.li>
               </ul>
             </div>
           </motion.div>

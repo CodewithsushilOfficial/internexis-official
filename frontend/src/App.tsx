@@ -13,10 +13,11 @@ import { OurServices } from "./components/pages/home/OurServices";
 import { Pricing } from "./components/features/internships/Pricing";
 import { Certificates } from "./components/features/internships/Certificates";
 import { Testimonials } from "./components/pages/home/Testimonials";
-import { FAQ } from "./components/shared/FAQ";
 import { Contact } from "./components/pages/contact/Contact";
 import { Partners } from "./components/pages/home/Partners";
 import { Footer } from "./components/layout/Footer";
+import { FAQPopup } from "./components/ui/FAQPopup";
+import { FAQProvider, useFAQ } from "./lib/hooks/use-faq";
 import { TermsOfService } from "./components/features/legal/TermsOfService";
 import { PrivacyPolicy } from "./components/features/legal/PrivacyPolicy";
 import { RefundPolicy } from "./components/features/legal/RefundPolicy";
@@ -51,6 +52,8 @@ import {
 function AppLayout() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
+  const { isFAQOpen, closeFAQ } = useFAQ();
+  
   return (
     <div className="font-sans bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
       {!isAdminRoute && <Navbar />}
@@ -117,7 +120,6 @@ function AppLayout() {
               <Pricing />
               <Certificates />
               <Testimonials />
-              <FAQ />
               <Contact />
               <Partners />
             </main>
@@ -126,15 +128,18 @@ function AppLayout() {
       </Routes>
 
       {!isAdminRoute && <Footer />}
+      <FAQPopup isOpen={isFAQOpen} onClose={closeFAQ} />
     </div>
   );
 }
 
 function App() {
   return (
-    <Router>
-      <AppLayout />
-    </Router>
+    <FAQProvider>
+      <Router>
+        <AppLayout />
+      </Router>
+    </FAQProvider>
   );
 }
 
