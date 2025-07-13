@@ -32,24 +32,24 @@ export const About: React.FC = () => {
       <section className="relative py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-100 via-purple-100 to-teal-100 dark:from-blue-900/30 dark:via-purple-900/30 dark:to-teal-900/30 rounded-full mb-8 shadow-lg border border-white/50 dark:border-gray-700/50">
-              <Star className="w-6 h-6 text-yellow-500 mr-3 animate-pulse" />
+            <div className="inline-flex items-center px-6 py-3 bg-blue-50 dark:bg-blue-900/30 rounded-full mb-8 shadow-lg border border-blue-200 dark:border-blue-700">
+              <Star className="w-6 h-6 text-blue-500 mr-3" />
               <span className="text-sm font-bold text-gray-700 dark:text-gray-300 tracking-wider uppercase">
                 WHO WE ARE
               </span>
-              <Star className="w-6 h-6 text-yellow-500 ml-3 animate-pulse" />
+              <Star className="w-6 h-6 text-blue-500 ml-3" />
             </div>
             <h2 className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white mb-6">
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-teal-600 bg-clip-text text-transparent animate-pulse">
+              <span className="text-blue-600 dark:text-blue-400">
                 Internexis
               </span>
               <br />
-              <span className="bg-gradient-to-r from-teal-600 via-orange-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="text-purple-600 dark:text-purple-400">
                 Technologies
               </span>
             </h2>
             <div className="flex justify-center mb-8">
-              <div className="w-40 h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-teal-500 rounded-full shadow-lg"></div>
+              <div className="w-40 h-2 bg-blue-500 rounded-full shadow-lg"></div>
             </div>
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-4xl mx-auto leading-relaxed">
               Where <span className="font-bold text-blue-600 dark:text-blue-400">Passion Meets Innovation</span> - 
@@ -61,13 +61,13 @@ export const About: React.FC = () => {
             <div className="space-y-8">
               {/* Premium Main Headline */}
               <div className="relative group">
-                <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-teal-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500" />
-                <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-2xl border border-white/20 shadow-2xl">
+                <div className="absolute -inset-4 bg-blue-500/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500" />
+                <div className="relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-8 rounded-2xl border border-blue-200/30 dark:border-blue-700/30 shadow-2xl">
                   <div className="flex items-center mb-6">
-                    <div className="w-3 h-12 bg-gradient-to-b from-blue-500 via-purple-500 to-teal-500 rounded-full mr-6" />
+                    <div className="w-3 h-12 bg-blue-500 rounded-full mr-6" />
                     <div>
-                      <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-teal-600 bg-clip-text text-transparent mb-2">
-                        Self-Driven Tech Platform
+                      <h3 className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+                        Self-Independent Tech Platform
                       </h3>
                       <div className="flex items-center space-x-2">
                         <Shield className="w-4 h-4 text-green-500" />
@@ -76,23 +76,25 @@ export const About: React.FC = () => {
                     </div>
                   </div>
                   <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                    <span className="font-bold text-blue-600 dark:text-blue-400">Internexis Technologies</span> is a self-driven tech platform offering 
-                    <span className="font-semibold text-purple-600 dark:text-purple-400"> real-world internships</span>, 
-                    <span className="font-semibold text-teal-600 dark:text-teal-400"> hands-on training</span>, and 
-                    <span className="font-semibold text-orange-600 dark:text-orange-400"> career mentorship</span>. 
-                    Built by passionate experts, we focus on practical learning across multiple domains.
+                    <span className="font-bold text-blue-600 dark:text-blue-400">Internexis Technologies</span> is a 
+                    <span className="font-semibold text-purple-600 dark:text-purple-400">self-independent platform</span> built with a vision to empower the next generation of 
+                    <span className="font-semibold text-teal-600 dark:text-teal-400">innovators, developers, and leaders</span>. We are a 
+                    <span className="font-semibold text-orange-600 dark:text-orange-400">community-driven tech ecosystem</span> offering 
+                    <span className="font-bold text-blue-600 dark:text-blue-400">real-world internships</span>, 
+                    <span className="font-bold text-purple-600 dark:text-purple-400">practical training</span>, and 
+                    <span className="font-bold text-teal-600 dark:text-teal-400">career mentorship</span> to students and professionals across the country.
                   </p>
                 </div>
               </div>
 
               {/* Premium Domain Showcase */}
               <div className="relative group">
-                <div className="absolute -inset-4 bg-gradient-to-r from-purple-500/20 via-teal-500/20 to-orange-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500" />
-                <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-2xl border border-white/20 shadow-2xl">
+                <div className="absolute -inset-4 bg-purple-500/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500" />
+                <div className="relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-8 rounded-2xl border border-purple-200/30 dark:border-purple-700/30 shadow-2xl">
                   <div className="flex items-center mb-6">
-                    <div className="w-3 h-12 bg-gradient-to-b from-purple-500 via-teal-500 to-orange-500 rounded-full mr-6" />
+                    <div className="w-3 h-12 bg-purple-500 rounded-full mr-6" />
                     <div>
-                      <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-600 via-teal-600 to-orange-600 bg-clip-text text-transparent mb-2">
+                      <h3 className="text-2xl font-bold text-purple-600 dark:text-purple-400 mb-2">
                         Premium Learning Domains
                       </h3>
                       <div className="flex items-center space-x-2">
@@ -135,12 +137,15 @@ export const About: React.FC = () => {
                   </div>
                   
                   <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                    Experience premium learning across 
-                    <span className="font-bold text-blue-600 dark:text-blue-400"> Web Development</span>,
+                    Our platform is 
+                    <span className="font-bold text-blue-600 dark:text-blue-400">designed, developed, and managed entirely</span> by a team of 
+                    <span className="font-semibold text-purple-600 dark:text-purple-400">passionate educators, developers, and entrepreneurs</span>, 
+                    <span className="font-bold text-teal-600 dark:text-teal-400">without relying on third-party systems</span>. We believe in 
+                    <span className="font-semibold text-orange-600 dark:text-orange-400">learning by doing</span> through 
+                    <span className="font-bold text-blue-600 dark:text-blue-400">Web Development</span>,
                     <span className="font-bold text-purple-600 dark:text-purple-400"> AI/ML</span>,
                     <span className="font-bold text-teal-600 dark:text-teal-400"> Cybersecurity</span>,
-                    <span className="font-bold text-orange-600 dark:text-orange-400"> UI/UX</span>, and more — 
-                    <span className="font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">all managed in-house</span> by our expert team.
+                    <span className="font-bold text-orange-600 dark:text-orange-400"> UI/UX Design</span>, and more.
                   </p>
                 </div>
               </div>
@@ -153,7 +158,7 @@ export const About: React.FC = () => {
                     <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl mb-3 mx-auto">
                       <Users className="w-6 h-6 text-white" />
                     </div>
-                    <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent mb-2 text-center">
+                    <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2 text-center">
                       1000+
                     </div>
                     <div className="text-sm text-gray-600 dark:text-gray-400 text-center font-medium">
@@ -167,7 +172,7 @@ export const About: React.FC = () => {
                     <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl mb-3 mx-auto">
                       <Shield className="w-6 h-6 text-white" />
                     </div>
-                    <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-purple-700 bg-clip-text text-transparent mb-2 text-center">
+                    <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2 text-center">
                       100%
                     </div>
                     <div className="text-sm text-gray-600 dark:text-gray-400 text-center font-medium">
@@ -181,7 +186,7 @@ export const About: React.FC = () => {
                     <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-600 rounded-xl mb-3 mx-auto">
                       <Rocket className="w-6 h-6 text-white" />
                     </div>
-                    <div className="text-3xl font-bold bg-gradient-to-r from-teal-600 to-teal-700 bg-clip-text text-transparent mb-2 text-center">
+                    <div className="text-3xl font-bold text-teal-600 dark:text-teal-400 mb-2 text-center">
                       5+
                     </div>
                     <div className="text-sm text-gray-600 dark:text-gray-400 text-center font-medium">
@@ -194,9 +199,8 @@ export const About: React.FC = () => {
 
             <div className="relative">
               {/* Enhanced 3D Card Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-teal-500/20 rounded-3xl transform rotate-3 scale-105 animate-pulse" />
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/15 via-teal-500/15 to-orange-500/15 rounded-3xl transform -rotate-2 scale-102" />
-              <div className="absolute inset-0 bg-gradient-to-r from-teal-500/10 via-orange-500/10 to-blue-500/10 rounded-3xl transform rotate-1 scale-103" />
+              <div className="absolute inset-0 bg-blue-500/10 rounded-3xl transform rotate-3 scale-105" />
+              <div className="absolute inset-0 bg-purple-500/5 rounded-3xl transform -rotate-2 scale-102" />
 
               <div className="relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-white/30 dark:border-gray-700/30 transform hover:scale-105 transition-all duration-500 group">
                 {/* Premium Video Container */}
@@ -223,15 +227,15 @@ export const About: React.FC = () => {
                 {/* Premium Header */}
                 <div className="flex items-center mb-6">
                   <div className="relative">
-                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 via-purple-500 to-teal-500 rounded-2xl flex items-center justify-center mr-4 shadow-xl">
+                    <div className="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center mr-4 shadow-xl">
                       <Globe className="w-8 h-8 text-white" />
                     </div>
-                    <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full flex items-center justify-center">
+                    <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
                       <Star className="w-3 h-3 text-white fill-current" />
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-teal-600 bg-clip-text text-transparent mb-1">
+                    <h3 className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-1">
                       Premium Learning Experience
                     </h3>
                     <div className="flex items-center space-x-1">
@@ -247,13 +251,13 @@ export const About: React.FC = () => {
                 </div>
 
                 {/* Enhanced Description */}
-                <div className="bg-gradient-to-r from-blue-50/50 via-purple-50/50 to-teal-50/50 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-teal-900/20 p-6 rounded-2xl mb-6 border border-gradient-to-r border-blue-200/30 dark:border-blue-700/30">
+                <div className="bg-blue-50/80 dark:bg-blue-900/20 p-6 rounded-2xl mb-6 border border-blue-200/30 dark:border-blue-700/30">
                   <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
                     Empowering learners across India with 
                     <span className="font-bold text-blue-600 dark:text-blue-400"> self-built resources</span>, 
                     <span className="font-bold text-purple-600 dark:text-purple-400"> expert guidance</span>, and 
                     <span className="font-bold text-teal-600 dark:text-teal-400"> meaningful opportunities</span> through our 
-                    <span className="font-semibold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">100% online and flexible</span> learning platform.
+                    <span className="font-semibold text-orange-600 dark:text-orange-400">100% online and flexible</span> learning platform.
                   </p>
                 </div>
 
@@ -268,7 +272,7 @@ export const About: React.FC = () => {
                       <span className="text-blue-600 dark:text-blue-400 font-bold">100%</span>
                     </div>
                     <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
-                      <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 h-full rounded-full w-full transform group-hover/progress:scale-105 transition-transform duration-500 animate-pulse"></div>
+                      <div className="bg-blue-500 h-full rounded-full w-full transform group-hover/progress:scale-105 transition-transform duration-500"></div>
                     </div>
                   </div>
                   <div className="group/progress">
@@ -280,7 +284,7 @@ export const About: React.FC = () => {
                       <span className="text-purple-600 dark:text-purple-400 font-bold">100%</span>
                     </div>
                     <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
-                      <div className="bg-gradient-to-r from-purple-500 via-teal-500 to-purple-600 h-full rounded-full w-full transform group-hover/progress:scale-105 transition-transform duration-500"></div>
+                      <div className="bg-purple-500 h-full rounded-full w-full transform group-hover/progress:scale-105 transition-transform duration-500"></div>
                     </div>
                   </div>
                   <div className="group/progress">
@@ -292,7 +296,7 @@ export const About: React.FC = () => {
                       <span className="text-teal-600 dark:text-teal-400 font-bold">100%</span>
                     </div>
                     <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
-                      <div className="bg-gradient-to-r from-teal-500 via-orange-500 to-teal-600 h-full rounded-full w-full transform group-hover/progress:scale-105 transition-transform duration-500"></div>
+                      <div className="bg-teal-500 h-full rounded-full w-full transform group-hover/progress:scale-105 transition-transform duration-500"></div>
                     </div>
                   </div>
                 </div>
