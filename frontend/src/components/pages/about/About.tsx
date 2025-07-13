@@ -32,144 +32,267 @@ export const About: React.FC = () => {
       <section className="relative py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-full mb-6">
-              <Star className="w-5 h-5 text-yellow-500 mr-2" />
-              <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-100 via-purple-100 to-teal-100 dark:from-blue-900/30 dark:via-purple-900/30 dark:to-teal-900/30 rounded-full mb-8 shadow-lg border border-white/50 dark:border-gray-700/50">
+              <Star className="w-6 h-6 text-yellow-500 mr-3 animate-pulse" />
+              <span className="text-sm font-bold text-gray-700 dark:text-gray-300 tracking-wider uppercase">
                 WHO WE ARE
               </span>
+              <Star className="w-6 h-6 text-yellow-500 ml-3 animate-pulse" />
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-teal-600 bg-clip-text text-transparent">
-                Internexis Technologies
+            <h2 className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white mb-6">
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-teal-600 bg-clip-text text-transparent animate-pulse">
+                Internexis
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-teal-600 via-orange-600 to-purple-600 bg-clip-text text-transparent">
+                Technologies
               </span>
             </h2>
-            <div className="w-32 h-1.5 bg-gradient-to-r from-blue-500 via-purple-500 to-teal-500 mx-auto mb-8 rounded-full" />
+            <div className="flex justify-center mb-8">
+              <div className="w-40 h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-teal-500 rounded-full shadow-lg"></div>
+            </div>
+            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-4xl mx-auto leading-relaxed">
+              Where <span className="font-bold text-blue-600 dark:text-blue-400">Passion Meets Innovation</span> - 
+              Crafting the Future of Tech Education
+            </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-8">
-              <div className="relative">
-                <div className="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-blue-500 to-purple-500 rounded-full" />
-                <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed pl-8">
-                  Internexis Technologies is a <span className="font-bold text-blue-600 dark:text-blue-400">self-independent platform</span> built with a vision to empower the next generation of innovators, developers, and leaders. We are a community-driven tech ecosystem offering real-world internships, practical training, and career mentorship to students and professionals across the country.
-                </p>
-              </div>
-
-              <div className="relative">
-                <div className="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-purple-500 to-teal-500 rounded-full" />
-                <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed pl-8">
-                  Our platform is designed, developed, and managed entirely by a team of passionate educators, developers, and entrepreneurs, <span className="font-bold text-purple-600 dark:text-purple-400">without relying on third-party systems</span>. We believe in learning by doing through
-                  <span className="font-bold text-blue-600 dark:text-blue-400">
-                    {" "}
-                    Web Development
-                  </span>
-                  ,
-                  <span className="font-bold text-purple-600 dark:text-purple-400">
-                    {" "}
-                    AI/ML
-                  </span>
-                  ,
-                  <span className="font-bold text-teal-600 dark:text-teal-400">
-                    {" "}
-                    Cybersecurity
-                  </span>
-                  ,
-                  <span className="font-bold text-orange-600 dark:text-orange-400">
-                    {" "}
-                    UI/UX Design
-                  </span>
-                  , and more.
-                </p>
-              </div>
-
-              {/* Stats Cards */}
-              <div className="grid grid-cols-2 gap-4 mt-8">
-                <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 transform hover:scale-105 transition-all duration-300">
-                  <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                    1000+
+              {/* Premium Main Headline */}
+              <div className="relative group">
+                <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-teal-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500" />
+                <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-2xl border border-white/20 shadow-2xl">
+                  <div className="flex items-center mb-6">
+                    <div className="w-3 h-12 bg-gradient-to-b from-blue-500 via-purple-500 to-teal-500 rounded-full mr-6" />
+                    <div>
+                      <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-teal-600 bg-clip-text text-transparent mb-2">
+                        Self-Driven Tech Platform
+                      </h3>
+                      <div className="flex items-center space-x-2">
+                        <Shield className="w-4 h-4 text-green-500" />
+                        <span className="text-sm font-semibold text-green-600 dark:text-green-400">100% In-House Built</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
-                    Students Trained
+                  <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <span className="font-bold text-blue-600 dark:text-blue-400">Internexis Technologies</span> is a self-driven tech platform offering 
+                    <span className="font-semibold text-purple-600 dark:text-purple-400"> real-world internships</span>, 
+                    <span className="font-semibold text-teal-600 dark:text-teal-400"> hands-on training</span>, and 
+                    <span className="font-semibold text-orange-600 dark:text-orange-400"> career mentorship</span>. 
+                    Built by passionate experts, we focus on practical learning across multiple domains.
+                  </p>
+                </div>
+              </div>
+
+              {/* Premium Domain Showcase */}
+              <div className="relative group">
+                <div className="absolute -inset-4 bg-gradient-to-r from-purple-500/20 via-teal-500/20 to-orange-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500" />
+                <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-2xl border border-white/20 shadow-2xl">
+                  <div className="flex items-center mb-6">
+                    <div className="w-3 h-12 bg-gradient-to-b from-purple-500 via-teal-500 to-orange-500 rounded-full mr-6" />
+                    <div>
+                      <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-600 via-teal-600 to-orange-600 bg-clip-text text-transparent mb-2">
+                        Premium Learning Domains
+                      </h3>
+                      <div className="flex items-center space-x-2">
+                        <Brain className="w-4 h-4 text-purple-500" />
+                        <span className="text-sm font-semibold text-purple-600 dark:text-purple-400">All Managed In-House</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Tech Stack Grid */}
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div className="group/tech relative overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 p-4 rounded-xl border border-blue-200 dark:border-blue-700 hover:scale-105 transition-all duration-300">
+                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 group-hover/tech:opacity-100 transition-opacity duration-300" />
+                      <div className="relative">
+                        <Globe className="w-6 h-6 text-blue-600 dark:text-blue-400 mb-2" />
+                        <span className="font-bold text-blue-700 dark:text-blue-300 text-sm">Web Development</span>
+                      </div>
+                    </div>
+                    <div className="group/tech relative overflow-hidden bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 p-4 rounded-xl border border-purple-200 dark:border-purple-700 hover:scale-105 transition-all duration-300">
+                      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent opacity-0 group-hover/tech:opacity-100 transition-opacity duration-300" />
+                      <div className="relative">
+                        <Brain className="w-6 h-6 text-purple-600 dark:text-purple-400 mb-2" />
+                        <span className="font-bold text-purple-700 dark:text-purple-300 text-sm">AI/ML</span>
+                      </div>
+                    </div>
+                    <div className="group/tech relative overflow-hidden bg-gradient-to-br from-teal-50 to-teal-100 dark:from-teal-900/30 dark:to-teal-800/30 p-4 rounded-xl border border-teal-200 dark:border-teal-700 hover:scale-105 transition-all duration-300">
+                      <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 to-transparent opacity-0 group-hover/tech:opacity-100 transition-opacity duration-300" />
+                      <div className="relative">
+                        <Shield className="w-6 h-6 text-teal-600 dark:text-teal-400 mb-2" />
+                        <span className="font-bold text-teal-700 dark:text-teal-300 text-sm">Cybersecurity</span>
+                      </div>
+                    </div>
+                    <div className="group/tech relative overflow-hidden bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/30 dark:to-orange-800/30 p-4 rounded-xl border border-orange-200 dark:border-orange-700 hover:scale-105 transition-all duration-300">
+                      <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent opacity-0 group-hover/tech:opacity-100 transition-opacity duration-300" />
+                      <div className="relative">
+                        <Wrench className="w-6 h-6 text-orange-600 dark:text-orange-400 mb-2" />
+                        <span className="font-bold text-orange-700 dark:text-orange-300 text-sm">UI/UX Design</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                    Experience premium learning across 
+                    <span className="font-bold text-blue-600 dark:text-blue-400"> Web Development</span>,
+                    <span className="font-bold text-purple-600 dark:text-purple-400"> AI/ML</span>,
+                    <span className="font-bold text-teal-600 dark:text-teal-400"> Cybersecurity</span>,
+                    <span className="font-bold text-orange-600 dark:text-orange-400"> UI/UX</span>, and more — 
+                    <span className="font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">all managed in-house</span> by our expert team.
+                  </p>
+                </div>
+              </div>
+
+              {/* Premium Stats Cards */}
+              <div className="grid grid-cols-3 gap-4 mt-8">
+                <div className="group relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-blue-50 dark:from-blue-900/20 dark:via-gray-800 dark:to-blue-900/20 p-6 rounded-2xl shadow-xl border border-blue-200/50 dark:border-blue-700/50 transform hover:scale-110 hover:-rotate-1 transition-all duration-500">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative">
+                    <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl mb-3 mx-auto">
+                      <Users className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent mb-2 text-center">
+                      1000+
+                    </div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400 text-center font-medium">
+                      Students Trained
+                    </div>
                   </div>
                 </div>
-                <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 transform hover:scale-105 transition-all duration-300">
-                  <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">
-                    100%
+                <div className="group relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-purple-50 dark:from-purple-900/20 dark:via-gray-800 dark:to-purple-900/20 p-6 rounded-2xl shadow-xl border border-purple-200/50 dark:border-purple-700/50 transform hover:scale-110 hover:rotate-1 transition-all duration-500">
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative">
+                    <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl mb-3 mx-auto">
+                      <Shield className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-purple-700 bg-clip-text text-transparent mb-2 text-center">
+                      100%
+                    </div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400 text-center font-medium">
+                      Self-Independent
+                    </div>
                   </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
-                    Self-Independent
+                </div>
+                <div className="group relative overflow-hidden bg-gradient-to-br from-teal-50 via-white to-teal-50 dark:from-teal-900/20 dark:via-gray-800 dark:to-teal-900/20 p-6 rounded-2xl shadow-xl border border-teal-200/50 dark:border-teal-700/50 transform hover:scale-110 hover:-rotate-1 transition-all duration-500">
+                  <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative">
+                    <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-600 rounded-xl mb-3 mx-auto">
+                      <Rocket className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="text-3xl font-bold bg-gradient-to-r from-teal-600 to-teal-700 bg-clip-text text-transparent mb-2 text-center">
+                      5+
+                    </div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400 text-center font-medium">
+                      Tech Domains
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="relative">
-              {/* 3D Card Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-3xl transform rotate-3 scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-teal-500/10 rounded-3xl transform -rotate-2 scale-102" />
+              {/* Enhanced 3D Card Effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-teal-500/20 rounded-3xl transform rotate-3 scale-105 animate-pulse" />
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/15 via-teal-500/15 to-orange-500/15 rounded-3xl transform -rotate-2 scale-102" />
+              <div className="absolute inset-0 bg-gradient-to-r from-teal-500/10 via-orange-500/10 to-blue-500/10 rounded-3xl transform rotate-1 scale-103" />
 
-              <div className="relative bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-700 backdrop-blur-sm transform hover:scale-105 transition-all duration-500">
-                {/* Hero Video */}
-                <div className="relative mb-6">
+              <div className="relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-white/30 dark:border-gray-700/30 transform hover:scale-105 transition-all duration-500 group">
+                {/* Premium Video Container */}
+                <div className="relative mb-8 overflow-hidden rounded-2xl">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 via-purple-500/20 to-teal-500/20 z-10" />
                   <video
                     src="https://d1jj76g3lut4fe.cloudfront.net/processed/thumb/L4dfL70N59xASoar34.mp4?Expires=1752415488&Signature=A-r9O7eixiaqDXtj8bgcG8-9irkxWQsrDvQzpa4L-RexOxA89SpY8kT3ATJPzEc-~J~uBO~TnyjLWlNzWH6XlKHVkqTxAtNiD8~ohzheC8vQd5xohxozgo-WC~KhwBFJNzD2x55CFrI~1Ao6L94m6kbPy-ezxbEEnOSmhOitXgDJbBjBxwSlqTSxZ~o79c1f3dxQRdJny3-IAA79dcuOvWQlT68qXTydz1hHSWQVWwJGwQqSWM5rebNXypgpcuRrXuQvUxthWBOKqTllMpwmpOkQK-AyLXUXcW5xTXHyd3P5i-6BXezRFJKj5rcKJWxjABzL6D4o7iZu3-syKhTu7Q__&Key-Pair-Id=K2YEDJLVZ3XRI#t=0.001"
                     autoPlay
                     muted
                     loop
                     playsInline
-                    className="w-[99%] h-80 object-cover rounded-2xl shadow-lg mx-auto"
+                    className="w-full h-80 object-cover rounded-2xl shadow-2xl transform group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-500/20 to-transparent rounded-2xl" />
+                  {/* Premium Play Overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-4">
+                      <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                        <div className="w-0 h-0 border-l-[8px] border-l-white border-y-[6px] border-y-transparent ml-1"></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
+                {/* Premium Header */}
                 <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center mr-4">
-                    <Globe className="w-8 h-8 text-white" />
+                  <div className="relative">
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 via-purple-500 to-teal-500 rounded-2xl flex items-center justify-center mr-4 shadow-xl">
+                      <Globe className="w-8 h-8 text-white" />
+                    </div>
+                    <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full flex items-center justify-center">
+                      <Star className="w-3 h-3 text-white fill-current" />
+                    </div>
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
-                      Global Impact
+                    <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-teal-600 bg-clip-text text-transparent mb-1">
+                      Premium Learning Experience
                     </h3>
-                    <div className="flex items-center mt-1">
+                    <div className="flex items-center space-x-1">
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
                           className="w-4 h-4 text-yellow-400 fill-current"
                         />
                       ))}
+                      <span className="text-sm text-gray-600 dark:text-gray-400 ml-2 font-medium">5.0 Rating</span>
                     </div>
                   </div>
                 </div>
-                <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-6">
-                  Empowering learners across India with self-built resources, expert guidance, and meaningful opportunities through our 100% online and flexible learning platform.
-                </p>
 
-                {/* Progress Bars */}
-                <div className="space-y-4">
-                  <div>
-                    <div className="flex justify-between text-sm mb-2">
-                      <span className="text-gray-600 dark:text-gray-400">
-                        Self-Independent
+                {/* Enhanced Description */}
+                <div className="bg-gradient-to-r from-blue-50/50 via-purple-50/50 to-teal-50/50 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-teal-900/20 p-6 rounded-2xl mb-6 border border-gradient-to-r border-blue-200/30 dark:border-blue-700/30">
+                  <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+                    Empowering learners across India with 
+                    <span className="font-bold text-blue-600 dark:text-blue-400"> self-built resources</span>, 
+                    <span className="font-bold text-purple-600 dark:text-purple-400"> expert guidance</span>, and 
+                    <span className="font-bold text-teal-600 dark:text-teal-400"> meaningful opportunities</span> through our 
+                    <span className="font-semibold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">100% online and flexible</span> learning platform.
+                  </p>
+                </div>
+
+                {/* Enhanced Progress Bars */}
+                <div className="space-y-6">
+                  <div className="group/progress">
+                    <div className="flex justify-between text-sm mb-3">
+                      <span className="text-gray-700 dark:text-gray-300 font-semibold flex items-center">
+                        <Shield className="w-4 h-4 mr-2 text-blue-500" />
+                        Self-Independent Platform
                       </span>
-                      <span className="text-blue-600 dark:text-blue-400">
-                        100%
-                      </span>
+                      <span className="text-blue-600 dark:text-blue-400 font-bold">100%</span>
                     </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full w-full"></div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+                      <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 h-full rounded-full w-full transform group-hover/progress:scale-105 transition-transform duration-500 animate-pulse"></div>
                     </div>
                   </div>
-                  <div>
-                    <div className="flex justify-between text-sm mb-2">
-                      <span className="text-gray-600 dark:text-gray-400">
+                  <div className="group/progress">
+                    <div className="flex justify-between text-sm mb-3">
+                      <span className="text-gray-700 dark:text-gray-300 font-semibold flex items-center">
+                        <Target className="w-4 h-4 mr-2 text-purple-500" />
                         Career-Ready Skills
                       </span>
-                      <span className="text-purple-600 dark:text-purple-400">
-                        100%
-                      </span>
+                      <span className="text-purple-600 dark:text-purple-400 font-bold">100%</span>
                     </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div className="bg-gradient-to-r from-purple-500 to-teal-500 h-2 rounded-full w-full"></div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+                      <div className="bg-gradient-to-r from-purple-500 via-teal-500 to-purple-600 h-full rounded-full w-full transform group-hover/progress:scale-105 transition-transform duration-500"></div>
+                    </div>
+                  </div>
+                  <div className="group/progress">
+                    <div className="flex justify-between text-sm mb-3">
+                      <span className="text-gray-700 dark:text-gray-300 font-semibold flex items-center">
+                        <Rocket className="w-4 h-4 mr-2 text-teal-500" />
+                        Industry-Ready Training
+                      </span>
+                      <span className="text-teal-600 dark:text-teal-400 font-bold">100%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+                      <div className="bg-gradient-to-r from-teal-500 via-orange-500 to-teal-600 h-full rounded-full w-full transform group-hover/progress:scale-105 transition-transform duration-500"></div>
                     </div>
                   </div>
                 </div>
