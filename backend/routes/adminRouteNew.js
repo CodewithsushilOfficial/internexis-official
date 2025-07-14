@@ -252,4 +252,163 @@ router.get('/dashboard/stats', authenticateAdmin, asyncHandler(async (req, res) 
   sendSuccess(res, stats, 'Dashboard stats retrieved successfully');
 }));
 
+// Dashboard recent applications
+router.get('/dashboard/recent/:limit?', authenticateAdmin, asyncHandler(async (req, res) => {
+  const limit = parseInt(req.params.limit) || 5;
+
+  // Get recent applications from all three collections
+  const [recentAmbassadors, recentCareers, recentInternships] = await Promise.all([
+    Ambassador.find()
+      .sort({ submittedAt: -1 })
+      .limit(limit)
+      .select('name email submittedAt status college')
+      .lean(),
+    Career.find()
+      .sort({ submittedAt: -1 })
+      .limit(limit)
+      .select('name email submittedAt status position')
+      .lean(),
+    Internship.find()
+      .sort({ submittedAt: -1 })
+      .limit(limit)
+      .select('name email submittedAt status domain college')
+      .lean()
+  ]);
+
+  // Add type field to each application
+  const ambassadorApps = recentAmbassadors.map(app => ({
+    ...app,
+    id: app._id,
+    type: 'Campus Ambassador'
+  }));
+
+  const careerApps = recentCareers.map(app => ({
+    ...app,
+    id: app._id,
+    type: 'Career'
+  }));
+
+  const internshipApps = recentInternships.map(app => ({
+    ...app,
+    id: app._id,
+    type: 'Internship'
+  }));
+
+  // Combine all applications and sort by submission date
+  const allApplications = [...ambassadorApps, ...careerApps, ...internshipApps]
+    .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt))
+    .slice(0, limit);
+
+  sendSuccess(res, allApplications, 'Recent applications retrieved successfully');
+}));
+
+// Get applications by type
+router.get('/applications/:type', authenticateAdmin, asyncHandler(async (req, res) => {
+  const { type } = req.params;
+  const { page = 1, limit = 10, status, search } = req.query;
+
+  let Model;
+  let selectFields;
+
+  switch (type.toLowerCase()) {
+    case 'ambassador':
+    case 'campus-ambassador':
+      Model = Ambassador;
+      selectFields = 'name email phone college whyYouWantToJoin submittedAt status';
+      break;
+    case 'career':
+      Model = Career;
+      selectFields = 'name email phone position resumeLink experience submittedAt status';
+      break;
+    case 'internship':
+      Model = Internship;
+      selectFields = 'name email phone domain college year duration submittedAt status';
+      break;
+    default:
+      return sendError(res, 'Invalid application type', 400);
+  }
+
+  // Build query
+  let query = {};
+  
+  if (status) {
+    query.status = status;
+  }
+
+  if (search) {
+    query.$or = [
+      { name: { $regex: search, $options: 'i' } },
+      { email: { $regex: search, $options: 'i' } }
+    ];
+  }
+
+  // Calculate pagination
+  const skip = (parseInt(page) - 1) * parseInt(limit);
+
+  // Get applications and total count
+  const [applications, total] = await Promise.all([
+    Model.find(query)
+      .select(selectFields)
+      .sort({ submittedAt: -1 })
+      .skip(skip)
+      .limit(parseInt(limit))
+      .lean(),
+    Model.countDocuments(query)
+  ]);
+
+  // Add id field for frontend compatibility
+  const applicationsWithId = applications.map(app => ({
+    ...app,
+    id: app._id
+  }));
+
+  sendSuccess(res, {
+    applications: applicationsWithId,
+    pagination: {
+      currentPage: parseInt(page),
+      totalPages: Math.ceil(total / parseInt(limit)),
+      totalItems: total,
+      itemsPerPage: parseInt(limit)
+    }
+  }, 'Applications retrieved successfully');
+}));
+
+// Update application status
+router.patch('/applications/:type/:id/status', authenticateAdmin, asyncHandler(async (req, res) => {
+  const { type, id } = req.params;
+  const { status } = req.body;
+
+  if (!status) {
+    return sendError(res, 'Status is required', 400);
+  }
+
+  let Model;
+  switch (type.toLowerCase()) {
+    case 'ambassador':
+    case 'campus-ambassador':
+      Model = Ambassador;
+      break;
+    case 'career':
+      Model = Career;
+      break;
+    case 'internship':
+      Model = Internship;
+      break;
+    default:
+      return sendError(res, 'Invalid application type', 400);
+  }
+
+  const application = await Model.findByIdAndUpdate(
+    id,
+    { status, statusUpdatedAt: new Date() },
+    { new: true, runValidators: true }
+  );
+
+  if (!application) {
+    return sendError(res, 'Application not found', 404);
+  }
+
+  sendSuccess(res, application, 'Application status updated successfully');
+}));
+
 module.exports = router;
