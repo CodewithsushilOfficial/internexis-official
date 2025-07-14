@@ -48,7 +48,7 @@ export const Hero: React.FC = () => {
     };
   }, [csImages.length]);
 
-  // Typewriter effect for headlines
+  // Typewriter effect for headlines - Continuous loop
   useEffect(() => {
     let timeouts: NodeJS.Timeout[] = [];
     
@@ -56,29 +56,40 @@ export const Hero: React.FC = () => {
       for (let i = 0; i <= text.length; i++) {
         const timeout = setTimeout(() => {
           setter(text.slice(0, i));
-        }, delay + i * 100);
+        }, delay + i * 80); // Slightly faster typing
         timeouts.push(timeout);
       }
     };
 
-    // Clear previous text
-    setDisplayedText({ learn: "", build: "", certified: "" });
-    
-    // Start typing animations with delays
-    typeText(textContent.learn, 800, (text) => 
-      setDisplayedText(prev => ({ ...prev, learn: text }))
-    );
-    typeText(textContent.build, 2000, (text) => 
-      setDisplayedText(prev => ({ ...prev, build: text }))
-    );
-    typeText(textContent.certified, 3500, (text) => 
-      setDisplayedText(prev => ({ ...prev, certified: text }))
-    );
+    const runTypewriterCycle = () => {
+      // Clear previous text
+      setDisplayedText({ learn: "", build: "", certified: "" });
+      
+      // Start typing animations with delays
+      typeText(textContent.learn, 500, (text) => 
+        setDisplayedText(prev => ({ ...prev, learn: text }))
+      );
+      typeText(textContent.build, 1500, (text) => 
+        setDisplayedText(prev => ({ ...prev, build: text }))
+      );
+      typeText(textContent.certified, 2500, (text) => 
+        setDisplayedText(prev => ({ ...prev, certified: text }))
+      );
+
+      // Wait 3 seconds after complete, then restart
+      const restartTimeout = setTimeout(() => {
+        runTypewriterCycle();
+      }, 5000); // Total cycle time
+      timeouts.push(restartTimeout);
+    };
+
+    // Start the first cycle immediately
+    runTypewriterCycle();
 
     return () => {
       timeouts.forEach(timeout => clearTimeout(timeout));
     };
-  }, []);
+  }, [textContent.learn, textContent.build, textContent.certified]);
 
   useEffect(() => {
     const icons = floatingIconsRef.current?.children;
