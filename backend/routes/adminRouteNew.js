@@ -3,9 +3,11 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { body } = require('express-validator');
 const Admin = require('../models/AdminModel');
+const Otp = require('../models/OtpModel');
 const Ambassador = require('../models/AmbassadorModelNew');
 const Career = require('../models/CareerModel');
 const Internship = require('../models/InternshipModel');
+const emailService = require('../utils/emailService');
 const { asyncHandler, validateRequest, authenticateAdmin, sendSuccess, sendError } = require('../utils/middleware');
 
 const router = express.Router();
@@ -38,7 +40,7 @@ const generateToken = (adminId, role) => {
   );
 };
 
-// Admin login endpoint
+// Admin login endpoint (Step 1: Validate credentials and send OTP)
 router.post('/login', loginValidation, validateRequest, asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -81,28 +83,192 @@ router.post('/login', loginValidation, validateRequest, asyncHandler(async (req,
     return sendError(res, 'Invalid credentials', 401);
   }
 
-  // Reset login attempts on successful login
-  await admin.resetLoginAttempts();
+  // Password is correct, now generate and send OTP
+  try {
+    // Clean up any existing OTPs for this email
+    await Otp.cleanupExpiredOtps(email);
 
-  // Update last login
-  admin.lastLogin = new Date();
-  await admin.save();
+    // Generate OTP
+    const otp = emailService.generateOTP();
 
-  // Generate token
-  const token = generateToken(admin._id, admin.role);
+    // Save OTP to database
+    const otpRecord = new Otp({
+      email: email.toLowerCase(),
+      otp: otp,
+      expiresAt: new Date(Date.now() + 5 * 60 * 1000) // 5 minutes
+    });
 
-  console.log(`Admin login successful for: ${email}`);
+    await otpRecord.save();
 
-  // Return success response
+    // Send OTP email
+    const emailResult = await emailService.sendOTPEmail(email, otp, admin.name);
+
+    if (!emailResult.success) {
+      // If email sending fails, delete the OTP record
+      await Otp.deleteOne({ _id: otpRecord._id });
+      
+      return sendError(res, 'Failed to send OTP email. Please try again.', 500);
+    }
+
+    console.log(`Admin login successful for: ${email} - OTP sent`);
+
+    // Return success response indicating OTP has been sent
+    sendSuccess(res, {
+      otp_sent: true,
+      email: email,
+      expires_in: 300 // 5 minutes in seconds
+    }, 'OTP sent to your email address');
+
+  } catch (otpError) {
+    console.error('OTP generation/sending error:', otpError);
+    return sendError(res, 'Failed to process login. Please try again.', 500);
+  }
+}));
+
+// Admin OTP verification endpoint (Step 2: Verify OTP and complete login)
+router.post('/verify-otp', [
+  body('email').isEmail().withMessage('Please provide a valid email'),
+  body('otp').isLength({ min: 6, max: 6 }).withMessage('OTP must be 6 digits')
+], validateRequest, asyncHandler(async (req, res) => {
+  const { email, otp } = req.body;
+
+  // Validate OTP format (6 digits)
+  if (!/^\d{6}$/.test(otp)) {
+    return sendError(res, 'OTP must be 6 digits', 400);
+  }
+
+  // Find the OTP record
+  const otpRecord = await Otp.findOne({
+    email: email.toLowerCase(),
+    isUsed: false
+  }).sort({ createdAt: -1 }); // Get the latest OTP
+
+  if (!otpRecord) {
+    return sendError(res, 'No valid OTP found. Please request a new one.', 401);
+  }
+
+  // Check if OTP has expired
+  if (otpRecord.isExpired()) {
+    await Otp.deleteOne({ _id: otpRecord._id });
+    return sendError(res, 'OTP has expired. Please request a new one.', 401);
+  }
+
+  // Check if maximum attempts exceeded
+  if (otpRecord.isAttemptsExceeded()) {
+    await Otp.deleteOne({ _id: otpRecord._id });
+    return sendError(res, 'Maximum OTP attempts exceeded. Please request a new one.', 429);
+  }
+
+  // Verify OTP
+  if (otpRecord.otp !== otp) {
+    // Increment attempts
+    await otpRecord.incrementAttempts();
+    
+    const remainingAttempts = 3 - otpRecord.attempts;
+    return sendError(res, `Invalid OTP. ${remainingAttempts} attempts remaining.`, 401);
+  }
+
+  // OTP is valid, now complete the login process
+  try {
+    // Find the admin
+    const admin = await Admin.findOne({ email: email.toLowerCase() });
+    
+    if (!admin || !admin.isActive) {
+      await Otp.deleteOne({ _id: otpRecord._id });
+      return sendError(res, 'Admin account not found or deactivated', 401);
+    }
+
+    // Mark OTP as used
+    otpRecord.isUsed = true;
+    await otpRecord.save();
+
+    // Reset login attempts and update last login
+    await admin.resetLoginAttempts();
+    admin.lastLogin = new Date();
+    await admin.save();
+
+    // Generate authentication token
+    const token = generateToken(admin._id, admin.role);
+
+    // Clean up all OTPs for this email
+    await Otp.cleanupExpiredOtps(email);
+
+    console.log(`2FA login completed for: ${email}`);
+
+    // Return success response with token
+    sendSuccess(res, {
+      adminId: admin._id,
+      email: admin.email,
+      name: admin.name,
+      role: admin.role,
+      token: token,
+      lastLogin: admin.lastLogin,
+      permissions: admin.permissions
+    }, 'Login successful');
+
+  } catch (authError) {
+    console.error('Authentication completion error:', authError);
+    await Otp.deleteOne({ _id: otpRecord._id });
+    
+    return sendError(res, 'Failed to complete authentication', 500);
+  }
+}));
+
+// Resend OTP endpoint
+router.post('/resend-otp', [
+  body('email').isEmail().withMessage('Please provide a valid email')
+], validateRequest, asyncHandler(async (req, res) => {
+  const { email } = req.body;
+
+  // Find admin to ensure email exists
+  const admin = await Admin.findOne({ email: email.toLowerCase() });
+  
+  if (!admin) {
+    return sendError(res, 'Admin not found', 404);
+  }
+
+  if (!admin.isActive) {
+    return sendError(res, 'Account is deactivated', 401);
+  }
+
+  // Clean up existing OTPs
+  await Otp.cleanupExpiredOtps(email);
+
+  // Check rate limiting (prevent spam)
+  const recentOtp = await Otp.findOne({
+    email: email.toLowerCase(),
+    createdAt: { $gt: new Date(Date.now() - 60 * 1000) } // Within last minute
+  });
+
+  if (recentOtp) {
+    return sendError(res, 'Please wait 1 minute before requesting a new OTP', 429);
+  }
+
+  // Generate new OTP
+  const otp = emailService.generateOTP();
+
+  // Save OTP to database
+  const otpRecord = new Otp({
+    email: email.toLowerCase(),
+    otp: otp,
+    expiresAt: new Date(Date.now() + 5 * 60 * 1000)
+  });
+
+  await otpRecord.save();
+
+  // Send OTP email
+  const emailResult = await emailService.sendOTPEmail(email, otp, admin.name);
+
+  if (!emailResult.success) {
+    await Otp.deleteOne({ _id: otpRecord._id });
+    
+    return sendError(res, 'Failed to send OTP email', 500);
+  }
+
   sendSuccess(res, {
-    adminId: admin._id,
-    email: admin.email,
-    name: admin.name,
-    role: admin.role,
-    token,
-    lastLogin: admin.lastLogin,
-    permissions: admin.permissions
-  }, 'Login successful');
+    email: email,
+    expires_in: 300
+  }, 'New OTP sent to your email');
 }));
 
 // Verify token endpoint

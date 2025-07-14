@@ -8,6 +8,9 @@ const compression = require('compression');
 const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
+// Initialize email service
+const emailService = require('./utils/emailService');
+
 const app = express();
 
 // Import routes
@@ -175,6 +178,15 @@ const startServer = async () => {
     // Connect to database
     await dbManager.connect();
     dbManager.setupEventHandlers();
+    
+    // Verify email configuration
+    console.log('📧 Verifying email configuration...');
+    const emailVerified = await emailService.verifyConfiguration();
+    if (emailVerified) {
+      console.log('✅ Email service configured successfully');
+    } else {
+      console.log('⚠️  Email service configuration failed - 2FA will not work');
+    }
     
     // Start HTTP server
     const server = app.listen(PORT, () => {

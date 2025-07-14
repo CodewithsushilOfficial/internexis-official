@@ -8,7 +8,9 @@
     "dev": "nodemon server.js",
     "build": "echo 'Backend build complete'",
     "postinstall": "echo 'Backend dependencies installed'",
-    "init-admin": "node initializeAdmin.js"
+    "init-admin": "node initializeAdmin.js",
+    "setup-2fa": "node setup2FA.js",
+    "test-2fa": "node test2FA.js"
   },
   "keywords": [
     "internexis",

@@ -1,13 +1,15 @@
 const express = require('express');
 const Admin = require('../models/AdminModel');
+const Otp = require('../models/OtpModel');
 const Ambassador = require('../models/AmbassadorModel');
 const Career = require('../models/CareerModel');
 const Internship = require('../models/InternshipModel');
+const emailService = require('../utils/emailService');
 const router = express.Router();
 
 // Simple password validation (in production, use bcrypt for hashing)
-const validatePassword = (inputPassword, storedPassword) => {
-  return inputPassword === storedPassword;
+const validatePassword = async (inputPassword, admin) => {
+  return await admin.comparePassword(inputPassword);
 };
 
 // Generate a simple JWT-like token (in production, use proper JWT)
@@ -17,7 +19,7 @@ const generateToken = (adminId) => {
   return `admin_${adminId}_${timestamp}_${randomString}`;
 };
 
-// Admin login endpoint
+// Admin login endpoint (Step 1: Validate credentials and send OTP)
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -30,8 +32,8 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // Find admin by email
-    const admin = await Admin.findOne({ email: email.toLowerCase() });
+    // Find admin by email and include password for validation
+    const admin = await Admin.findByEmail(email);
     
     if (!admin) {
       return res.status(401).json({
@@ -56,8 +58,8 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // Validate password
-    const isValidPassword = validatePassword(password, admin.password);
+    // Validate password using bcrypt
+    const isValidPassword = await admin.comparePassword(password);
     
     if (!isValidPassword) {
       // Increment login attempts
@@ -69,27 +71,268 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // Reset login attempts on successful login
-    await admin.resetLoginAttempts();
+    // Password is correct, now generate and send OTP
+    try {
+      // Clean up any existing OTPs for this email
+      await Otp.cleanupExpiredOtps(email);
 
-    // Generate token
-    const token = generateToken(admin._id);
+      // Generate OTP
+      const otp = emailService.generateOTP();
 
-    // Return success response
+      // Save OTP to database
+      const otpRecord = new Otp({
+        email: email.toLowerCase(),
+        otp: otp,
+        expiresAt: new Date(Date.now() + 5 * 60 * 1000) // 5 minutes
+      });
+
+      await otpRecord.save();
+
+      // Send OTP email
+      const emailResult = await emailService.sendOTPEmail(email, otp, admin.name);
+
+      if (!emailResult.success) {
+        // If email sending fails, delete the OTP record
+        await Otp.deleteOne({ _id: otpRecord._id });
+        
+        return res.status(500).json({
+          success: false,
+          message: 'Failed to send OTP email. Please try again.'
+        });
+      }
+
+      // Return success response indicating OTP has been sent
+      res.status(200).json({
+        success: true,
+        message: 'OTP sent to your email address',
+        data: {
+          otp_sent: true,
+          email: email,
+          expires_in: 300 // 5 minutes in seconds
+        }
+      });
+
+    } catch (otpError) {
+      console.error('OTP generation/sending error:', otpError);
+      return res.status(500).json({
+        success: false,
+        message: 'Failed to process login. Please try again.'
+      });
+    }
+
+  } catch (error) {
+    console.error('Admin login error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error'
+    });
+  }
+});
+
+// Admin OTP verification endpoint (Step 2: Verify OTP and complete login)
+router.post('/verify-otp', async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+
+    // Validate input
+    if (!email || !otp) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email and OTP are required'
+      });
+    }
+
+    // Validate OTP format (6 digits)
+    if (!/^\d{6}$/.test(otp)) {
+      return res.status(400).json({
+        success: false,
+        message: 'OTP must be 6 digits'
+      });
+    }
+
+    // Find the OTP record
+    const otpRecord = await Otp.findOne({
+      email: email.toLowerCase(),
+      isUsed: false
+    }).sort({ createdAt: -1 }); // Get the latest OTP
+
+    if (!otpRecord) {
+      return res.status(401).json({
+        success: false,
+        message: 'No valid OTP found. Please request a new one.'
+      });
+    }
+
+    // Check if OTP has expired
+    if (otpRecord.isExpired()) {
+      await Otp.deleteOne({ _id: otpRecord._id });
+      return res.status(401).json({
+        success: false,
+        message: 'OTP has expired. Please request a new one.'
+      });
+    }
+
+    // Check if maximum attempts exceeded
+    if (otpRecord.isAttemptsExceeded()) {
+      await Otp.deleteOne({ _id: otpRecord._id });
+      return res.status(429).json({
+        success: false,
+        message: 'Maximum OTP attempts exceeded. Please request a new one.'
+      });
+    }
+
+    // Verify OTP
+    if (otpRecord.otp !== otp) {
+      // Increment attempts
+      await otpRecord.incrementAttempts();
+      
+      const remainingAttempts = 3 - otpRecord.attempts;
+      return res.status(401).json({
+        success: false,
+        message: `Invalid OTP. ${remainingAttempts} attempts remaining.`
+      });
+    }
+
+    // OTP is valid, now complete the login process
+    try {
+      // Find the admin
+      const admin = await Admin.findOne({ email: email.toLowerCase() });
+      
+      if (!admin || !admin.isActive) {
+        await Otp.deleteOne({ _id: otpRecord._id });
+        return res.status(401).json({
+          success: false,
+          message: 'Admin account not found or deactivated'
+        });
+      }
+
+      // Mark OTP as used
+      otpRecord.isUsed = true;
+      await otpRecord.save();
+
+      // Reset login attempts and update last login
+      await admin.resetLoginAttempts();
+
+      // Generate authentication token
+      const token = generateToken(admin._id);
+
+      // Clean up all OTPs for this email
+      await Otp.cleanupExpiredOtps(email);
+
+      // Return success response with token
+      res.status(200).json({
+        success: true,
+        message: 'Login successful',
+        data: {
+          adminId: admin._id,
+          email: admin.email,
+          name: admin.name,
+          role: admin.role,
+          token: token,
+          lastLogin: admin.lastLogin,
+          permissions: admin.permissions
+        }
+      });
+
+    } catch (authError) {
+      console.error('Authentication completion error:', authError);
+      await Otp.deleteOne({ _id: otpRecord._id });
+      
+      return res.status(500).json({
+        success: false,
+        message: 'Failed to complete authentication'
+      });
+    }
+
+  } catch (error) {
+    console.error('OTP verification error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error'
+    });
+  }
+});
+
+// Resend OTP endpoint
+router.post('/resend-otp', async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email is required'
+      });
+    }
+
+    // Find admin to ensure email exists
+    const admin = await Admin.findOne({ email: email.toLowerCase() });
+    
+    if (!admin) {
+      return res.status(404).json({
+        success: false,
+        message: 'Admin not found'
+      });
+    }
+
+    if (!admin.isActive) {
+      return res.status(401).json({
+        success: false,
+        message: 'Account is deactivated'
+      });
+    }
+
+    // Clean up existing OTPs
+    await Otp.cleanupExpiredOtps(email);
+
+    // Check rate limiting (prevent spam)
+    const recentOtp = await Otp.findOne({
+      email: email.toLowerCase(),
+      createdAt: { $gt: new Date(Date.now() - 60 * 1000) } // Within last minute
+    });
+
+    if (recentOtp) {
+      return res.status(429).json({
+        success: false,
+        message: 'Please wait 1 minute before requesting a new OTP'
+      });
+    }
+
+    // Generate new OTP
+    const otp = emailService.generateOTP();
+
+    // Save OTP to database
+    const otpRecord = new Otp({
+      email: email.toLowerCase(),
+      otp: otp,
+      expiresAt: new Date(Date.now() + 5 * 60 * 1000)
+    });
+
+    await otpRecord.save();
+
+    // Send OTP email
+    const emailResult = await emailService.sendOTPEmail(email, otp, admin.name);
+
+    if (!emailResult.success) {
+      await Otp.deleteOne({ _id: otpRecord._id });
+      
+      return res.status(500).json({
+        success: false,
+        message: 'Failed to send OTP email'
+      });
+    }
+
     res.status(200).json({
       success: true,
-      message: 'Login successful',
+      message: 'New OTP sent to your email',
       data: {
-        adminId: admin._id,
-        email: admin.email,
-        role: admin.role,
-        token: token,
-        lastLogin: admin.lastLogin
+        email: email,
+        expires_in: 300
       }
     });
 
   } catch (error) {
-    console.error('Admin login error:', error);
+    console.error('Resend OTP error:', error);
     res.status(500).json({
       success: false,
       message: 'Internal server error'

@@ -6,6 +6,7 @@ import {
   LockClosedIcon,
 } from "@heroicons/react/24/outline";
 import axios from "axios";
+import OTPVerification from "./OTPVerification";
 
 interface AdminLoginProps {
   onLogin: (token: string) => void;
@@ -19,6 +20,8 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showOTPVerification, setShowOTPVerification] = useState(false);
+  const [otpEmail, setOtpEmail] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,9 +36,16 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
       );
 
       if (response.data.success) {
-        const token = response.data.data.token || "admin-token";
-        localStorage.setItem("adminToken", token);
-        onLogin(token);
+        // Check if this is the new 2FA flow (OTP sent)
+        if (response.data.data.otp_sent) {
+          setOtpEmail(credentials.email);
+          setShowOTPVerification(true);
+        } else {
+          // Old flow - direct token (shouldn't happen with new backend)
+          const token = response.data.data.token || "admin-token";
+          localStorage.setItem("adminToken", token);
+          onLogin(token);
+        }
       } else {
         setError(response.data.message || "Login failed");
       }
@@ -50,6 +60,28 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
       setLoading(false);
     }
   };
+
+  const handleOTPVerified = (token: string) => {
+    onLogin(token);
+  };
+
+  const handleBackToLogin = () => {
+    setShowOTPVerification(false);
+    setOtpEmail("");
+    setCredentials({ email: "", password: "" });
+    setError("");
+  };
+
+  // Show OTP verification screen if needed
+  if (showOTPVerification && otpEmail) {
+    return (
+      <OTPVerification
+        email={otpEmail}
+        onVerified={handleOTPVerified}
+        onBack={handleBackToLogin}
+      />
+    );
+  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
