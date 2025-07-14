@@ -15,6 +15,166 @@ import {
 } from "lucide-react";
 import AOS from "aos";
 
+// Add custom CSS styles with solid colors and shadows
+const customStyles = `
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-8px) rotate(1deg); }
+    66% { transform: translateY(-4px) rotate(-0.5deg); }
+  }
+  
+  @keyframes subtle-glow {
+    0%, 100% { 
+      box-shadow: 0 0 40px rgba(99, 102, 241, 0.15), 0 0 80px rgba(139, 92, 246, 0.08); 
+    }
+    50% { 
+      box-shadow: 0 0 60px rgba(99, 102, 241, 0.25), 0 0 120px rgba(139, 92, 246, 0.12); 
+    }
+  }
+  
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.08);
+  }
+  
+  .text-shadow-xl {
+    text-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .glow-soft {
+    animation: subtle-glow 4s ease-in-out infinite;
+  }
+  
+  .float-gentle {
+    animation: float 5s ease-in-out infinite;
+  }
+`;
+
+// Letter-by-letter typing effect component
+const TypewriterText: React.FC<{
+  text: string;
+  className?: string;
+  delay?: number;
+  speed?: number;
+}> = ({ text, className = "", delay = 0, speed = 50 }) => {
+  const [displayedText, setDisplayedText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTyping, setIsTyping] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsTyping(true);
+    }, delay);
+
+    return () => clearTimeout(timeout);
+  }, [delay]);
+
+  useEffect(() => {
+    if (!isTyping) return;
+
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText(text.slice(0, currentIndex + 1));
+        setCurrentIndex(currentIndex + 1);
+      }, speed);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, text, isTyping, speed]);
+
+  return (
+    <span className={className}>
+      {displayedText}
+      {isTyping && currentIndex < text.length && (
+        <motion.span
+          className="inline-block w-0.5 h-full bg-gradient-to-b from-blue-500 to-purple-500 ml-1"
+          animate={{ opacity: [0, 1, 0] }}
+          transition={{ duration: 0.8, repeat: Infinity }}
+        />
+      )}
+    </span>
+  );
+};
+
+// Enhanced Animated Text Component with solid colors
+const AnimatedTitle: React.FC<{ isInView: boolean }> = ({ isInView }) => {
+  const [startAnimation, setStartAnimation] = useState(false);
+
+  useEffect(() => {
+    if (isInView) {
+      setStartAnimation(true);
+    }
+  }, [isInView]);
+
+  // Inject custom styles
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = customStyles;
+    document.head.appendChild(style);
+    
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
+  return (
+    <div className="relative">
+      {/* Subtle background glow effect */}
+      <motion.div
+        className="absolute -inset-6 bg-indigo-500/10 rounded-3xl blur-3xl opacity-0 glow-soft"
+        animate={startAnimation ? { opacity: [0, 0.4, 0.2] } : {}}
+        transition={{ duration: 3, delay: 0.5 }}
+      />
+
+      <div className="relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight mb-6"
+        >
+          {startAnimation ? (
+            <TypewriterText 
+              text="Comprehensive Solutions for"
+              speed={70}
+              delay={500}
+              className="text-gray-800 dark:text-gray-100 text-shadow-lg block"
+            />
+          ) : (
+            <span className="text-gray-800 dark:text-gray-100 text-shadow-lg block" style={{ opacity: 0 }}>
+              Comprehensive Solutions for
+            </span>
+          )}
+        </motion.div>
+        
+        <motion.div 
+          className="relative"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 1, delay: 2.5 }}
+        >
+          <motion.div
+            className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-indigo-600 dark:text-indigo-400 text-shadow-xl"
+          >
+            {startAnimation ? (
+              <TypewriterText 
+                text="Your Success"
+                speed={90}
+                delay={2300}
+                className="text-indigo-600 dark:text-indigo-400 text-shadow-xl"
+              />
+            ) : (
+              <span className="text-indigo-600 dark:text-indigo-400 text-shadow-xl" style={{ opacity: 0 }}>
+                Your Success
+              </span>
+            )}
+          </motion.div>
+          
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
 interface Service {
   id: number;
   title: string;
@@ -308,50 +468,52 @@ export const OurServices: React.FC = () => {
             initial={{ scale: 0.9, opacity: 0 }}
             animate={isInView ? { scale: 1, opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-full mb-8 border border-blue-200 dark:border-blue-800"
-          >
-            <Layers className="w-6 h-6 text-blue-600 dark:text-blue-400 mr-3" />
-            <span className="text-base font-bold text-blue-700 dark:text-blue-300 tracking-wide">
+            className="relative inline-flex items-center px-6 py-3 bg-indigo-50 dark:bg-indigo-900/30 rounded-full mb-8 border border-indigo-200 dark:border-indigo-800 shadow-lg hover:shadow-xl transition-all duration-300"
+            style={{
+              boxShadow: '0 8px 25px rgba(99, 102, 241, 0.15), 0 4px 10px rgba(99, 102, 241, 0.1)'
+            }}
+          >            
+            <motion.div
+              className="w-6 h-6 text-indigo-600 dark:text-indigo-400 mr-3"
+              animate={{
+                rotate: [0, 5, -5, 0],
+              }}
+              transition={{ duration: 3, repeat: Infinity }}
+            >
+              <Layers className="w-full h-full drop-shadow-sm" />
+            </motion.div>
+            
+            <span className="text-base font-bold text-indigo-700 dark:text-indigo-300 tracking-wide text-shadow-lg">
               OUR PREMIUM SERVICES
             </span>
           </motion.div>
 
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-5xl md:text-6xl lg:text-7xl font-black bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-900 dark:from-white dark:via-blue-200 dark:to-indigo-200 bg-clip-text text-transparent mb-8 leading-tight"
-          >
-            Comprehensive Solutions for{" "}
-            <motion.span 
-              className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent relative"
-              animate={{
-                backgroundPosition: ["0%", "100%", "0%"],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              Your Success
-              <motion.div
-                className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"
-                initial={{ scaleX: 0 }}
-                animate={isInView ? { scaleX: 1 } : {}}
-                transition={{ duration: 1, delay: 0.8 }}
-              />
-            </motion.span>
-          </motion.h2>
+          <div className="mb-8">
+            <AnimatedTitle isInView={isInView} />
+          </div>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed font-medium"
+            transition={{ duration: 0.8, delay: 4.5 }}
+            className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed font-medium relative"
           >
-            From internships to career guidance, we provide cutting-edge solutions
-            to accelerate your professional journey and unlock your potential.
+            <motion.span
+              className="relative z-10 text-shadow-lg"
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : {}}
+              transition={{ duration: 1, delay: 5 }}
+            >
+              From internships to career guidance, we provide{" "}
+              <span className="text-indigo-600 dark:text-indigo-400 font-bold text-shadow-lg">
+                cutting-edge solutions
+              </span>{" "}
+              to accelerate your professional journey and{" "}
+              <span className="text-purple-600 dark:text-purple-400 font-bold text-shadow-lg">
+                unlock your potential
+              </span>
+              .
+            </motion.span>
           </motion.p>
         </motion.div>
 
