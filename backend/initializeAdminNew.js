@@ -81,7 +81,7 @@ const initializeAdmin = async () => {
     }
   } finally {
     await mongoose.connection.close();
-    console.log('� MongoDB connection closed');
+    console.log('📤 MongoDB connection closed');
     process.exit(0);
   }
 };
