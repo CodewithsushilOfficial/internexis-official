@@ -8,8 +8,7 @@
     "dev": "nodemon server.js",
     "build": "echo 'Backend build complete'",
     "postinstall": "echo 'Backend dependencies installed'",
-    "init-admin": "node initializeAdmin.js",
-    "test-admin": "node testAdminLogin.js"
+    "init-admin": "node initializeAdmin.js"
   },
   "keywords": [
     "internexis",
