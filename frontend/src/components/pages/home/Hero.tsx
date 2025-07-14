@@ -213,7 +213,7 @@ export const Hero: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-20 h-full">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 xl:gap-16 min-h-[calc(100vh-12rem)] lg:min-h-[calc(100vh-8rem)]">
           {/* Left side - Ultra Modern Text content */}
-          <div className="w-full lg:w-1/2 xl:w-5/12 space-y-6 md:space-y-8 text-center lg:text-left order-2 lg:order-1">
+          <div className="w-full lg:w-1/2 xl:w-5/12 space-y-6 md:space-y-8 text-center lg:text-left order-1 lg:order-1">
             <motion.div
               custom={0}
               initial="hidden"
@@ -358,7 +358,7 @@ export const Hero: React.FC = () => {
             initial={{ opacity: 0, scale: 0.8, rotateY: 30 }}
             animate={{ opacity: 1, scale: 1, rotateY: 0 }}
             transition={{ duration: 1, delay: 0.5 }}
-            className="w-full lg:w-1/2 xl:w-7/12 relative perspective-1000 order-1 lg:order-2 -mt-16 md:-mt-20 lg:-mt-8"
+            className="w-full lg:w-1/2 xl:w-7/12 relative perspective-1000 order-2 lg:order-2 -mt-16 md:-mt-20 lg:-mt-8"
           >
             <div className="relative transform-gpu max-w-lg md:max-w-xl lg:max-w-none mx-auto">
               {/* Main futuristic image container with 3D depth */}
