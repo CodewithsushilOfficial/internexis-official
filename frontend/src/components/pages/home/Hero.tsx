@@ -127,7 +127,7 @@ export const Hero: React.FC = () => {
       {/* Enhanced Floating Tech Icons */}
       <div
         ref={floatingIconsRef}
-        className="absolute inset-0 overflow-hidden opacity-15 md:opacity-20 dark:opacity-25 dark:md:opacity-30 pointer-events-none z-10"
+        className="absolute inset-0 overflow-hidden opacity-5 sm:opacity-10 md:opacity-20 dark:opacity-10 dark:md:opacity-30 pointer-events-none z-5"
       >
         <motion.div
           animate={{
@@ -139,7 +139,7 @@ export const Hero: React.FC = () => {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute top-1/4 left-1/4 transition-transform backdrop-blur-md p-3 md:p-4 rounded-xl md:rounded-2xl bg-white/20 dark:bg-gray-800/20 border border-white/20 dark:border-gray-700/20"
+          className="absolute top-1/4 left-1/4 transition-transform backdrop-blur-md p-2 md:p-4 rounded-lg md:rounded-2xl bg-white/10 dark:bg-gray-800/10 border border-white/10 dark:border-gray-700/10 hidden sm:block"
         >
           <Code size={40} className="md:w-[52px] md:h-[52px] text-blue-600 dark:text-blue-400 drop-shadow-lg" />
         </motion.div>
@@ -155,7 +155,7 @@ export const Hero: React.FC = () => {
             ease: "easeInOut",
             delay: 1,
           }}
-          className="absolute top-1/5 right-1/4 transition-transform backdrop-blur-md p-3 md:p-4 rounded-xl md:rounded-2xl bg-white/20 dark:bg-gray-800/20 border border-white/20 dark:border-gray-700/20"
+          className="absolute top-1/5 right-1/4 transition-transform backdrop-blur-md p-2 md:p-4 rounded-lg md:rounded-2xl bg-white/10 dark:bg-gray-800/10 border border-white/10 dark:border-gray-700/10 hidden sm:block"
         >
           <Rocket size={36} className="md:w-[46px] md:h-[46px] text-purple-600 dark:text-purple-400 drop-shadow-lg" />
         </motion.div>
@@ -171,7 +171,7 @@ export const Hero: React.FC = () => {
             ease: "easeInOut",
             delay: 2,
           }}
-          className="absolute bottom-1/3 left-1/3 transition-transform backdrop-blur-md p-3 md:p-4 rounded-xl md:rounded-2xl bg-white/20 dark:bg-gray-800/20 border border-white/20 dark:border-gray-700/20"
+          className="absolute bottom-1/3 left-1/3 transition-transform backdrop-blur-md p-2 md:p-4 rounded-lg md:rounded-2xl bg-white/10 dark:bg-gray-800/10 border border-white/10 dark:border-gray-700/10 hidden sm:block"
         >
           <Database size={32} className="md:w-[42px] md:h-[42px] text-green-600 dark:text-green-400 drop-shadow-lg" />
         </motion.div>
@@ -187,7 +187,7 @@ export const Hero: React.FC = () => {
             ease: "easeInOut",
             delay: 0.5,
           }}
-          className="absolute bottom-1/4 right-1/3 transition-transform backdrop-blur-md p-3 md:p-4 rounded-xl md:rounded-2xl bg-white/20 dark:bg-gray-800/20 border border-white/20 dark:border-gray-700/20"
+          className="absolute bottom-1/4 right-1/3 transition-transform backdrop-blur-md p-2 md:p-4 rounded-lg md:rounded-2xl bg-white/10 dark:bg-gray-800/10 border border-white/10 dark:border-gray-700/10 hidden sm:block"
         >
           <Cpu size={30} className="md:w-[40px] md:h-[40px] text-orange-600 dark:text-orange-400 drop-shadow-lg" />
         </motion.div>
@@ -203,15 +203,15 @@ export const Hero: React.FC = () => {
             ease: "easeInOut",
             delay: 3,
           }}
-          className="absolute top-2/5 left-2/3 transition-transform backdrop-blur-md p-3 md:p-4 rounded-xl md:rounded-2xl bg-white/20 dark:bg-gray-800/20 border border-white/20 dark:border-gray-700/20"
+          className="absolute top-2/5 left-2/3 transition-transform backdrop-blur-md p-2 md:p-4 rounded-lg md:rounded-2xl bg-white/10 dark:bg-gray-800/10 border border-white/10 dark:border-gray-700/10 hidden sm:block"
         >
           <Zap size={28} className="md:w-[36px] md:h-[36px] text-yellow-600 dark:text-yellow-400 drop-shadow-lg" />
         </motion.div>
       </div>
 
       {/* Main content with enhanced modern layout */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-20 h-full">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 xl:gap-16 min-h-[calc(100vh-12rem)] lg:min-h-[calc(100vh-8rem)]">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-30 h-full">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-12 xl:gap-16 min-h-[calc(100vh-12rem)] lg:min-h-[calc(100vh-8rem)]">
           {/* Left side - Ultra Modern Text content */}
           <div className="w-full lg:w-1/2 xl:w-5/12 space-y-6 md:space-y-8 text-center lg:text-left order-1 lg:order-1">
             <motion.div
@@ -358,7 +358,7 @@ export const Hero: React.FC = () => {
             initial={{ opacity: 0, scale: 0.8, rotateY: 30 }}
             animate={{ opacity: 1, scale: 1, rotateY: 0 }}
             transition={{ duration: 1, delay: 0.5 }}
-            className="w-full lg:w-1/2 xl:w-7/12 relative perspective-1000 order-2 lg:order-2 -mt-16 md:-mt-20 lg:-mt-8"
+            className="w-full lg:w-1/2 xl:w-7/12 relative perspective-1000 order-2 lg:order-2 mt-8 md:mt-4 lg:-mt-8"
           >
             <div className="relative transform-gpu max-w-lg md:max-w-xl lg:max-w-none mx-auto">
               {/* Main futuristic image container with 3D depth */}
@@ -451,7 +451,7 @@ export const Hero: React.FC = () => {
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="absolute -top-2 md:-top-3 -right-2 md:-right-3 w-8 h-8 md:w-10 md:h-10 bg-yellow-400 rounded-lg md:rounded-xl shadow-xl shadow-yellow-500/25 flex items-center justify-center z-30 transform-gpu"
+                className="absolute -top-1 md:-top-3 -right-1 md:-right-3 w-6 h-6 md:w-10 md:h-10 bg-yellow-400 rounded-md md:rounded-xl shadow-lg shadow-yellow-500/25 flex items-center justify-center z-30 transform-gpu"
               >
                 <motion.div
                   animate={{ rotate: [0, 360] }}
@@ -473,7 +473,7 @@ export const Hero: React.FC = () => {
                   ease: "easeInOut",
                   delay: 2,
                 }}
-                className="absolute -bottom-2 md:-bottom-3 -left-2 md:-left-3 w-7 h-7 md:w-9 md:h-9 bg-cyan-400 rounded-lg md:rounded-xl shadow-xl shadow-cyan-500/25 flex items-center justify-center z-30 transform-gpu"
+                className="absolute -bottom-1 md:-bottom-3 -left-1 md:-left-3 w-5 h-5 md:w-9 md:h-9 bg-cyan-400 rounded-md md:rounded-xl shadow-lg shadow-cyan-500/25 flex items-center justify-center z-30 transform-gpu"
               >
                 <span className="text-xs md:text-sm">🎯</span>
               </motion.div>
@@ -488,7 +488,7 @@ export const Hero: React.FC = () => {
                   rotateY: 5,
                   transition: { duration: 0.3 }
                 }}
-                className="absolute -right-2 md:-right-3 -bottom-3 md:-bottom-4 bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl rounded-md md:rounded-lg p-1.5 md:p-2 shadow-xl border border-white/20 dark:border-gray-700/20 z-30 max-w-[140px] md:max-w-[160px] transform-gpu"
+                className="absolute -right-1 md:-right-3 -bottom-2 md:-bottom-4 bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl rounded-md md:rounded-lg p-1 md:p-2 shadow-lg border border-white/20 dark:border-gray-700/20 z-30 max-w-[120px] md:max-w-[160px] transform-gpu"
               >
                 <div className="flex items-center gap-1 md:gap-2">
                   <div className="text-center">
@@ -525,7 +525,7 @@ export const Hero: React.FC = () => {
                   scale: 1.05,
                   transition: { duration: 0.3 }
                 }}
-                className="absolute -left-4 md:-left-8 top-8 md:top-12 bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl rounded-lg md:rounded-xl p-2.5 md:p-3 shadow-xl border border-white/20 dark:border-gray-700/20 z-30 transform-gpu"
+                className="absolute -left-2 md:-left-8 top-6 md:top-12 bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl rounded-md md:rounded-xl p-2 md:p-3 shadow-lg border border-white/20 dark:border-gray-700/20 z-30 transform-gpu"
               >
                 <div className="flex items-center gap-2 md:gap-3">
                   <div className="bg-blue-600 text-white p-1.5 md:p-2 rounded-md md:rounded-lg shadow-lg">
@@ -572,7 +572,7 @@ export const Hero: React.FC = () => {
                   repeat: Infinity,
                   ease: "linear",
                 }}
-                className="absolute top-1/4 -right-6 md:-right-8 w-4 h-4 md:w-5 md:h-5 bg-pink-400 rounded-full shadow-lg shadow-pink-500/25 z-20"
+                className="absolute top-1/4 -right-4 md:-right-8 w-3 h-3 md:w-5 md:h-5 bg-pink-400 rounded-full shadow-lg shadow-pink-500/25 z-20"
               />
               
               <motion.div
@@ -586,7 +586,7 @@ export const Hero: React.FC = () => {
                   ease: "linear",
                   delay: 3,
                 }}
-                className="absolute bottom-1/3 -left-4 md:-left-6 w-3 h-3 md:w-4 md:h-4 bg-emerald-400 rounded-full shadow-lg shadow-emerald-500/25 z-20"
+                className="absolute bottom-1/3 -left-2 md:-left-6 w-2 h-2 md:w-4 md:h-4 bg-emerald-400 rounded-full shadow-lg shadow-emerald-500/25 z-20"
               />
             </div>
           </motion.div>
