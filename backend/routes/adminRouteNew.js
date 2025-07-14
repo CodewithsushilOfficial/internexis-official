@@ -411,4 +411,44 @@ router.patch('/applications/:type/:id/status', authenticateAdmin, asyncHandler(a
   sendSuccess(res, application, 'Application status updated successfully');
 }));
 
+// Unlock admin account (emergency endpoint)
+router.post('/unlock-account', [
+  body('email').isEmail().withMessage('Valid email is required'),
+  body('adminKey').notEmpty().withMessage('Admin key is required')
+], validateRequest, asyncHandler(async (req, res) => {
+  const { email, adminKey } = req.body;
+  
+  // Check admin key (for emergency access)
+  const expectedKey = process.env.ADMIN_UNLOCK_KEY || 'emergency_unlock_internexis_2024';
+  if (adminKey !== expectedKey) {
+    return sendError(res, 'Invalid admin key', 403);
+  }
+
+  // Find and unlock the admin account
+  const admin = await Admin.findOne({ email: email.toLowerCase() });
+  
+  if (!admin) {
+    return sendError(res, 'Admin not found', 404);
+  }
+
+  // Reset all lock-related fields
+  admin.loginAttempts = 0;
+  admin.lockUntil = undefined;
+  admin.isActive = true;
+  admin.emailVerified = true;
+  admin.passwordChangedAt = new Date();
+  
+  await admin.save();
+
+  console.log(`🔓 Admin account unlocked for: ${email}`);
+
+  sendSuccess(res, {
+    email: admin.email,
+    name: admin.name,
+    isActive: admin.isActive,
+    isLocked: admin.isAccountLocked ? admin.isAccountLocked() : false,
+    loginAttempts: admin.loginAttempts
+  }, 'Admin account unlocked successfully');
+}));
+
 module.exports = router;
