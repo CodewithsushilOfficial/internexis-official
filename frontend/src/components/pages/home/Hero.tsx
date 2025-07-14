@@ -6,6 +6,14 @@ import StarBackground from "../../shared/StarBackground";
 export const Hero: React.FC = () => {
   const floatingIconsRef = useRef<HTMLDivElement>(null);
   const [activeImage, setActiveImage] = useState(0);
+  const [displayedText, setDisplayedText] = useState({ learn: "", build: "", certified: "" });
+  
+  // Text content for typewriter effect
+  const textContent = {
+    learn: "Learn,",
+    build: "Build",
+    certified: "Get Certified"
+  };
 
   // Indian college student images with laptops for the slideshow
   const csImages = [
@@ -39,6 +47,38 @@ export const Hero: React.FC = () => {
       clearInterval(imageInterval);
     };
   }, [csImages.length]);
+
+  // Typewriter effect for headlines
+  useEffect(() => {
+    let timeouts: NodeJS.Timeout[] = [];
+    
+    const typeText = (text: string, delay: number, setter: (value: string) => void) => {
+      for (let i = 0; i <= text.length; i++) {
+        const timeout = setTimeout(() => {
+          setter(text.slice(0, i));
+        }, delay + i * 100);
+        timeouts.push(timeout);
+      }
+    };
+
+    // Clear previous text
+    setDisplayedText({ learn: "", build: "", certified: "" });
+    
+    // Start typing animations with delays
+    typeText(textContent.learn, 800, (text) => 
+      setDisplayedText(prev => ({ ...prev, learn: text }))
+    );
+    typeText(textContent.build, 2000, (text) => 
+      setDisplayedText(prev => ({ ...prev, build: text }))
+    );
+    typeText(textContent.certified, 3500, (text) => 
+      setDisplayedText(prev => ({ ...prev, certified: text }))
+    );
+
+    return () => {
+      timeouts.forEach(timeout => clearTimeout(timeout));
+    };
+  }, []);
 
   useEffect(() => {
     const icons = floatingIconsRef.current?.children;
@@ -220,7 +260,7 @@ export const Hero: React.FC = () => {
               whileInView="visible"
               variants={textVariants}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 rounded-full bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700/50 text-blue-700 dark:text-blue-300 text-xs md:text-sm font-semibold shadow-lg backdrop-blur-md"
+              className="inline-flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 rounded-full bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700/50 text-blue-700 dark:text-blue-300 text-sm md:text-xs lg:text-sm font-semibold shadow-lg backdrop-blur-md"
             >
               <motion.div
                 animate={{
@@ -241,13 +281,22 @@ export const Hero: React.FC = () => {
 
             <div className="space-y-3 md:space-y-4">
               <motion.h1 
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-[0.9] tracking-tighter"
+                className="text-6xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-[0.85] sm:leading-[0.9] tracking-tighter"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
                 <span className="text-gray-900 dark:text-white drop-shadow-sm">
-                  Learn,
+                  {displayedText.learn}
+                  {displayedText.learn.length < textContent.learn.length && (
+                    <motion.span
+                      animate={{ opacity: [1, 0, 1] }}
+                      transition={{ duration: 0.8, repeat: Infinity }}
+                      className="text-blue-600"
+                    >
+                      |
+                    </motion.span>
+                  )}
                 </span>
                 <br />
                 <motion.span
@@ -264,10 +313,19 @@ export const Hero: React.FC = () => {
                     WebkitTextStroke: "1px rgba(59, 130, 246, 0.1)",
                   }}
                 >
-                  Build
+                  {displayedText.build}
+                  {displayedText.build.length < textContent.build.length && displayedText.learn.length >= textContent.learn.length && (
+                    <motion.span
+                      animate={{ opacity: [1, 0, 1] }}
+                      transition={{ duration: 0.8, repeat: Infinity }}
+                      className="text-blue-600"
+                    >
+                      |
+                    </motion.span>
+                  )}
                 </motion.span>
                 <span className="text-gray-900 dark:text-white">
-                  {" "}&{" "}
+                  {displayedText.build.length >= textContent.build.length ? " & " : ""}
                 </span>
                 <br />
                 <motion.span
@@ -285,7 +343,16 @@ export const Hero: React.FC = () => {
                     WebkitTextStroke: "1px rgba(236, 72, 153, 0.1)",
                   }}
                 >
-                  Get Certified
+                  {displayedText.certified}
+                  {displayedText.certified.length < textContent.certified.length && displayedText.build.length >= textContent.build.length && (
+                    <motion.span
+                      animate={{ opacity: [1, 0, 1] }}
+                      transition={{ duration: 0.8, repeat: Infinity }}
+                      className="text-purple-600"
+                    >
+                      |
+                    </motion.span>
+                  )}
                 </motion.span>
               </motion.h1>
             </div>
@@ -296,7 +363,7 @@ export const Hero: React.FC = () => {
               whileInView="visible"
               variants={textVariants}
               viewport={{ once: true }}
-              className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 max-w-full lg:max-w-2xl leading-relaxed font-medium mx-auto lg:mx-0"
+              className="text-lg sm:text-base md:text-lg lg:text-xl xl:text-2xl text-gray-600 dark:text-gray-300 max-w-full lg:max-w-2xl leading-relaxed font-medium mx-auto lg:mx-0"
             >
               A{" "}
               <span className="text-blue-600 dark:text-blue-400 font-bold">
@@ -317,7 +384,7 @@ export const Hero: React.FC = () => {
                 href="#programs"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="group relative px-6 md:px-10 py-3 md:py-4 rounded-2xl text-base md:text-lg font-bold text-white overflow-hidden shadow-2xl shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 w-full sm:w-auto"
+                className="group relative px-8 md:px-6 lg:px-10 py-4 md:py-3 lg:py-4 rounded-2xl text-lg md:text-base lg:text-lg font-bold text-white overflow-hidden shadow-2xl shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 w-full sm:w-auto"
               >
                 <div className="absolute inset-0 bg-blue-600 group-hover:bg-blue-700 transition-all duration-300"></div>
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 via-white/20 to-blue-600/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
@@ -336,7 +403,7 @@ export const Hero: React.FC = () => {
                 href="https://docs.google.com/forms/d/e/1FAIpQLSfMY0zYYwtHDW5gdBcoBWxsU0xPTyCzOAGPCUtnaMqqGcmnCg/viewform?usp=header"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="group px-6 md:px-10 py-3 md:py-4 rounded-2xl text-base md:text-lg font-bold border-2 border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-blue-500 hover:text-white dark:hover:bg-blue-600 backdrop-blur-md transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-blue-500/25 w-full sm:w-auto"
+                className="group px-8 md:px-6 lg:px-10 py-4 md:py-3 lg:py-4 rounded-2xl text-lg md:text-base lg:text-lg font-bold border-2 border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-blue-500 hover:text-white dark:hover:bg-blue-600 backdrop-blur-md transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-blue-500/25 w-full sm:w-auto"
               >
                 <span className="flex items-center justify-center gap-2">
                   Apply Now
