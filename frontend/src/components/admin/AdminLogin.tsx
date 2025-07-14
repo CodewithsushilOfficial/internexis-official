@@ -13,7 +13,7 @@ interface AdminLoginProps {
 
 const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
   const [credentials, setCredentials] = useState({
-    username: "",
+    email: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -33,7 +33,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
       );
 
       if (response.data.success) {
-        const token = response.data.token || "admin-token";
+        const token = response.data.data.token || "admin-token";
         localStorage.setItem("adminToken", token);
         onLogin(token);
       } else {
@@ -85,23 +85,23 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
         </div>
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Username Field */}
+          {/* Email Field */}
           <div>
             <label
-              htmlFor="username"
+              htmlFor="email"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Username
+              Email
             </label>
             <input
-              type="text"
-              id="username"
-              name="username"
-              value={credentials.username}
+              type="email"
+              id="email"
+              name="email"
+              value={credentials.email}
               onChange={handleInputChange}
               required
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200"
-              placeholder="Enter your username"
+              placeholder="Enter your email"
             />
           </div>
 
