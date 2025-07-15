@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ChevronDown, X, MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTheme } from "../../lib/hooks/use-theme";
+import { useTheme } from "../../hooks/use-theme";
 
 interface FAQItem {
   question: string;

@@ -1,4 +1,4 @@
-import { adminService } from "../lib/services";
+import { adminService } from "../services";
 
 // Test API connections
 export const testAPIConnections = async () => {

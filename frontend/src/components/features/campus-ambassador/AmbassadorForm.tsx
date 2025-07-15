@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   campusAmbassadorService,
   CampusAmbassadorFormData,
-} from "../../../lib/services";
+} from "../../../services";
 
 const AmbassadorForm: React.FC = () => {
   // Add CSS animations to the document head

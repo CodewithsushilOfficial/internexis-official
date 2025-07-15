@@ -1,7 +1,7 @@
 import React, { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Stars } from "@react-three/drei";
-import { useTheme } from "../../lib/hooks/use-theme";
+import { useTheme } from "../../hooks/use-theme";
 import * as THREE from "three";
 
 // StarField component that will be used in the 3D scene

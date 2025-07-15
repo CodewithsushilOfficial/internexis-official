@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { useFAQ } from "../../lib/hooks/use-faq";
+import { useFAQ } from "../hooks/use-faq";
 
 export const Footer: React.FC = () => {
   const footerRef = useRef<HTMLDivElement>(null);

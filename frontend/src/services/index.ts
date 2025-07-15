@@ -69,6 +69,10 @@ api.interceptors.response.use(
   },
 );
 
+// Services exports
+export * from './api';
+// export * from './apiNew'; // Commented out due to naming conflicts
+
 // Type definitions for form data
 export interface AmbassadorFormData {
   name: string;

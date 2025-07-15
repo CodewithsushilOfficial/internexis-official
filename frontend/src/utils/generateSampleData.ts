@@ -1,4 +1,4 @@
-import { CampusAmbassadorFormData } from "../lib/services";
+import { CampusAmbassadorFormData } from "../services";
 
 // Sample data arrays
 const firstNames = [

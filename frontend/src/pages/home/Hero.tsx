@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Code, MoveRight, Sparkles, Zap, Cpu, Database, Rocket } from "lucide-react";
 import { motion } from "framer-motion";
-import StarBackground from "../../shared/StarBackground";
+import StarBackground from "../../components/common/StarBackground";
 
 export const Hero: React.FC = () => {
   const floatingIconsRef = useRef<HTMLDivElement>(null);

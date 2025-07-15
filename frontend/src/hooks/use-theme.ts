@@ -2,7 +2,7 @@ import { useContext } from "react";
 import {
   ThemeProviderContext,
   ThemeProviderState,
-} from "../../components/shared/theme-context";
+} from "../context/theme-context";
 
 export const useTheme = (): ThemeProviderState => {
   const context = useContext(ThemeProviderContext);
