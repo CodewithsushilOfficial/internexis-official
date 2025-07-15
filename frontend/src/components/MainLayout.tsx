@@ -1,8 +1,8 @@
 import { useLocation } from "react-router-dom";
-import { Navbar } from "../components/Navbar/Navbar";
-import { Footer } from "../components/Footer/Footer";
-import { LiveChatButton } from "../components/ui/live-chat-button";
-import { FAQPopup } from "../components/ui/FAQPopup";
+import { Navbar } from "./Navbar/Navbar";
+import { Footer } from "./Footer/Footer";
+import { LiveChatButton } from "./ui/live-chat-button";
+import { FAQPopup } from "./ui/FAQPopup";
 import { useFAQ } from "../hooks/use-faq";
 
 interface MainLayoutProps {

@@ -1,18 +1,35 @@
 // Pages exports
-export { default as UserPage } from "./UserPage";
+export { UserPage } from "./UserPage";
 
-// Main page components
-export * from './about/About';
-export * from './about/MeetInternexis';
-export * from './contact/Contact';
-export * from './home/Features';
-export * from './home/Hero';
-export * from './home/OurServices';
-export * from './home/Partners';
-export * from './home/Stats';
-export * from './home/Testimonials';
-export * from './home/WhyChoose';
-export * from './programs/AllPrograms';
-export * from './programs/Programs';
-export * from './CampusAmbassadorApplication';
-export * from './CampusAmbassadorTestPage';
+// About pages
+export * from './About/About';
+export * from './About/MeetInternexis';
+
+// Contact pages
+export * from './Contact/Contact';
+
+// Home components (moved to components/Home)
+export * from '../components/Home/HeroSection';
+export * from '../components/Home/OurServices';
+export * from '../components/Home/Partners';
+export * from '../components/Home/Stats';
+export * from '../components/Home/Testimonials';
+export * from '../components/Home/WhyChoose';
+
+// Internship/Programs pages
+export * from './Internship/AllPrograms';
+export * from './Internship/Internship';
+
+// Campus Ambassador pages
+export * from './CampusAmbassador/Ambassador';
+export * from './CampusAmbassador/CampusAmbassadorApplication';
+export * from './CampusAmbassador/CampusAmbassadorTestPage';
+
+// Career pages
+export * from './Career/Career';
+
+// Services pages
+export * from './Services/Services';
+
+// Admin pages
+export * from './Admin/AdminDashboard';

@@ -1,31 +1,31 @@
 import { Routes, Route } from "react-router-dom";
-import { Hero } from "../pages/home/Hero";
-import { About } from "../pages/about/About";
-import { Programs } from "../pages/programs/Programs";
-import { OurServices } from "../pages/home/OurServices";
+import { HeroSection } from "../components/Home/HeroSection";
+import { About } from "../pages/About/About";
+import { Internship } from "../pages/Internship/Internship";
+import { OurServices } from "../components/Home/OurServices";
 // import { Pricing } from "../components/features/internships/Pricing";
 // import { Certificates } from "../components/features/internships/Certificates";
-import { Testimonials } from "../pages/home/Testimonials";
-import { Contact } from "../pages/contact/Contact";
-import { Partners } from "../pages/home/Partners";
+import { Testimonials } from "../components/Home/Testimonials";
+import { Contact } from "../pages/Contact/Contact";
+import { Partners } from "../components/Home/Partners";
 import { TermsOfService } from "../components/features/legal/TermsOfService";
 import { PrivacyPolicy } from "../components/features/legal/PrivacyPolicy";
 import { RefundPolicy } from "../components/features/legal/RefundPolicy";
 import { CookiePolicy } from "../components/features/legal/CookiePolicy";
 import { TermsAndConditions } from "../components/features/legal/TermsAndConditionsNew";
-import { MeetInternexis } from "../pages/about/MeetInternexis";
-import { AllPrograms } from "../pages/programs/AllPrograms";
+import { MeetInternexis } from "../pages/About/MeetInternexis";
+import { AllPrograms } from "../pages/Internship/AllPrograms";
 // import InternshipProjects from "../components/features/internships/InternshipProjects";
 // import DomainDetails from "../components/features/internships/DomainDetails";
-import CampusAmbassador from "../components/features/campus-ambassador/CampusAmbassador";
+import { Ambassador } from "../pages/CampusAmbassador/Ambassador";
 // import InternshipApplication from "../components/features/internships/InternshipApplication";
-// import AdminDashboard from "../components/features/admin/AdminDashboard";
+// import { AdminDashboard } from "../pages/Admin/AdminDashboard";
 // import SimpleAdminLogin from "../components/features/admin/SimpleAdminLogin";
 // import AdminApp from "../components/admin/AdminApp";
-import CareerPage from "../components/features/careers/CareerPage";
-import { UserPage } from "../pages";
-import CampusAmbassadorApplication from "../pages/CampusAmbassadorApplication";
-import CampusAmbassadorTestPage from "../pages/CampusAmbassadorTestPage";
+import { Career } from "../pages/Career/Career";
+import { UserPage } from "../pages/UserPage";
+import { CampusAmbassadorApplication } from "../pages/CampusAmbassador/CampusAmbassadorApplication";
+import { CampusAmbassadorTestPage } from "../pages/CampusAmbassador/CampusAmbassadorTestPage";
 
 // Service pages
 // import DigitalSolutionsPage from "../components/features/services/DigitalSolutionsPage";
@@ -68,13 +68,13 @@ export function AppRoutes() {
       <Route path="/career-jobs" element={<CareerJobsPage />} /> */}
       
       {/* Campus Ambassador Program */}
-      <Route path="/campus-ambassador" element={<CampusAmbassador />} />
+      <Route path="/campus-ambassador" element={<Ambassador />} />
       <Route path="/campus-ambassador-application" element={<CampusAmbassadorApplication />} />
       <Route path="/campus-ambassador-test" element={<CampusAmbassadorTestPage />} />
       {/* <Route path="/apply-internship" element={<InternshipApplication />} /> */}
       
       {/* Career Page */}
-      <Route path="/careers" element={<CareerPage />} />
+      <Route path="/careers" element={<Career />} />
       
       {/* User Management */}
       <Route path="/users" element={<UserPage />} />
@@ -92,10 +92,10 @@ export function AppRoutes() {
         path="/"
         element={
           <main>
-            <Hero />
+            <HeroSection />
             <OurServices />
             <About />
-            <Programs />
+            <Internship />
             {/* TODO: Add back when components are created */}
             {/* <Pricing />
             <Certificates /> */}

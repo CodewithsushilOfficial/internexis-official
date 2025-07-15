@@ -38,7 +38,7 @@ import CareerForm from "./CareerForm";
 import "./CareerPage.module.css";
 import "./AnimatedEffects.module.css";
 
-const CareerPage: React.FC = () => {
+const Career: React.FC = () => {
   // Storyset Animated Images URLs
   const storsetImages = {
     heroAnimation:
@@ -2026,4 +2026,6 @@ const CareerPage: React.FC = () => {
   );
 };
 
-export default CareerPage;
+export { Career };
+
+export default Career;

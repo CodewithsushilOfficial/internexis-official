@@ -1,3 +1,17 @@
+// Navbar components
+export { Navbar } from './Navbar/Navbar';
+
+// Footer components
+export { Footer } from './Footer/Footer';
+
+// Home components
+export { HeroSection } from './Home/HeroSection';
+export { OurServices } from './Home/OurServices';
+export { Partners } from './Home/Partners';
+export { Stats } from './Home/Stats';
+export { Testimonials } from './Home/Testimonials';
+export { WhyChoose } from './Home/WhyChoose';
+
 // Common components exports
 export * from './common/FAQ';
 export * from './common/Newsletter';

@@ -22,7 +22,7 @@ interface Program {
   level: string;
 }
 
-export const Programs: React.FC = () => {
+export const Internship: React.FC = () => {
   const programs: Program[] = [
     {
       id: 1,
@@ -193,3 +193,5 @@ export const Programs: React.FC = () => {
     </section>
   );
 };
+
+export default Internship;

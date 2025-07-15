@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X, ChevronRight, ChevronDown, Star, Zap, Globe, Users, Code, Briefcase } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { ThemeToggle } from "../components/ui/theme-toggle";
+import { ThemeToggle } from "../ui/theme-toggle";
 import { motion, AnimatePresence } from "framer-motion";
 
 export const Navbar: React.FC = () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import AmbassadorForm from "../components/features/campus-ambassador/AmbassadorForm";
+import AmbassadorForm from "./AmbassadorForm";
 
 const CampusAmbassadorTestPage: React.FC = () => {
   return (
@@ -22,4 +22,5 @@ const CampusAmbassadorTestPage: React.FC = () => {
   );
 };
 
+export { CampusAmbassadorTestPage };
 export default CampusAmbassadorTestPage;

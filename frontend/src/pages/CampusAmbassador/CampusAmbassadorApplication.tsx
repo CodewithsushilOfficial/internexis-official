@@ -1,8 +1,9 @@
 import React from "react";
-import AmbassadorForm from "../components/features/campus-ambassador/AmbassadorForm";
+import AmbassadorForm from "./AmbassadorForm";
 
 const CampusAmbassadorApplication: React.FC = () => {
   return <AmbassadorForm />;
 };
 
+export { CampusAmbassadorApplication };
 export default CampusAmbassadorApplication;

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Code, MoveRight, Sparkles, Zap, Cpu, Database, Rocket } from "lucide-react";
 import { motion } from "framer-motion";
-import StarBackground from "../../components/common/StarBackground";
+import StarBackground from "../common/StarBackground";
 
-export const Hero: React.FC = () => {
+export const HeroSection: React.FC = () => {
   const floatingIconsRef = useRef<HTMLDivElement>(null);
   const [activeImage, setActiveImage] = useState(0);
   const [displayedText, setDisplayedText] = useState({ learn: "", build: "", certified: "" });
@@ -721,3 +721,5 @@ export const Hero: React.FC = () => {
     </section>
   );
 };
+
+export default HeroSection;

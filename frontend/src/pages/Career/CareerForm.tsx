@@ -426,7 +426,7 @@ const CareerForm: React.FC<CareerFormProps> = ({
       console.log("Submitting career application:", apiData);
 
       // Use the career service to submit
-      const { careerService } = await import("../../../services");
+      const { careerService } = await import("../../services");
       const result = await careerService.submitApplication(apiData);
 
       if (result.success) {

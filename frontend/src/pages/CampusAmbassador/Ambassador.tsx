@@ -7,7 +7,7 @@ import AmbassadorForm from "./AmbassadorForm";
 import AmbassadorHeader from "./AmbassadorHeader";
 import AmbassadorTracker from "./AmbassadorTracker";
 
-const CampusAmbassador: React.FC = () => {
+const Ambassador: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<"apply" | "track">("apply");
 
   return (
@@ -55,4 +55,6 @@ const CampusAmbassador: React.FC = () => {
   );
 };
 
-export default CampusAmbassador;
+export { Ambassador };
+
+export default Ambassador;
