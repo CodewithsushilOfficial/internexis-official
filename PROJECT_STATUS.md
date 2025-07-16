@@ -13,6 +13,7 @@ internexis-official/
 │   │   ├── components/
 │   │   │   ├── AmbassadorForm.tsx     ✅ name, email, phone, college, whyYouWantToJoin
 │   │   │   ├── CareerForm.tsx         ✅ name, email, phone, position, resumeLink
+│   │   │   ├── Mentorship/            ✅ Premium mentorship system (July 2025)
 │   │   │   └── InternshipApplication.tsx ✅ name, email, phone, domain, college
 │   │   └── lib/services/index.ts      ✅ Axios API integration
 │   ├── package.json                   ✅ Updated with axios dependency
@@ -214,3 +215,36 @@ npm run build       # Build for production
 - Set `VITE_ADMIN_USERNAME` and `VITE_ADMIN_PASSWORD` in frontend `.env` file
 - Admin access available at `/admin` or `/admin-login`
 - See `ADMIN_SECURITY.md` for detailed setup instructions
+
+## 🌟 Premium Mentorship System (July 2025 Update)
+
+### Feature Overview ✅
+- **Implemented Premium Mentorship Model**: Complete system for ₹60/30-minute mentorship sessions
+- **Mentor Listings & Profiles**: Searchable mentor directory with detailed profiles
+- **Multi-step Booking Process**: User-friendly booking flow with session packages
+- **Payment Integration**: Simulated payment flow ready for gateway integration
+- **Responsive Experience**: Fully optimized for all devices with modern UI/UX
+
+### New Pages & Components
+- **Pages**: 
+  - `/mentorship` - Landing page with premium features
+  - `/mentorship/mentors` - Filterable mentor listings
+  - `/mentorship/mentor/:id` - Individual mentor profiles
+  - `/mentorship/success` - Booking confirmation page
+  
+- **Components**:
+  - `MentorCard.tsx` - Mentor display with rating and booking
+  - `BookingModal.tsx` - 5-step booking process
+  - `SessionPackageCard.tsx` - Pricing options with discounts
+  - `TestimonialCard.tsx` - Student success stories
+
+### Technical Implementation
+- **Stack**: React + TypeScript, Tailwind CSS, Framer Motion
+- **State Management**: React Context API and useState
+- **Routing**: React Router with dynamic routes
+- **Notifications**: react-hot-toast for booking confirmations
+
+### Documentation
+- Added comprehensive documentation in `frontend/src/components/Mentorship/README.md`
+- Updated component exports in Mentorship index files
+- Full user flow documented with premium pricing model

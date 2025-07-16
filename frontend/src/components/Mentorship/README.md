@@ -2,7 +2,7 @@
 
 This directory contains all the components for the Mentorship Program section of the Internexis website.
 
-## Components
+## Original Components
 
 ### 1. MentorshipSection.tsx
 The main container component that orchestrates the entire mentorship section.
@@ -41,6 +41,52 @@ Call-to-action component encouraging users to join the mentorship program.
 - Gradient backgrounds and glowing effects
 - Feature checkmarks highlighting benefits
 
+## Premium Mentorship Components (July 2025 Update)
+
+### 1. MentorCard.tsx
+Display card for individual mentors with detailed information and booking options.
+
+**Features:**
+- Rating stars display with exact decimals
+- Tech stack tags with dynamic rendering
+- Availability badge (Available/Busy)
+- Profile view and booking buttons
+- Hover animations with gradient overlays
+- Responsive layout for all devices
+
+### 2. BookingModal.tsx
+Multi-step booking process for mentorship sessions.
+
+**Features:**
+- 5-step booking flow with progress indicator
+- Session topic selection with validation
+- Date and time picker with availability
+- Contact information collection
+- Session package selection with pricing
+- Payment simulation with success handling
+- Responsive design for mobile booking
+
+### 3. SessionPackageCard.tsx
+Price cards for different session packages with discount calculations.
+
+**Features:**
+- 1/5/10 session package options
+- Price display (₹60, ₹250, ₹480)
+- Discount badges for multi-session packages
+- Feature list with checkmarks
+- Popular package highlighting
+- Hover effects and animations
+
+### 4. TestimonialCard.tsx
+Card to display student testimonials and success stories.
+
+**Features:**
+- Star rating display
+- Student information with college/course
+- Session count tracking
+- Quote display with formatting
+- Mentor attribution
+
 ## Usage
 
 ```jsx
@@ -71,6 +117,58 @@ All components use:
 - Tailwind CSS
 - Framer Motion (for animations)
 - AOS (for scroll animations)
+- React Hot Toast (for notifications)
+- Lucide Icons (for consistent iconography)
+
+## Premium Mentorship System (July 2025 Update)
+
+### Overview
+
+The Premium Mentorship System is a comprehensive solution that allows users to book personalized mentoring sessions with industry experts at ₹60/30-minute. This feature enables students to connect with experienced professionals for guidance, career advice, and skill development.
+
+### Features
+
+- **Mentor Listings**: Browse through curated industry experts with filtering by domain, rating, language, and availability
+- **Mentor Profiles**: View detailed profiles with experience, skills, specialties, and testimonials
+- **Booking System**: Multi-step booking process with different session packages
+- **Payment Integration**: Simple payment flow for session bookings (currently simulated)
+- **Testimonials**: Real user feedback from previous mentorship sessions
+- **Responsive Design**: Fully responsive across all devices with optimized UI/UX
+
+### Pages
+
+- **`index.tsx`**: Main mentorship landing page with premium features and pricing
+- **`mentors.tsx`**: Mentor listing page with search and filtering functionality
+- **`mentor-profile.tsx`**: Detailed individual mentor profile pages
+- **`success.tsx`**: Booking confirmation page with next steps
+- **`apply.tsx`**: Form for becoming a mentor (existing)
+- **`about.tsx`**: Information about the mentorship program (existing)
+
+### User Flow
+
+1. User visits `/mentorship` to see premium mentorship pricing and features
+2. User browses mentors at `/mentorship/mentors` with filtering options
+3. User selects a mentor to view detailed profile at `/mentorship/mentor/:id`
+4. User books a session through the booking modal
+5. User completes payment and arrives at `/mentorship/success` confirmation page
+
+### Pricing Model
+
+- Single Session: ₹60 (30-minute)
+- 5-Session Package: ₹250 (₹50/session, 16% discount)
+- 10-Session Package: ₹480 (₹48/session, 20% discount)
+
+### Future Enhancements
+
+- Real payment gateway integration (Razorpay/Stripe)
+- Calendar integration for mentor availability
+- Video call integration for sessions
+- Rating and review system after sessions
+- Session history and note-taking features
+
+---
+
+Developed by Internexis Technologies | Updated July 2025
 
 ## Responsive Design
 

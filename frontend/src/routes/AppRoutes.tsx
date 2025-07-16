@@ -18,7 +18,7 @@ import { Career } from "@pages/Career/Career";
 import { UserPage } from "@pages/index";
 import { CampusAmbassadorApplication } from "@pages/CampusAmbassador/CampusAmbassadorApplication";
 import { CampusAmbassadorTestPage } from "@pages/CampusAmbassador/CampusAmbassadorTestPage";
-import { MentorshipMentorsPage, MentorshipApplyPage, MentorshipAboutPage } from "@pages/Mentorship";
+import { MentorshipMentorsPage, MentorshipApplyPage, MentorshipAboutPage, MentorProfilePage, MentorshipSuccessPage } from "@pages/Mentorship";
 import MentorshipIndexPage from "@pages/Mentorship/index.tsx";
 
 // Course imports
@@ -58,6 +58,8 @@ export function AppRoutes() {
       {/* Service Pages */}
       <Route path="/mentorship" element={<MentorshipIndexPage />} />
       <Route path="/mentorship/mentors" element={<MentorshipMentorsPage />} />
+      <Route path="/mentorship/mentor/:id" element={<MentorProfilePage />} />
+      <Route path="/mentorship/success" element={<MentorshipSuccessPage />} />
       <Route path="/mentorship/apply" element={<MentorshipApplyPage />} />
       <Route path="/mentorship/about" element={<MentorshipAboutPage />} />
       
