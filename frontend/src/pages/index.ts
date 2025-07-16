@@ -2,8 +2,8 @@
 export { UserPage } from './UserPage';
 
 // About pages
-export { About } from './About/About';
-export { MeetInternexis } from './About/MeetInternexis';
+export { About } from './about/About';
+export { MeetInternexis } from './about/MeetInternexis';
 
 // Contact pages
 export { Contact } from './Contact/Contact';

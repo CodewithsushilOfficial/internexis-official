@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { HeroSection } from "@components/Home/HeroSection";
-import { About } from "@pages/About/About.tsx";
+import { About } from "@pages/about/About.tsx";
 import { Internship, AllPrograms } from "@pages/Internship";
 import { OurServices } from "@components/Home/OurServices";
 import { Testimonials } from "@components/Home/Testimonials";
@@ -12,7 +12,7 @@ import { PrivacyPolicy } from "@pages/Legal/PrivacyPolicy";
 import { RefundPolicy } from "@pages/Legal/RefundPolicy";
 import { CookiePolicy } from "@pages/Legal/CookiePolicy";
 import { TermsAndConditions } from "@pages/Legal/TermsAndConditionsNew";
-import { MeetInternexis } from "@pages/About/MeetInternexis";
+import { MeetInternexis } from "@pages/about/MeetInternexis";
 import { Ambassador } from "@pages/CampusAmbassador/Ambassador";
 import { Career } from "@pages/Career/Career";
 import { UserPage } from "@pages/index";
