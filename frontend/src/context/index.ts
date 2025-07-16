@@ -1,5 +1,7 @@
 // Context exports
-// export * from './ThemeContext';
+export * from './faq-context';
+export * from './faq-context.tsx';
+export * from './theme-context';
 // export * from './AuthContext';
 // export * from './UserContext';
 // export * from './NotificationContext';

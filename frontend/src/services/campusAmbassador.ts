@@ -33,7 +33,7 @@ export interface CampusAmbassadorFormData {
 export interface CampusAmbassadorResponse {
   success: boolean;
   message: string;
-  data?: any;
+  data?: unknown;
   error?: string;
 }
 
@@ -46,11 +46,15 @@ export const campusAmbassadorService = {
         message: 'Application submitted successfully!',
         data: response.data
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const responseError = error && typeof error === 'object' && 'response' in error ? 
+        (error as { response?: { data?: { message?: string } } }).response?.data?.message : undefined;
+      
       return {
         success: false,
         message: 'Failed to submit application',
-        error: error.response?.data?.message || error.message
+        error: responseError || errorMessage
       };
     }
   },
@@ -63,11 +67,15 @@ export const campusAmbassadorService = {
         message: 'Status retrieved successfully',
         data: response.data
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const responseError = error && typeof error === 'object' && 'response' in error ? 
+        (error as { response?: { data?: { message?: string } } }).response?.data?.message : undefined;
+      
       return {
         success: false,
         message: 'Failed to get application status',
-        error: error.response?.data?.message || error.message
+        error: responseError || errorMessage
       };
     }
   },
@@ -80,11 +88,15 @@ export const campusAmbassadorService = {
         message: 'Applications retrieved successfully',
         data: response.data
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const responseError = error && typeof error === 'object' && 'response' in error ? 
+        (error as { response?: { data?: { message?: string } } }).response?.data?.message : undefined;
+      
       return {
         success: false,
         message: 'Failed to get applications',
-        error: error.response?.data?.message || error.message
+        error: responseError || errorMessage
       };
     }
   }

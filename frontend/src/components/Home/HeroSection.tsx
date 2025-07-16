@@ -50,7 +50,7 @@ export const HeroSection: React.FC = () => {
 
   // Typewriter effect for headlines - Continuous loop
   useEffect(() => {
-    let timeouts: NodeJS.Timeout[] = [];
+    const timeouts: NodeJS.Timeout[] = [];
     
     const typeText = (text: string, delay: number, setter: (value: string) => void) => {
       for (let i = 0; i <= text.length; i++) {

@@ -1,11 +1,6 @@
 import { motion } from 'framer-motion';
 import { 
-  CheckCircleIcon, 
   PuzzlePieceIcon, 
-  AcademicCapIcon, 
-  UserGroupIcon,
-  ClockIcon,
-  CodeBracketIcon,
   CpuChipIcon,
   ChartBarIcon
 } from '@heroicons/react/24/outline';

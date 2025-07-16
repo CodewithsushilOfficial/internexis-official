@@ -1,13 +1,8 @@
 import { motion } from 'framer-motion';
 import { 
-  CheckCircleIcon, 
   ShieldCheckIcon, 
-  AcademicCapIcon, 
-  UserGroupIcon,
-  ClockIcon,
   ComputerDesktopIcon,
-  GlobeAltIcon,
-  WrenchScrewdriverIcon
+  GlobeAltIcon
 } from '@heroicons/react/24/outline';
 
 const modules = [

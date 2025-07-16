@@ -26,7 +26,7 @@ export const slugify = (text: string) => {
     .replace(/^-+|-+$/g, '');
 };
 
-export const debounce = <T extends (...args: any[]) => void>(
+export const debounce = <T extends (...args: unknown[]) => void>(
   func: T,
   delay: number
 ): ((...args: Parameters<T>) => void) => {
@@ -37,7 +37,7 @@ export const debounce = <T extends (...args: any[]) => void>(
   };
 };
 
-export const throttle = <T extends (...args: any[]) => void>(
+export const throttle = <T extends (...args: unknown[]) => void>(
   func: T,
   delay: number
 ): ((...args: Parameters<T>) => void) => {

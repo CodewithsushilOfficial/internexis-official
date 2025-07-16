@@ -6,8 +6,7 @@ import {
   UserGroupIcon,
   CommandLineIcon,
   ServerIcon,
-  GlobeAltIcon,
-  DatabaseIcon
+  GlobeAltIcon
 } from '@heroicons/react/24/outline';
 
 const modules = [

@@ -1,10 +1,6 @@
 import { motion } from 'framer-motion';
 import { 
-  CheckCircleIcon, 
   ChartBarIcon, 
-  AcademicCapIcon, 
-  UserGroupIcon,
-  ClockIcon,
   BeakerIcon,
   TableCellsIcon,
   PresentationChartLineIcon
