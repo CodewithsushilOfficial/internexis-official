@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { HeroSection } from "@components/Home/HeroSection";
-import { About } from "@pages/about/About.tsx";
+import { About } from "@pages/about/About";
 import { Internship, AllPrograms } from "@pages/Internship";
 import { OurServices } from "@components/Home/OurServices";
 import { Testimonials } from "@components/Home/Testimonials";
