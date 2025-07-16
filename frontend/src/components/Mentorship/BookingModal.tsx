@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight, Calendar, Clock, User, Mail, Phone, CreditCard, CheckCircle, Loader } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Mail, Phone, CreditCard, CheckCircle, Loader } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 interface BookingModalProps {
