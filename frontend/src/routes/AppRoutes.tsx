@@ -6,6 +6,7 @@ import { OurServices } from "@components/Home/OurServices";
 import { Testimonials } from "@components/Home/Testimonials";
 import { Contact } from "@pages/Contact/Contact";
 import { Partners } from "@components/Home/Partners";
+import { Services } from "@pages/Services/Services";
 import { TermsOfService } from "@pages/Legal/TermsOfService";
 import { PrivacyPolicy } from "@pages/Legal/PrivacyPolicy";
 import { RefundPolicy } from "@pages/Legal/RefundPolicy";
@@ -41,6 +42,9 @@ export function AppRoutes() {
       
       {/* About Pages */}
       <Route path="/meet-internexis" element={<MeetInternexis />} />
+      
+      {/* Services Page */}
+      <Route path="/services" element={<Services />} />
       
       {/* Program Pages */}
       <Route path="/all-programs" element={<AllPrograms />} />

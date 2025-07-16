@@ -12,6 +12,11 @@ export { Stats } from '@components/Home/Stats';
 export { Testimonials } from '@components/Home/Testimonials';
 export { WhyChoose } from '@components/Home/WhyChoose';
 
+// Services components
+export { TechServices } from '@components/Services/TechServices';
+export { ComprehensiveServices } from '@components/Services/ComprehensiveServices';
+export { TechServicesSection } from '@components/Services/TechServicesSection';
+
 // Common components exports
 export * from '@components/common/FAQ';
 export * from '@components/common/Newsletter';
