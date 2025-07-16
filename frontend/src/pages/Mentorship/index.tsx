@@ -6,7 +6,6 @@ import 'aos/dist/aos.css';
 import { 
   Users, 
   UserPlus, 
-  Search, 
   Calendar,
   Award,
   Heart,
