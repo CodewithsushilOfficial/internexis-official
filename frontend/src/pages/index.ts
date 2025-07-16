@@ -8,6 +8,17 @@ export * from '@pages/About/MeetInternexis';
 // Contact pages
 export * from '@pages/Contact/Contact';
 
+// Courses pages
+export * from '@pages/Courses';
+export * from '@pages/Courses/WebDevelopment';
+export * from '@pages/Courses/AndroidDevelopment';
+export * from '@pages/Courses/AIML';
+export * from '@pages/Courses/PythonDjango';
+export * from '@pages/Courses/DataScience';
+export * from '@pages/Courses/CyberSecurity';
+export * from '@pages/Courses/DSA';
+export * from '@pages/Courses/UIUX';
+
 // Home components (moved to components/Home)
 export * from '@components/Home/HeroSection';
 export * from '@components/Home/OurServices';

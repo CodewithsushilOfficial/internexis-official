@@ -18,6 +18,17 @@ import { UserPage } from "@pages/index";
 import { CampusAmbassadorApplication } from "@pages/CampusAmbassador/CampusAmbassadorApplication";
 import { CampusAmbassadorTestPage } from "@pages/CampusAmbassador/CampusAmbassadorTestPage";
 
+// Course imports
+import { Courses } from "@pages/Courses";
+import { WebDevelopment } from "@pages/Courses/WebDevelopment";
+import { AndroidDevelopment } from "@pages/Courses/AndroidDevelopment";
+import { AIML } from "@pages/Courses/AIML";
+import { PythonDjango } from "@pages/Courses/PythonDjango";
+import { DataScience } from "@pages/Courses/DataScience";
+import { CyberSecurity } from "@pages/Courses/CyberSecurity";
+import { DSA } from "@pages/Courses/DSA";
+import { UIUX } from "@pages/Courses/UIUX";
+
 export function AppRoutes() {
   return (
     <Routes>
@@ -51,7 +62,17 @@ export function AppRoutes() {
       <Route path="/campus-ambassador" element={<Ambassador />} />
       <Route path="/campus-ambassador-application" element={<CampusAmbassadorApplication />} />
       <Route path="/campus-ambassador-test" element={<CampusAmbassadorTestPage />} />
-      {/* <Route path="/apply-internship" element={<InternshipApplication />} /> */}
+      
+      {/* Course Routes */}
+      <Route path="/courses" element={<Courses />} />
+      <Route path="/courses/web-development" element={<WebDevelopment />} />
+      <Route path="/courses/android-development" element={<AndroidDevelopment />} />
+      <Route path="/courses/ai-ml" element={<AIML />} />
+      <Route path="/courses/python-django" element={<PythonDjango />} />
+      <Route path="/courses/data-science" element={<DataScience />} />
+      <Route path="/courses/cybersecurity" element={<CyberSecurity />} />
+      <Route path="/courses/dsa" element={<DSA />} />
+      <Route path="/courses/ui-ux" element={<UIUX />} />
       
       {/* Career Page */}
       <Route path="/careers" element={<Career />} />

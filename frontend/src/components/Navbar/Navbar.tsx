@@ -242,6 +242,7 @@ export const Navbar: React.FC = () => {
             {/* Other Navigation Items */}
             {[
               { name: "All Programs", path: "/all-programs" },
+              { name: "Courses", path: "/courses" },
               { name: "Careers", path: "/careers" },
               { name: "Pricing", path: "/", section: "pricing" },
               { name: "Contact", path: "/", section: "contact" },
@@ -409,6 +410,7 @@ export const Navbar: React.FC = () => {
               >
                 {[
                   { name: "All Programs", path: "/all-programs", icon: Code },
+                  { name: "Courses", path: "/courses", icon: Briefcase },
                   { name: "Careers", path: "/careers", icon: Briefcase },
                   { name: "Pricing", path: "/", section: "pricing", icon: Star },
                   { name: "Contact", path: "/", section: "contact", icon: Globe },
