@@ -235,8 +235,8 @@ const MentorshipIndexPage: React.FC = () => {
       </div>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4">
-        <div className="max-w-7xl mx-auto">
+      <section className="relative pt-20 pb-16 px-4 min-h-screen flex items-center">
+        <div className="max-w-7xl mx-auto w-full">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
             <motion.div
@@ -245,15 +245,20 @@ const MentorshipIndexPage: React.FC = () => {
               transition={{ duration: 0.8 }}
               className="space-y-8"
             >
+              {/* Main Heading */}
               <div className="space-y-6">
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
-                  🚀 Premium Mentorship
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-wide leading-tight">
+                  <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+                    🎯 Clarity. Confidence. Career.
+                  </span>
                 </h1>
-                <h2 className="text-3xl md:text-4xl font-semibold text-gray-800 dark:text-gray-200">
-                  Starting at <span className="text-purple-600 dark:text-purple-400">₹60/30min</span>
+                
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-gray-800 dark:text-gray-200 leading-relaxed">
+                  1-on-1 live sessions with industry experts — gain real direction, feedback & confidence.
                 </h2>
-                <p className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
-                  Get personalized 1-on-1 guidance from industry experts. Book sessions with top developers, designers, and tech professionals to accelerate your career growth.
+                
+                <p className="text-lg md:text-xl font-medium text-indigo-600 dark:text-indigo-400 italic tracking-wide">
+                  "One conversation can change everything."
                 </p>
               </div>
 
@@ -261,93 +266,133 @@ const MentorshipIndexPage: React.FC = () => {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   to="/mentorship/mentors"
-                  className="group bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                  className="group bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 w-full sm:w-auto text-center"
                 >
                   <span className="flex items-center justify-center">
-                    <Search className="mr-2 h-5 w-5" />
-                    Browse Mentors
+                    🚀 Book a Mentor
                     <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </Link>
-                <Link
-                  to="/mentorship/apply"
-                  className="group bg-white dark:bg-gray-800 text-purple-600 dark:text-purple-400 px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border-2 border-purple-600 dark:border-purple-400"
-                >
+                
+                <button className="group bg-transparent border-2 border-indigo-600 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 w-full sm:w-auto">
                   <span className="flex items-center justify-center">
-                    <UserPlus className="mr-2 h-5 w-5" />
-                    Become a Mentor
+                    🎥 Try a Demo
                     <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                   </span>
-                </Link>
+                </button>
+              </div>
+
+              {/* Trusted Stats */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8">
+                <div className="flex items-center space-x-3 bg-white/10 dark:bg-gray-800/10 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                    <span className="text-2xl">👨‍🏫</span>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">50+</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">Mentors</div>
+                  </div>
+                </div>
+                
+                <div className="flex items-center space-x-3 bg-white/10 dark:bg-gray-800/10 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
+                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-blue-600 rounded-full flex items-center justify-center">
+                    <span className="text-2xl">👨‍🎓</span>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">10K+</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">Students</div>
+                  </div>
+                </div>
+                
+                <div className="flex items-center space-x-3 bg-white/10 dark:bg-gray-800/10 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
+                  <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center">
+                    <span className="text-2xl">💸</span>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">₹60</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">/ 30 Min Session</div>
+                  </div>
+                </div>
               </div>
             </motion.div>
 
-            {/* Right Image */}
+            {/* Right Content */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative"
+              className="relative flex justify-center items-center order-first lg:order-last"
             >
-              <div className="relative">
-                <img
-                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop"
-                  alt="Mentorship Session"
-                  className="w-full h-96 object-cover rounded-2xl shadow-2xl"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-purple-600/20 to-transparent rounded-2xl"></div>
-                
-                {/* Floating Cards */}
-                <div className="absolute -top-4 -left-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                      <CheckCircle className="h-4 w-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">1000+</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">Sessions Completed</p>
-                    </div>
+              {/* Background Abstract Shapes */}
+              <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-orange-400 to-pink-500 rounded-full opacity-20 animate-pulse"></div>
+                <div className="absolute bottom-10 right-10 w-40 h-40 bg-gradient-to-br from-purple-400 to-blue-500 rounded-full opacity-20 animate-pulse" style={{ animationDelay: '1s' }}></div>
+                <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-gradient-to-br from-green-400 to-cyan-500 rounded-full opacity-20 animate-pulse" style={{ animationDelay: '2s' }}></div>
+              </div>
+
+              {/* Main Image Container */}
+              <div className="relative z-10">
+                <div className="relative w-80 h-80 md:w-96 md:h-96">
+                  {/* Image with Ring and Shadow */}
+                  <div className="w-full h-full rounded-full ring-4 ring-indigo-200 dark:ring-indigo-800 shadow-2xl overflow-hidden bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900 dark:to-purple-900">
+                    <img
+                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face"
+                      alt="Smiling student with laptop"
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+
+                  {/* Floating Icons */}
+                  <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-lg animate-bounce">
+                    <span className="text-2xl">💬</span>
+                  </div>
+                  
+                  <div className="absolute top-1/2 -left-6 w-14 h-14 bg-gradient-to-br from-green-500 to-cyan-500 rounded-full flex items-center justify-center shadow-lg animate-bounce" style={{ animationDelay: '0.5s' }}>
+                    <span className="text-xl">🎯</span>
+                  </div>
+                  
+                  <div className="absolute -bottom-2 left-1/4 w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center shadow-lg animate-bounce" style={{ animationDelay: '1s' }}>
+                    <span className="text-lg">🎓</span>
+                  </div>
+
+                  {/* Additional floating elements */}
+                  <div className="absolute top-1/4 -right-8 w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                    <Star className="h-5 w-5 text-white" />
+                  </div>
+                  
+                  <div className="absolute bottom-1/4 -left-8 w-10 h-10 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full flex items-center justify-center shadow-lg animate-pulse" style={{ animationDelay: '1.5s' }}>
+                    <Award className="h-5 w-5 text-white" />
                   </div>
                 </div>
-                
-                <div className="absolute -bottom-4 -right-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
-                      <Star className="h-4 w-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">4.9/5</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">Average Rating</p>
-                    </div>
+              </div>
+
+              {/* Floating Success Badge */}
+              <div className="absolute top-0 right-0 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 animate-float">
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                    <CheckCircle className="h-4 w-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">4.9/5</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">Rating</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating Sessions Badge */}
+              <div className="absolute bottom-0 left-0 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 animate-float" style={{ animationDelay: '1s' }}>
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
+                    <Users className="h-4 w-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">10K+</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">Sessions</p>
                   </div>
                 </div>
               </div>
             </motion.div>
           </div>
-          
-          {/* Hero Banner Image */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-16 relative"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&h=300&fit=crop"
-              alt="Team Collaboration"
-              className="w-full h-64 object-cover rounded-2xl shadow-2xl"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-600/60 to-pink-600/60 rounded-2xl flex items-center justify-center">
-              <div className="text-center text-white">
-                <h3 className="text-2xl md:text-3xl font-bold mb-2">
-                  🚀 Join 1000+ Successful Students
-                </h3>
-                <p className="text-lg opacity-90">
-                  Transform your career with industry-expert mentorship
-                </p>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </section>
 
