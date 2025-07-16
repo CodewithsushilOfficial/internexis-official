@@ -18,6 +18,8 @@ import { Career } from "@pages/Career/Career";
 import { UserPage } from "@pages/index";
 import { CampusAmbassadorApplication } from "@pages/CampusAmbassador/CampusAmbassadorApplication";
 import { CampusAmbassadorTestPage } from "@pages/CampusAmbassador/CampusAmbassadorTestPage";
+import { MentorshipMentorsPage, MentorshipApplyPage, MentorshipAboutPage } from "@pages/Mentorship";
+import MentorshipIndexPage from "@pages/Mentorship/index.tsx";
 
 // Course imports
 import { Courses } from "@pages/Courses";
@@ -53,11 +55,16 @@ export function AppRoutes() {
       <Route path="/internship-projects/:domainSlug" element={<InternshipProjects />} />
       <Route path="/domain-details/:domainSlug" element={<DomainDetails />} /> */}
       
+      {/* Service Pages */}
+      <Route path="/mentorship" element={<MentorshipIndexPage />} />
+      <Route path="/mentorship/mentors" element={<MentorshipMentorsPage />} />
+      <Route path="/mentorship/apply" element={<MentorshipApplyPage />} />
+      <Route path="/mentorship/about" element={<MentorshipAboutPage />} />
+      
       {/* Service Pages - TODO: Add back when components are created */}
       {/* <Route path="/digital-solutions" element={<DigitalSolutionsPage />} />
       <Route path="/hackathons" element={<HackathonsPage />} />
       <Route path="/work-with-us" element={<WorkWithUsPage />} />
-      <Route path="/mentorship" element={<MentorshipPage />} />
       <Route path="/career-guidance" element={<CareerGuidancePage />} />
       <Route path="/freelance-projects" element={<FreelanceProjectsPage />} />
       <Route path="/career-jobs" element={<CareerJobsPage />} /> */}

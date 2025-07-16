@@ -42,6 +42,9 @@ export { Career } from './Career/Career';
 // Services pages
 export * from './Services/Services';
 
+// Mentorship pages
+export { MentorshipPage } from './Mentorship';
+
 // Admin pages
 export { AdminDashboard } from './Admin/AdminDashboard';
 

@@ -22,6 +22,9 @@ export * from '@components/common/FAQ';
 export * from '@components/common/Newsletter';
 export * from '@components/common/StarBackground';
 
+// Mentorship components
+export * from '@components/Mentorship';
+
 // UI components exports  
 export * from '@components/ui/access-code-modal';
 export * from '@components/ui/card';
