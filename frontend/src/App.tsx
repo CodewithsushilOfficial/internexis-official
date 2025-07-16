@@ -1,7 +1,7 @@
 import { BrowserRouter as Router } from "react-router-dom";
-import { FAQProvider } from "./hooks/use-faq";
-import { MainLayout } from "./components/MainLayout";
-import { AppRoutes } from "./routes/AppRoutes";
+import { FAQProvider } from "@hooks/use-faq";
+import { MainLayout } from "@components/MainLayout";
+import { AppRoutes } from "@routes/AppRoutes";
 
 function App() {
   return (

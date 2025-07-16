@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   campusAmbassadorService,
   CampusAmbassadorFormData,
-} from "../../services";
+} from "@services/index";
 
 const AmbassadorForm: React.FC = () => {
   // Add CSS animations to the document head
@@ -66,8 +66,17 @@ const AmbassadorForm: React.FC = () => {
     whyInternexis: "",
     availabilityHours: "",
     startDate: "",
+    achievements: "",
+    socialMediaLinks: {
+      linkedin: "",
+      instagram: "",
+      facebook: "",
+      twitter: "",
+    },
     referralSource: "",
     additionalInfo: "",
+    termsAccepted: false,
+    privacyAccepted: false,
   });
   const [message, setMessage] = useState<{
     type: "success" | "error";
@@ -161,8 +170,17 @@ const AmbassadorForm: React.FC = () => {
           whyInternexis: "",
           availabilityHours: "",
           startDate: "",
+          achievements: "",
+          socialMediaLinks: {
+            linkedin: "",
+            instagram: "",
+            facebook: "",
+            twitter: "",
+          },
           referralSource: "",
           additionalInfo: "",
+          termsAccepted: false,
+          privacyAccepted: false,
         });
       } else {
         setMessage({

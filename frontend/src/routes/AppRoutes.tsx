@@ -1,23 +1,22 @@
 import { Routes, Route } from "react-router-dom";
-import { HeroSection } from "../components/Home/HeroSection";
-import { About } from "../pages/About/About";
-import { Internship } from "../pages/Internship/Internship";
-import { OurServices } from "../components/Home/OurServices";
-import { Testimonials } from "../components/Home/Testimonials";
-import { Contact } from "../pages/Contact/Contact";
-import { Partners } from "../components/Home/Partners";
-import { TermsOfService } from "../components/features/legal/TermsOfService";
-import { PrivacyPolicy } from "../components/features/legal/PrivacyPolicy";
-import { RefundPolicy } from "../components/features/legal/RefundPolicy";
-import { CookiePolicy } from "../components/features/legal/CookiePolicy";
-import { TermsAndConditions } from "../components/features/legal/TermsAndConditionsNew";
-import { MeetInternexis } from "../pages/About/MeetInternexis";
-import { AllPrograms } from "../pages/Internship/AllPrograms";
-import { Ambassador } from "../pages/CampusAmbassador/Ambassador";
-import { Career } from "../pages/Career/Career";
-import { UserPage } from "../pages/UserPage";
-import { CampusAmbassadorApplication } from "../pages/CampusAmbassador/CampusAmbassadorApplication";
-import { CampusAmbassadorTestPage } from "../pages/CampusAmbassador/CampusAmbassadorTestPage";
+import { HeroSection } from "@components/Home/HeroSection";
+import { About } from "@pages/About/About";
+import { Internship, AllPrograms } from "@pages/Internship";
+import { OurServices } from "@components/Home/OurServices";
+import { Testimonials } from "@components/Home/Testimonials";
+import { Contact } from "@pages/Contact/Contact";
+import { Partners } from "@components/Home/Partners";
+import { TermsOfService } from "@pages/Legal/TermsOfService";
+import { PrivacyPolicy } from "@pages/Legal/PrivacyPolicy";
+import { RefundPolicy } from "@pages/Legal/RefundPolicy";
+import { CookiePolicy } from "@pages/Legal/CookiePolicy";
+import { TermsAndConditions } from "@pages/Legal/TermsAndConditionsNew";
+import { MeetInternexis } from "@pages/About/MeetInternexis";
+import { Ambassador } from "@pages/CampusAmbassador/Ambassador";
+import { Career } from "@pages/Career/Career";
+import { UserPage } from "@pages/index";
+import { CampusAmbassadorApplication } from "@pages/CampusAmbassador/CampusAmbassadorApplication";
+import { CampusAmbassadorTestPage } from "@pages/CampusAmbassador/CampusAmbassadorTestPage";
 
 export function AppRoutes() {
   return (

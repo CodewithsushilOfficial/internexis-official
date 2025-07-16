@@ -1,35 +1,42 @@
 // Pages exports
-export { UserPage } from "./UserPage";
+export { UserPage } from './UserPage';
 
 // About pages
-export * from './About/About';
-export * from './About/MeetInternexis';
+export * from '@pages/About/About';
+export * from '@pages/About/MeetInternexis';
 
 // Contact pages
-export * from './Contact/Contact';
+export * from '@pages/Contact/Contact';
 
 // Home components (moved to components/Home)
-export * from '../components/Home/HeroSection';
-export * from '../components/Home/OurServices';
-export * from '../components/Home/Partners';
-export * from '../components/Home/Stats';
-export * from '../components/Home/Testimonials';
-export * from '../components/Home/WhyChoose';
+export * from '@components/Home/HeroSection';
+export * from '@components/Home/OurServices';
+export * from '@components/Home/Partners';
+export * from '@components/Home/Stats';
+export * from '@components/Home/Testimonials';
+export * from '@components/Home/WhyChoose';
 
 // Internship/Programs pages
-export * from './Internship/AllPrograms';
-export * from './Internship/Internship';
+export * from '@pages/Internship/AllPrograms';
+export * from '@pages/Internship/Internship';
 
 // Campus Ambassador pages
-export * from './CampusAmbassador/Ambassador';
-export * from './CampusAmbassador/CampusAmbassadorApplication';
-export * from './CampusAmbassador/CampusAmbassadorTestPage';
+export * from '@pages/CampusAmbassador/Ambassador';
+export * from '@pages/CampusAmbassador/CampusAmbassadorApplication';
+export * from '@pages/CampusAmbassador/CampusAmbassadorTestPage';
 
 // Career pages
-export * from './Career/Career';
+export * from '@pages/Career/Career';
 
 // Services pages
 export * from './Services/Services';
 
 // Admin pages
-export * from './Admin/AdminDashboard';
+export * from '@pages/Admin/AdminDashboard';
+
+// Legal pages
+export * from '@pages/Legal/TermsOfService';
+export * from '@pages/Legal/PrivacyPolicy';
+export * from '@pages/Legal/RefundPolicy';
+export * from '@pages/Legal/CookiePolicy';
+export * from '@pages/Legal/TermsAndConditionsNew';
