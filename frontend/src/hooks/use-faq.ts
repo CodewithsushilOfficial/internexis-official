@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { FAQContext } from "@context/faq-context";
+import { FAQContext } from "@context/faq-context.ts";
 
 export const useFAQ = () => {
   const context = useContext(FAQContext);
