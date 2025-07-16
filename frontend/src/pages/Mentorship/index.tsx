@@ -39,6 +39,7 @@ import {
 import MentorCard from '../../components/Mentorship/MentorCard';
 import BookingModal from '../../components/Mentorship/BookingModal';
 import SessionPackageCard from '../../components/Mentorship/SessionPackageCard';
+import MentorshipTimeline from '../../components/Mentorship/MentorshipTimeline';
 
 const MentorshipIndexPage: React.FC = () => {
   const [selectedMentor, setSelectedMentor] = useState<any>(null);
@@ -484,6 +485,9 @@ const MentorshipIndexPage: React.FC = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* Mentorship Timeline */}
+      <MentorshipTimeline />
 
       {/* Featured Mentors Section */}
       <section className="py-20 px-4">
