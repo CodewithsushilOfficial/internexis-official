@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Menu, X, ChevronRight, ChevronDown, Star, Zap, Globe, Users, Code, Briefcase } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Menu, X, ChevronRight, ChevronDown, Star, Globe, Users, Code, Briefcase, Monitor } from "lucide-react";
+import { Link } from "react-router-dom";
 import { ThemeToggle } from "../ui/theme-toggle";
+import { ContactFormPopup } from "../ui/ContactFormPopup";
 import { motion, AnimatePresence } from "framer-motion";
 
 export const Navbar: React.FC = () => {
@@ -9,7 +10,7 @@ export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const location = useLocation();
+  const [isContactPopupOpen, setIsContactPopupOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,22 +24,6 @@ export const Navbar: React.FC = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Function to handle smooth scrolling to sections
-  const scrollToSection = (sectionId: string) => {
-    setIsOpen(false); // Close mobile menu
-
-    // If we're not on the home page, navigate to home first
-    if (location.pathname !== "/") {
-      return; // Let the Link component handle the navigation
-    }
-
-    // If we're already on the home page, scroll to the section
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   // Animation variants for navbar links
   const navItemVariants = {
@@ -81,13 +66,13 @@ export const Navbar: React.FC = () => {
   const servicesData = [
     {
       name: "Digital Solutions",
-      path: "/digital-solutions",
-      icon: Code,
-      description: "Custom software development and digital transformation",
+      path: "/services",
+      icon: Monitor,
+      description: "Complete digital transformation solutions",
     },
     {
-      name: "Internship Projects",
-      path: "/internship-projects",
+      name: "Internships",
+      path: "/all-programs",
       icon: Briefcase,
       description: "Hands-on learning experiences and real-world projects",
     },
@@ -98,22 +83,10 @@ export const Navbar: React.FC = () => {
       description: "Join our network of student ambassadors",
     },
     {
-      name: "Hackathons",
-      path: "/hackathons",
-      icon: Zap,
-      description: "Competitive coding and innovation challenges",
-    },
-    {
       name: "Mentorship",
       path: "/mentorship",
       icon: Star,
       description: "Get guidance from industry experts",
-    },
-    {
-      name: "Work With Us",
-      path: "/work-with-us",
-      icon: Globe,
-      description: "Join our team and grow your career",
     },
   ];
 
@@ -121,8 +94,8 @@ export const Navbar: React.FC = () => {
     <nav
       className={`fixed w-full z-50 transition-all duration-700 ${
         isScrolled
-          ? "bg-white/85 dark:bg-gray-900/85 backdrop-blur-xl shadow-xl shadow-gray-500/10 dark:shadow-gray-900/20 py-2 border-b border-gray-200/50 dark:border-gray-700/50"
-          : "bg-transparent py-4"
+          ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl shadow-2xl shadow-gray-500/5 dark:shadow-gray-900/30 py-3 border-b border-gray-200/30 dark:border-gray-700/30"
+          : "bg-transparent py-5"
       }`}
     >
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
@@ -135,22 +108,24 @@ export const Navbar: React.FC = () => {
             transition={{ duration: 0.6 }}
           >
             <Link to="/" className="group relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <img
-                src="https://iili.io/3ZQltN1.jpg"
-                height={70}
-                width={150}
-                className="h-11 md:h-13 w-auto hover:scale-105 transition-transform duration-300 relative z-10"
-                alt="Internexis Technologies"
-                loading="eager"
-                fetchPriority="high"
-              />
+              <div className="absolute inset-0 bg-gradient-to-r from-primary-500/10 to-secondary-500/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="relative z-10 flex items-center">
+                <img
+                  src="https://iili.io/3ZQltN1.jpg"
+                  height={70}
+                  width={150}
+                  className="h-12 md:h-14 w-auto hover:scale-105 transition-transform duration-300"
+                  alt="Internexis Technologies"
+                  loading="eager"
+                  fetchPriority="high"
+                />
+              </div>
             </Link>
           </motion.div>
 
           {/* Desktop Navigation with enhanced styling */}
           <div className="hidden lg:flex items-center space-x-1">
-            {/* Main Navigation Items */}
+            {/* Home Link */}
             <motion.div
               custom={0}
               initial="hidden"
@@ -159,14 +134,13 @@ export const Navbar: React.FC = () => {
             >
               <Link
                 to="/"
-                onClick={() => scrollToSection("about")}
                 className="group relative px-4 py-2.5 text-sm font-medium rounded-xl text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-300"
-                onMouseEnter={() => setHoveredItem("about")}
+                onMouseEnter={() => setHoveredItem("home")}
                 onMouseLeave={() => setHoveredItem(null)}
               >
-                <span className="relative z-10">About</span>
+                <span className="relative z-10">Home</span>
                 <div className={`absolute inset-0 bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                {hoveredItem === "about" && (
+                {hoveredItem === "home" && (
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-primary-100 to-secondary-100 dark:from-primary-800/30 dark:to-secondary-800/30 rounded-xl"
                     layoutId="navbar-hover"
@@ -211,27 +185,37 @@ export const Navbar: React.FC = () => {
                     initial="hidden"
                     animate="visible"
                     exit="exit"
-                    className="absolute top-full left-0 mt-2 w-80 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700 rounded-2xl shadow-2xl overflow-hidden"
+                    className="absolute top-full left-0 mt-3 w-80 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 rounded-2xl shadow-2xl overflow-hidden"
                   >
-                    <div className="p-2">
-                      {servicesData.map((service) => (
-                        <Link
+                    <div className="p-3">
+                      <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-3 px-3 uppercase tracking-wide">
+                        Our Services
+                      </div>
+                      {servicesData.map((service, index) => (
+                        <motion.div
                           key={service.name}
-                          to={service.path}
-                          className="group flex items-start gap-3 p-3 rounded-xl hover:bg-gradient-to-r hover:from-primary-50 hover:to-secondary-50 dark:hover:from-primary-900/20 dark:hover:to-secondary-900/20 transition-all duration-300"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.1 }}
                         >
-                          <div className="mt-1 p-2 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg text-white shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                            <service.icon className="h-4 w-4" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                              {service.name}
+                          <Link
+                            to={service.path}
+                            className="group flex items-start gap-3 p-3 rounded-xl hover:bg-gradient-to-r hover:from-primary-50 hover:to-secondary-50 dark:hover:from-primary-900/20 dark:hover:to-secondary-900/20 transition-all duration-300"
+                          >
+                            <div className="mt-1 p-2.5 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl text-white shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300">
+                              <service.icon className="h-4 w-4" />
                             </div>
-                            <div className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
-                              {service.description}
+                            <div className="flex-1 min-w-0">
+                              <div className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                                {service.name}
+                              </div>
+                              <div className="text-sm text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-2">
+                                {service.description}
+                              </div>
                             </div>
-                          </div>
-                        </Link>
+                            <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300" />
+                          </Link>
+                        </motion.div>
                       ))}
                     </div>
                   </motion.div>
@@ -241,11 +225,8 @@ export const Navbar: React.FC = () => {
 
             {/* Other Navigation Items */}
             {[
-              { name: "All Programs", path: "/all-programs" },
               { name: "Courses", path: "/courses" },
               { name: "Careers", path: "/careers" },
-              { name: "Pricing", path: "/", section: "pricing" },
-              { name: "Contact", path: "/", section: "contact" },
             ].map((item, i) => (
               <motion.div
                 key={item.name}
@@ -256,7 +237,6 @@ export const Navbar: React.FC = () => {
               >
                 <Link
                   to={item.path}
-                  onClick={() => item.section && scrollToSection(item.section)}
                   className="group relative px-4 py-2.5 text-sm font-medium rounded-xl text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-300"
                   onMouseEnter={() => setHoveredItem(item.name)}
                   onMouseLeave={() => setHoveredItem(null)}
@@ -267,16 +247,41 @@ export const Navbar: React.FC = () => {
                     <motion.div
                       className="absolute inset-0 bg-gradient-to-r from-primary-100 to-secondary-100 dark:from-primary-800/30 dark:to-secondary-800/30 rounded-xl"
                       layoutId="navbar-hover"
-                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
                     />
                   )}
                 </Link>
               </motion.div>
             ))}
 
+            {/* Contact Us Button */}
+            <motion.div
+              custom={4}
+              initial="hidden"
+              animate="visible"
+              variants={navItemVariants}
+            >
+              <button
+                onClick={() => setIsContactPopupOpen(true)}
+                className="group relative px-4 py-2.5 text-sm font-medium rounded-xl text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-300"
+                onMouseEnter={() => setHoveredItem("Contact Us")}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                <span className="relative z-10">Contact Us</span>
+                <div className={`absolute inset-0 bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                {hoveredItem === "Contact Us" && (
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-primary-100 to-secondary-100 dark:from-primary-800/30 dark:to-secondary-800/30 rounded-xl"
+                    layoutId="navbar-hover"
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  />
+                )}
+              </button>
+            </motion.div>
+
             {/* Theme Toggle */}
             <motion.div
-              custom={7}
+              custom={5}
               initial="hidden"
               animate="visible"
               variants={navItemVariants}
@@ -287,7 +292,7 @@ export const Navbar: React.FC = () => {
 
             {/* CTA Button */}
             <motion.div
-              custom={8}
+              custom={6}
               initial="hidden"
               animate="visible"
               variants={navItemVariants}
@@ -295,10 +300,12 @@ export const Navbar: React.FC = () => {
             >
               <Link
                 to="https://docs.google.com/forms/d/e/1FAIpQLSfMY0zYYwtHDW5gdBcoBWxsU0xPTyCzOAGPCUtnaMqqGcmnCg/viewform?usp=header"
-                className="group relative overflow-hidden btn-primary py-2.5 px-6 rounded-xl flex items-center gap-2 text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative overflow-hidden btn-primary py-3 px-6 rounded-xl flex items-center gap-2 text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 bg-gradient-to-r from-primary-500 to-secondary-500 text-white border-0"
               >
                 <span className="relative z-10">Apply Now</span>
-                <ChevronRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform duration-300" />
+                <ChevronRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
                 <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </Link>
             </motion.div>
@@ -342,61 +349,45 @@ export const Navbar: React.FC = () => {
             className="lg:hidden overflow-hidden"
           >
             <div className="mx-4 mt-4 mb-4 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-2xl rounded-2xl p-6 border border-gray-200/50 dark:border-gray-700/50">
-              {/* About Link */}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.1 }}
-                className="mb-4"
-              >
-                <Link
-                  to="/"
-                  onClick={() => {
-                    scrollToSection("about");
-                    setIsOpen(false);
-                  }}
-                  className="group flex items-center gap-3 p-3 rounded-xl hover:bg-gradient-to-r hover:from-primary-50 hover:to-secondary-50 dark:hover:from-primary-900/20 dark:hover:to-secondary-900/20 transition-all duration-300"
-                >
-                  <div className="p-2 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg text-white shadow-lg">
-                    <Star className="h-4 w-4" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="font-medium text-gray-900 dark:text-gray-100">About</div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">Learn about our mission</div>
-                  </div>
-                </Link>
-              </motion.div>
-
+              
               {/* Services Section */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-                className="mb-4"
+                transition={{ delay: 0.1 }}
+                className="mb-6"
               >
-                <div className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3 px-3">
+                <div className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-4 px-3 flex items-center gap-2">
+                  <div className="w-2 h-2 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full"></div>
                   Our Services
                 </div>
-                <div className="space-y-1">
-                  {servicesData.map((service) => (
-                    <Link
+                <div className="space-y-2">
+                  {servicesData.map((service, index) => (
+                    <motion.div
                       key={service.name}
-                      to={service.path}
-                      onClick={() => setIsOpen(false)}
-                      className="group flex items-center gap-3 p-3 rounded-xl hover:bg-gradient-to-r hover:from-primary-50 hover:to-secondary-50 dark:hover:from-primary-900/20 dark:hover:to-secondary-900/20 transition-all duration-300"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 + index * 0.05 }}
                     >
-                      <div className="p-2 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg text-white shadow-lg">
-                        <service.icon className="h-4 w-4" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="font-medium text-gray-900 dark:text-gray-100">
-                          {service.name}
+                      <Link
+                        to={service.path}
+                        onClick={() => setIsOpen(false)}
+                        className="group flex items-center gap-3 p-3 rounded-xl hover:bg-gradient-to-r hover:from-primary-50 hover:to-secondary-50 dark:hover:from-primary-900/20 dark:hover:to-secondary-900/20 transition-all duration-300"
+                      >
+                        <div className="p-2.5 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl text-white shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300">
+                          <service.icon className="h-4 w-4" />
                         </div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400">
-                          {service.description}
+                        <div className="flex-1">
+                          <div className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                            {service.name}
+                          </div>
+                          <div className="text-sm text-gray-500 dark:text-gray-400">
+                            {service.description}
+                          </div>
                         </div>
-                      </div>
-                    </Link>
+                        <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300" />
+                      </Link>
+                    </motion.div>
                   ))}
                 </div>
               </motion.div>
@@ -405,53 +396,86 @@ export const Navbar: React.FC = () => {
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 }}
-                className="space-y-1 mb-4"
+                transition={{ delay: 0.2 }}
+                className="mb-6"
               >
-                {[
-                  { name: "All Programs", path: "/all-programs", icon: Code },
-                  { name: "Courses", path: "/courses", icon: Briefcase },
-                  { name: "Careers", path: "/careers", icon: Briefcase },
-                  { name: "Pricing", path: "/", section: "pricing", icon: Star },
-                  { name: "Contact", path: "/", section: "contact", icon: Globe },
-                ].map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.path}
-                    onClick={() => {
-                      if (item.section) {
-                        scrollToSection(item.section);
-                      }
-                      setIsOpen(false);
-                    }}
-                    className="group flex items-center gap-3 p-3 rounded-xl hover:bg-gradient-to-r hover:from-primary-50 hover:to-secondary-50 dark:hover:from-primary-900/20 dark:hover:to-secondary-900/20 transition-all duration-300"
+                <div className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-4 px-3 flex items-center gap-2">
+                  <div className="w-2 h-2 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full"></div>
+                  Quick Links
+                </div>
+                <div className="space-y-2">
+                  {[
+                    { name: "Home", path: "/", icon: Monitor },
+                    { name: "Courses", path: "/courses", icon: Code },
+                    { name: "Careers", path: "/careers", icon: Briefcase },
+                  ].map((item, index) => (
+                    <motion.div
+                      key={item.name}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 + index * 0.05 }}
+                    >
+                      <Link
+                        to={item.path}
+                        onClick={() => setIsOpen(false)}
+                        className="group flex items-center gap-3 p-3 rounded-xl hover:bg-gradient-to-r hover:from-primary-50 hover:to-secondary-50 dark:hover:from-primary-900/20 dark:hover:to-secondary-900/20 transition-all duration-300"
+                      >
+                        <div className="p-2.5 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl text-white shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300">
+                          <item.icon className="h-4 w-4" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                            {item.name}
+                          </div>
+                        </div>
+                        <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300" />
+                      </Link>
+                    </motion.div>
+                  ))}
+                  
+                  {/* Contact Us Button */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 + 3 * 0.05 }}
                   >
-                    <div className="p-2 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg text-white shadow-lg">
-                      <item.icon className="h-4 w-4" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="font-medium text-gray-900 dark:text-gray-100">
-                        {item.name}
+                    <button
+                      onClick={() => {
+                        setIsContactPopupOpen(true);
+                        setIsOpen(false);
+                      }}
+                      className="group flex items-center gap-3 p-3 rounded-xl hover:bg-gradient-to-r hover:from-primary-50 hover:to-secondary-50 dark:hover:from-primary-900/20 dark:hover:to-secondary-900/20 transition-all duration-300 w-full"
+                    >
+                      <div className="p-2.5 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl text-white shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300">
+                        <Globe className="h-4 w-4" />
                       </div>
-                    </div>
-                  </Link>
-                ))}
+                      <div className="flex-1">
+                        <div className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                          Contact Us
+                        </div>
+                      </div>
+                      <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300" />
+                    </button>
+                  </motion.div>
+                </div>
               </motion.div>
 
               {/* CTA Button */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
+                transition={{ delay: 0.3 }}
                 className="pt-4 border-t border-gray-200 dark:border-gray-700"
               >
                 <Link
                   to="https://docs.google.com/forms/d/e/1FAIpQLSfMY0zYYwtHDW5gdBcoBWxsU0xPTyCzOAGPCUtnaMqqGcmnCg/viewform?usp=header"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setIsOpen(false)}
-                  className="group relative overflow-hidden btn-primary py-3.5 px-6 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 w-full flex items-center justify-center gap-2"
+                  className="group relative overflow-hidden btn-primary py-4 px-6 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 w-full flex items-center justify-center gap-2 bg-gradient-to-r from-primary-500 to-secondary-500 text-white border-0"
                 >
                   <span className="relative z-10">Apply Now</span>
-                  <ChevronRight className="h-5 w-5 group-hover:translate-x-0.5 transition-transform duration-300" />
+                  <ChevronRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
                   <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </Link>
               </motion.div>
@@ -459,6 +483,12 @@ export const Navbar: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Contact Form Popup */}
+      <ContactFormPopup
+        isOpen={isContactPopupOpen}
+        onClose={() => setIsContactPopupOpen(false)}
+      />
     </nav>
   );
 };

@@ -81,6 +81,9 @@ export function AppRoutes() {
       {/* Career Page */}
       <Route path="/careers" element={<Career />} />
       
+      {/* Contact Page */}
+      <Route path="/contact" element={<Contact />} />
+      
       {/* User Management */}
       <Route path="/users" element={<UserPage />} />
       <Route path="/user-page" element={<UserPage />} />
