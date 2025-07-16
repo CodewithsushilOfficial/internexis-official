@@ -2,52 +2,52 @@
 export { UserPage } from './UserPage';
 
 // About pages
-export * from '@pages/About/About';
-export * from '@pages/About/MeetInternexis';
+export { About } from './About/About';
+export { MeetInternexis } from './About/MeetInternexis';
 
 // Contact pages
-export * from '@pages/Contact/Contact';
+export { Contact } from './Contact/Contact';
 
 // Courses pages
-export * from '@pages/Courses';
-export * from '@pages/Courses/WebDevelopment';
-export * from '@pages/Courses/AndroidDevelopment';
-export * from '@pages/Courses/AIML';
-export * from '@pages/Courses/PythonDjango';
-export * from '@pages/Courses/DataScience';
-export * from '@pages/Courses/CyberSecurity';
-export * from '@pages/Courses/DSA';
-export * from '@pages/Courses/UIUX';
+export * from './Courses';
+export * from './Courses/WebDevelopment';
+export * from './Courses/AndroidDevelopment';
+export * from './Courses/AIML';
+export * from './Courses/PythonDjango';
+export * from './Courses/DataScience';
+export * from './Courses/CyberSecurity';
+export * from './Courses/DSA';
+export * from './Courses/UIUX';
 
 // Home components (moved to components/Home)
-export * from '@components/Home/HeroSection';
-export * from '@components/Home/OurServices';
-export * from '@components/Home/Partners';
-export * from '@components/Home/Stats';
-export * from '@components/Home/Testimonials';
-export * from '@components/Home/WhyChoose';
+export { HeroSection } from '@components/Home/HeroSection';
+export { OurServices } from '@components/Home/OurServices';
+export { Partners } from '@components/Home/Partners';
+export { Stats } from '@components/Home/Stats';
+export { Testimonials } from '@components/Home/Testimonials';
+export { WhyChoose } from '@components/Home/WhyChoose';
 
 // Internship/Programs pages
-export * from '@pages/Internship/AllPrograms';
-export * from '@pages/Internship/Internship';
+export { AllPrograms } from './Internship/AllPrograms';
+export { Internship } from './Internship/Internship';
 
 // Campus Ambassador pages
-export * from '@pages/CampusAmbassador/Ambassador';
-export * from '@pages/CampusAmbassador/CampusAmbassadorApplication';
-export * from '@pages/CampusAmbassador/CampusAmbassadorTestPage';
+export { Ambassador } from './CampusAmbassador/Ambassador';
+export { CampusAmbassadorApplication } from './CampusAmbassador/CampusAmbassadorApplication';
+export { CampusAmbassadorTestPage } from './CampusAmbassador/CampusAmbassadorTestPage';
 
 // Career pages
-export * from '@pages/Career/Career';
+export { Career } from './Career/Career';
 
 // Services pages
 export * from './Services/Services';
 
 // Admin pages
-export * from '@pages/Admin/AdminDashboard';
+export { AdminDashboard } from './Admin/AdminDashboard';
 
 // Legal pages
-export * from '@pages/Legal/TermsOfService';
-export * from '@pages/Legal/PrivacyPolicy';
-export * from '@pages/Legal/RefundPolicy';
-export * from '@pages/Legal/CookiePolicy';
-export * from '@pages/Legal/TermsAndConditionsNew';
+export { TermsOfService } from './Legal/TermsOfService';
+export { PrivacyPolicy } from './Legal/PrivacyPolicy';
+export { RefundPolicy } from './Legal/RefundPolicy';
+export { CookiePolicy } from './Legal/CookiePolicy';
+export { TermsAndConditions } from './Legal/TermsAndConditionsNew';
