@@ -8,7 +8,6 @@ import {
   TrendingUp,
   CheckCircle,
   Users,
-  MessageCircle,
   BookOpen
 } from 'lucide-react';
 
