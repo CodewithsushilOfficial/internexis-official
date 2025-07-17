@@ -6,11 +6,51 @@ import StarBackground from "../common/StarBackground";
 export const HeroSection: React.FC = () => {
   const floatingIconsRef = useRef<HTMLDivElement>(null);
   
+
   // Main hero image for circular display
   const heroImage = {
     url: "https://iili.io/3ZCSdmJ.jpg",
     alt: "Indian student studying with laptop",
   };
+
+  // Typewriter effect state
+  const headline = [
+    { text: "Learn,", className: "text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600" },
+    { text: " Grow", className: "text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-violet-600" },
+    { text: " & ", className: "text-gray-800 dark:text-white" },
+    { text: "Succeed", className: "text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600" }
+  ];
+  const fullText = headline.map(h => h.text).join("");
+  const [typedLength, setTypedLength] = React.useState(0);
+  const [showCursor, setShowCursor] = React.useState(true);
+
+  React.useEffect(() => {
+    let typingTimeout: NodeJS.Timeout;
+    let cursorTimeout: NodeJS.Timeout;
+    let isMounted = true;
+    function typeLetter(idx: number) {
+      if (!isMounted) return;
+      if (idx <= fullText.length) {
+        setTypedLength(idx);
+        typingTimeout = setTimeout(() => typeLetter(idx + 1), 70);
+      } else {
+        // Pause, then restart
+        cursorTimeout = setTimeout(() => {
+          setTypedLength(0);
+          typeLetter(1);
+        }, 1800);
+      }
+    }
+    typeLetter(1);
+    // Cursor blink
+    const blink = setInterval(() => setShowCursor(c => !c), 400);
+    return () => {
+      isMounted = false;
+      clearTimeout(typingTimeout);
+      clearTimeout(cursorTimeout);
+      clearInterval(blink);
+    };
+  }, [fullText]);
 
   useEffect(() => {
     // Simple floating animation for icons
@@ -164,148 +204,29 @@ export const HeroSection: React.FC = () => {
             >
               <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight tracking-tight px-2 lg:px-0">
                 <div className="mb-4">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
-                    {"Learn,".split("").map((char, index) => (
-                      <motion.span
-                        key={index}
-                        initial={{ opacity: 0, width: 0 }}
-                        animate={{ opacity: 1, width: "auto" }}
-                        transition={{
-                          duration: 0.05,
-                          delay: index * 0.08,
-                          repeat: Infinity,
-                          repeatType: "loop",
-                          repeatDelay: 5,
-                          ease: "easeOut"
-                        }}
-                        style={{ display: 'inline-block', overflow: 'hidden' }}
-                      >
-                        {char}
-                      </motion.span>
-                    ))}
-                    <motion.span
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: [0, 1, 0] }}
-                      transition={{
-                        duration: 0.5,
-                        delay: 0.48,
-                        repeat: Infinity,
-                        repeatType: "loop",
-                        repeatDelay: 5,
-                        ease: "easeInOut"
-                      }}
-                      className="text-blue-600 dark:text-blue-400 ml-1"
-                    >
-                      |
-                    </motion.span>
-                  </span>{" "}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-violet-600">
-                    {"Grow".split("").map((char, index) => (
-                      <motion.span
-                        key={index}
-                        initial={{ opacity: 0, width: 0 }}
-                        animate={{ opacity: 1, width: "auto" }}
-                        transition={{
-                          duration: 0.05,
-                          delay: 0.6 + index * 0.08,
-                          repeat: Infinity,
-                          repeatType: "loop",
-                          repeatDelay: 5,
-                          ease: "easeOut"
-                        }}
-                        style={{ display: 'inline-block', overflow: 'hidden' }}
-                      >
-                        {char}
-                      </motion.span>
-                    ))}
-                    <motion.span
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: [0, 1, 0] }}
-                      transition={{
-                        duration: 0.5,
-                        delay: 0.92,
-                        repeat: Infinity,
-                        repeatType: "loop",
-                        repeatDelay: 5,
-                        ease: "easeInOut"
-                      }}
-                      className="text-purple-600 dark:text-purple-400 ml-1"
-                    >
-                      |
-                    </motion.span>
+                  {/* Learn, Grow on first line */}
+                  <span className={headline[0].className}>
+                    {fullText.slice(0, Math.min(headline[0].text.length, typedLength))}
+                  </span>
+                  <span className={headline[1].className}>
+                    {fullText.slice(headline[0].text.length, Math.min(headline[0].text.length + headline[1].text.length, typedLength))}
+                  </span>
+                  {/* New line for & and Succeed */}
+                  <br />
+                  <span className={headline[2].className}>
+                    {typedLength > headline[0].text.length + headline[1].text.length
+                      ? fullText.slice(headline[0].text.length + headline[1].text.length, Math.min(headline[0].text.length + headline[1].text.length + headline[2].text.length, typedLength))
+                      : ""}
+                  </span>
+                  <span className={headline[3].className}>
+                    {typedLength > headline[0].text.length + headline[1].text.length + headline[2].text.length
+                      ? fullText.slice(headline[0].text.length + headline[1].text.length + headline[2].text.length, Math.min(fullText.length, typedLength))
+                      : ""}
                   </span>
                 </div>
-                <div>
-                  <span className="text-gray-800 dark:text-white">
-                    {"& ".split("").map((char, index) => (
-                      <motion.span
-                        key={index}
-                        initial={{ opacity: 0, width: 0 }}
-                        animate={{ opacity: 1, width: "auto" }}
-                        transition={{
-                          duration: 0.05,
-                          delay: 1.1 + index * 0.08,
-                          repeat: Infinity,
-                          repeatType: "loop",
-                          repeatDelay: 5,
-                          ease: "easeOut"
-                        }}
-                        style={{ display: 'inline-block', overflow: 'hidden' }}
-                      >
-                        {char}
-                      </motion.span>
-                    ))}
-                    <motion.span
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: [0, 1, 0] }}
-                      transition={{
-                        duration: 0.5,
-                        delay: 1.26,
-                        repeat: Infinity,
-                        repeatType: "loop",
-                        repeatDelay: 5,
-                        ease: "easeInOut"
-                      }}
-                      className="text-gray-800 dark:text-white ml-1"
-                    >
-                      |
-                    </motion.span>
-                  </span>
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">
-                    {"Succeed".split("").map((char, index) => (
-                      <motion.span
-                        key={index}
-                        initial={{ opacity: 0, width: 0 }}
-                        animate={{ opacity: 1, width: "auto" }}
-                        transition={{
-                          duration: 0.05,
-                          delay: 1.3 + index * 0.08,
-                          repeat: Infinity,
-                          repeatType: "loop",
-                          repeatDelay: 5,
-                          ease: "easeOut"
-                        }}
-                        style={{ display: 'inline-block', overflow: 'hidden' }}
-                      >
-                        {char}
-                      </motion.span>
-                    ))}
-                    <motion.span
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: [0, 1, 0] }}
-                      transition={{
-                        duration: 0.5,
-                        delay: 1.86,
-                        repeat: Infinity,
-                        repeatType: "loop",
-                        repeatDelay: 5,
-                        ease: "easeInOut"
-                      }}
-                      className="text-emerald-600 dark:text-emerald-400 ml-1"
-                    >
-                      |
-                    </motion.span>
-                  </span>
+                {/* Blinking cursor moved below headline */}
+                <div className="mt-2 h-8 flex items-center justify-center lg:justify-start">
+                  {showCursor && <span className="inline-block animate-pulse text-indigo-600 dark:text-indigo-400 text-3xl">|</span>}
                 </div>
               </h1>
               
