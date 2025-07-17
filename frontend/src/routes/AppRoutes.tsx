@@ -32,6 +32,18 @@ import { CyberSecurity } from "@pages/Courses/CyberSecurity";
 import { DSA } from "@pages/Courses/DSA";
 import { UIUX } from "@pages/Courses/UIUX";
 
+// Internship imports
+import WebDevelopmentEnhanced from "@pages/Internship/WebDevelopment/WebDevelopmentEnhanced";
+import AIMLEnhanced from "@pages/Internship/AIML/AIMLEnhanced";
+import { WebDevelopment as InternshipWebDev } from "@pages/Internship/WebDevelopment";
+import { AIML as InternshipAIML } from "@pages/Internship/AIML";
+import { AndroidDevelopment as InternshipAndroid } from "@pages/Internship/AndroidDevelopment";
+import { DataScience as InternshipDataScience } from "@pages/Internship/DataScience";
+import { Cybersecurity as InternshipCybersecurity } from "@pages/Internship/Cybersecurity";
+import { UIDesign as InternshipUIDesign } from "@pages/Internship/UIDesign";
+import { PythonWithDjango as InternshipPythonDjango } from "@pages/Internship/PythonWithDjango";
+import { DataAnalytics as InternshipDataAnalytics } from "@pages/Internship/DataAnalytics";
+
 export function AppRoutes() {
   return (
     <Routes>
@@ -86,6 +98,17 @@ export function AppRoutes() {
       <Route path="/courses/cybersecurity" element={<CyberSecurity />} />
       <Route path="/courses/dsa" element={<DSA />} />
       <Route path="/courses/ui-ux" element={<UIUX />} />
+      
+      {/* Internship Routes */}
+      <Route path="/internship" element={<Internship />} />
+      <Route path="/internship/web-development" element={<WebDevelopmentEnhanced />} />
+      <Route path="/internship/ai-ml" element={<AIMLEnhanced />} />
+      <Route path="/internship/android-development" element={<InternshipAndroid />} />
+      <Route path="/internship/data-science" element={<InternshipDataScience />} />
+      <Route path="/internship/cybersecurity" element={<InternshipCybersecurity />} />
+      <Route path="/internship/ui-design" element={<InternshipUIDesign />} />
+      <Route path="/internship/python-django" element={<InternshipPythonDjango />} />
+      <Route path="/internship/data-analytics" element={<InternshipDataAnalytics />} />
       
       {/* Career Page */}
       <Route path="/careers" element={<Career />} />
