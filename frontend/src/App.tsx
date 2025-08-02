@@ -2,7 +2,6 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  useLocation,
 } from "react-router-dom";
 import { Navbar } from "./components/layout/Navbar";
 import { Hero } from "./components/pages/home/Hero";
@@ -29,13 +28,7 @@ import InternshipProjects from "./components/features/internships/InternshipProj
 import DomainDetails from "./components/features/internships/DomainDetails";
 import CampusAmbassador from "./components/features/campus-ambassador/CampusAmbassador";
 import InternshipApplication from "./components/features/internships/InternshipApplication";
-import AdminDashboard from "./components/features/admin/AdminDashboard";
-import SimpleAdminLogin from "./components/features/admin/SimpleAdminLogin";
-import AdminApp from "./components/admin/AdminApp";
 import CareerPage from "./components/features/careers/CareerPage";
-import { UserPage } from "./pages";
-import CampusAmbassadorApplication from "./pages/CampusAmbassadorApplication";
-import CampusAmbassadorTestPage from "./pages/CampusAmbassadorTestPage";
 
 // Service pages
 import DigitalSolutionsPage from "./components/features/services/DigitalSolutionsPage";
@@ -50,14 +43,12 @@ import {
 
 // Component to conditionally render navbar based on route
 function AppLayout() {
-  const location = useLocation();
-  const isAdminRoute = location.pathname.startsWith("/admin");
   const { isFAQOpen, closeFAQ } = useFAQ();
   
   return (
     <div className="font-sans bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
-      {!isAdminRoute && <Navbar />}
-      {!isAdminRoute && <LiveChatButton />}
+      <Navbar />
+      <LiveChatButton />
 
       <Routes>
         {/* Routes for the different pages */}
@@ -88,26 +79,9 @@ function AppLayout() {
         <Route path="/career-jobs" element={<CareerJobsPage />} />
         {/* Campus Ambassador Program Routes */}
         <Route path="/campus-ambassador" element={<CampusAmbassador />} />
-        <Route
-          path="/campus-ambassador-application"
-          element={<CampusAmbassadorApplication />}
-        />
-        <Route
-          path="/campus-ambassador-test"
-          element={<CampusAmbassadorTestPage />}
-        />
         <Route path="/apply-internship" element={<InternshipApplication />} />
         {/* Career Page Route */}
         <Route path="/careers" element={<CareerPage />} />
-        {/* User Management Route */}
-        <Route path="/users" element={<UserPage />} />
-        {/* Admin Routes */}
-        <Route path="/admin" element={<AdminApp />} />
-        <Route path="/admin/dashboard" element={<AdminApp />} />
-        <Route path="/admin/*" element={<AdminApp />} />
-        <Route path="/admin-login" element={<SimpleAdminLogin />} />
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
-        <Route path="/user-page" element={<UserPage />} />
         {/* Home route with multiple sections */}
         <Route
           path="/"
@@ -127,7 +101,7 @@ function AppLayout() {
         />
       </Routes>
 
-      {!isAdminRoute && <Footer />}
+      <Footer />
       <FAQPopup isOpen={isFAQOpen} onClose={closeFAQ} />
     </div>
   );

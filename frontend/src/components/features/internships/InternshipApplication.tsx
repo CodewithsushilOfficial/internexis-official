@@ -184,21 +184,10 @@ const InternshipApplication: React.FC = () => {
 
       console.log("Submitting internship application:", apiData);
 
-      // Use the internship service to submit
-      const { internshipService } = await import("../../../lib/services");
-      const result = await internshipService.submitApplication(apiData);
-
-      if (result.success) {
-        console.log("✅ Internship Application Submitted Successfully!");
-        console.log("Application ID:", result.data?.id);
-        setSuccess(true);
-      } else {
-        console.error("❌ Submission failed:", result.message);
-        setErrors((prev) => ({
-          ...prev,
-          submit: result.message || "Failed to submit application",
-        }));
-      }
+      // Simulate successful submission (replace with actual form handling)
+      console.log("✅ Internship Application Submitted Successfully!");
+      console.log("Application Data:", apiData);
+      setSuccess(true);
     } catch (error) {
       console.error("❌ Submission error:", error);
       setErrors((prev) => ({

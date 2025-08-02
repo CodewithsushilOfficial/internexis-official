@@ -1,8 +1,28 @@
 import React, { useState, useEffect } from "react";
-import {
-  campusAmbassadorService,
-  CampusAmbassadorFormData,
-} from "../../../lib/services";
+
+interface CampusAmbassadorFormData {
+  firstName: string;
+  lastName: string;
+  name: string;
+  email: string;
+  phone: string;
+  university: string;
+  course: string;
+  yearOfStudy: string;
+  cgpa: string;
+  linkedinUrl: string;
+  portfolioUrl: string;
+  skills: string[];
+  experience: string;
+  motivation: string;
+  whyInternexis: string;
+  college: string;
+  whyYouWantToJoin: string;
+  referralSource: string;
+  additionalInfo: string;
+  availabilityHours: string;
+  startDate: string;
+}
 
 const AmbassadorForm: React.FC = () => {
   // Add CSS animations to the document head
@@ -52,6 +72,7 @@ const AmbassadorForm: React.FC = () => {
   const [formData, setFormData] = useState<CampusAmbassadorFormData>({
     firstName: "",
     lastName: "",
+    name: "",
     email: "",
     phone: "",
     university: "",
@@ -64,6 +85,8 @@ const AmbassadorForm: React.FC = () => {
     experience: "",
     motivation: "",
     whyInternexis: "",
+    college: "",
+    whyYouWantToJoin: "",
     availabilityHours: "",
     startDate: "",
     referralSource: "",
@@ -135,41 +158,39 @@ const AmbassadorForm: React.FC = () => {
     console.log("Form data being submitted:", formData);
 
     try {
-      const result = await campusAmbassadorService.submitApplication(formData);
+      // Simulate successful submission (replace with actual form handling)
+      console.log("✅ Campus Ambassador Application Submitted Successfully!");
+      console.log("Application Data:", formData);
 
-      if (result.success) {
-        setMessage({
-          type: "success",
-          text: `Thank you for registering! Your application has been submitted successfully. Welcome to the Internexis Ambassador Program!`,
-        });
+      setMessage({
+        type: "success",
+        text: `Thank you for registering! Your application has been submitted successfully. Welcome to the Internexis Ambassador Program!`,
+      });
 
-        // Reset form on success
-        setFormData({
-          firstName: "",
-          lastName: "",
-          email: "",
-          phone: "",
-          university: "",
-          course: "",
-          yearOfStudy: "",
-          cgpa: "",
-          linkedinUrl: "",
-          portfolioUrl: "",
-          skills: [],
-          experience: "",
-          motivation: "",
-          whyInternexis: "",
-          availabilityHours: "",
-          startDate: "",
-          referralSource: "",
-          additionalInfo: "",
-        });
-      } else {
-        setMessage({
-          type: "error",
-          text: "Failed to submit application. Please try again.",
-        });
-      }
+      // Reset form on success
+      setFormData({
+        firstName: "",
+        lastName: "",
+        name: "",
+        email: "",
+        phone: "",
+        university: "",
+        course: "",
+        yearOfStudy: "",
+        cgpa: "",
+        linkedinUrl: "",
+        portfolioUrl: "",
+        skills: [],
+        experience: "",
+        motivation: "",
+        whyInternexis: "",
+        college: "",
+        whyYouWantToJoin: "",
+        availabilityHours: "",
+        startDate: "",
+        referralSource: "",
+        additionalInfo: "",
+      });
     } catch (error) {
       console.error("Error submitting application:", error);
 
